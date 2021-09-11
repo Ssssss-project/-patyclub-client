@@ -2,7 +2,7 @@
   <div class="note" :style="note">
     <div class="flexbox">
       <div class="calculator">
-        <img src="../assets/logo1.png" />
+        <img src="../assets/PatyRabbit.png" />
         <img src="../assets/PatyClub.png" />
         <input
           clase="input"
@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       note: {
-        backgroundImage: "url(" + require("../assets/backImg.png") + ")",
+        backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
       },
       account: "",
       password: "",
