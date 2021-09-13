@@ -1,0 +1,17 @@
+button {
+    user-select: none;
+    background-color: transparent;
+    border: none;
+    border-radius: 3px;
+    color: inherit;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0.25em 0.75em;
+    width: fit-content;
+
+    &:hover {
+        transition: 0.3s;
+        background: $main-color;
+    }
+}
