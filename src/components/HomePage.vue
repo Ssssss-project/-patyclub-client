@@ -1,13 +1,14 @@
 <template>
+<main id="HomePage">
   <div class="main-bar">
     <button class="btns">所有活動</button>
     <button class="btns">創建活動</button>
-
     <router-link to="/login">
       <button class="btns" click="navigate">登入</button>
     </router-link>
-    
   </div>
+  
+</main>
 </template>
 
 <script>
