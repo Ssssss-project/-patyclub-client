@@ -1,6 +1,6 @@
 <template>
   <div id="LoginModal">
-    <transition>
+    <transition name="slide-fade">
       <div v-if="openModal">
         <div class="overlay">
           <div class="modal">
@@ -10,7 +10,7 @@
             <label class="welcome">歡迎光臨</label>
             <img src="../assets/PatyLogo.png" />
             <input type="text" placeholder="Email/帳號" />
-            <input type="password" laceholder="密碼" />
+            <input type="password" placeholder="密碼" />
             <div class="right">
               <a class="forget" href="">忘記密碼了, 995 QwQ</a>
             </div>
