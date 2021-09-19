@@ -1,0 +1,20 @@
+#Home{
+    .main-bar {
+        position: inherit;
+        width: 100%;
+        background-color: #ebe8e5;
+        height: 50px;
+        text-align: right;
+    }
+    .btns {
+        height: 50px;
+        width: 100px;
+        background-color: #ebe8e5;
+        border-color: #ebe8e5;
+        border-style: none;
+       
+    }
+    .btns:hover {
+        background-color: rgb(238, 184, 136);
+    }
+}
