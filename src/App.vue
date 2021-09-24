@@ -1,5 +1,5 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <style lang="scss">
@@ -23,5 +23,4 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
 </style>

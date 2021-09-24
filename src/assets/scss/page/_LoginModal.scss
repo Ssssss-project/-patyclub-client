@@ -1,4 +1,4 @@
-#LoginModal{
+#LoginModal {
     .modal {
         display: grid;
         justify-content: center;
@@ -12,58 +12,58 @@
         box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.25);
         transition: all 0.2s ease-in;
         .right {
-          display: grid;
-          justify-content: right;
-          align-items: right;
+            display: grid;
+            justify-content: right;
+            align-items: right;
         }
         .welcome {
-          color: #deb06b;
-          font-size: 36px;
+            color: #deb06b;
+            font-size: 36px;
         }
         .forget {
-          color: #deb06b;
-          font-size: 10px;
+            color: #deb06b;
+            font-size: 10px;
         }
         .btn-login {
-          width: 100%;
-          background-color: rgb(238, 184, 136);
-          border-color: #402e32;
-          border-style: solid;
-          &:hover {
-            background: #e7660f;
-          }
+            width: 100%;
+            background-color: rgb(238, 184, 136);
+            border-color: #402e32;
+            border-style: solid;
+            &:hover {
+                background: #e7660f;
+            }
         }
         .btn-regist {
-          width: 100%;
-          background-color: rgb(255, 255, 255);
-          border-color: #402e32;
-          border-style: solid;
-          &:hover {
-            background: #deb06b;
-          }
+            width: 100%;
+            background-color: rgb(255, 255, 255);
+            border-color: #402e32;
+            border-style: solid;
+            &:hover {
+                background: #deb06b;
+            }
         }
         .btn-google {
-          width: 100%;
-          height: 32px;
-          background-color: #c25450;
-          color: #fff;
-          margin-bottom: 0;
-          &:hover {
-            background: #e61e04;
-          }
+            width: 100%;
+            height: 32px;
+            background-color: #c25450;
+            color: #fff;
+            margin-bottom: 0;
+            &:hover {
+                background: #e61e04;
+            }
         }
         .btn-facebook {
-          width: 100%;
-          height: 32px;
-          background-color: #496bdb;
-          color: #fff;
-          &:hover {
-            background: #2f0fe7;
-          }
+            width: 100%;
+            height: 32px;
+            background-color: #496bdb;
+            color: #fff;
+            &:hover {
+                background: #2f0fe7;
+            }
         }
-      }
-      
-      .overlay {
+    }
+
+    .overlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -75,32 +75,33 @@
         background: #00000094;
         z-index: 999;
         transition: opacity 0.2s ease;
-      }
-      
-      .hr {
+    }
+
+    .hr {
         display: flex;
         align-items: center;
         justify-content: center;
         .line {
-          height: 1px;
-          background-color: rgb(168, 167, 167);
-          width: 100px;
+            height: 1px;
+            background-color: rgb(168, 167, 167);
+            width: 100px;
         }
         .text {
-          padding: 0px 10px;
-          color: rgb(168, 167, 167);
-          font-size: 16px;
+            padding: 0px 10px;
+            color: rgb(168, 167, 167);
+            font-size: 16px;
         }
-      }
+    }
 
-      .slide-fade-enter-active {
-        transition: all .3s ease;
-      }
-      .slide-fade-leave-active {
-        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-      }
-      .slide-fade-enter, .slide-fade-leave-to{
+    .slide-fade-enter-active {
+        transition: all 0.3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+    .slide-fade-enter,
+    .slide-fade-leave-to {
         transform: translateX(10px);
         opacity: 0;
-      }
+    }
 }

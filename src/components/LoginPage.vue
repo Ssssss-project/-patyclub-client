@@ -1,5 +1,9 @@
 <template>
-  <div id="Login" class="note" :style="note">
+  <div
+    id="Login"
+    class="note"
+    :style="note"
+  >
     <div class="flexbox">
       <div class="calculator">
         <img src="../assets/PatyRabbit.png" />
@@ -32,14 +36,13 @@ export default {
   data() {
     return {
       note: {
-        backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+        backgroundImage:
+          "url(" + require("../assets/backgroundImage.png") + ")",
       },
       account: "",
       password: "",
     };
   },
-  methods: {
-   
-  },
+  methods: {},
 };
 </script>

@@ -9,10 +9,19 @@
             </div>
             <label class="welcome">歡迎光臨</label>
             <img src="../assets/PatyLogo.png" />
-            <input type="text" placeholder="Email/帳號" />
-            <input type="password" placeholder="密碼" />
+            <input
+              type="text"
+              placeholder="Email/帳號"
+            />
+            <input
+              type="password"
+              placeholder="密碼"
+            />
             <div class="right">
-              <a class="forget" href="">忘記密碼了, 995 QwQ</a>
+              <a
+                class="forget"
+                href=""
+              >忘記密碼了, 995 QwQ</a>
             </div>
             <button class="btn-login">登入</button>
             <button class="btn-regist">註冊</button>
