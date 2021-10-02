@@ -5,19 +5,19 @@
       <button class="btns">創建活動</button>
       <button class="btns" @click="bShowModal = true">登入</button>
     </div>
-    <LoginModal :openModal="bShowModal" @close-modal="bShowModal = false"/>
+    <LoginModal :openModal="bShowModal" @close-modal="bShowModal = false" />
   </main>
 </template>
 
 <script>
-import LoginModal from './LoginModal.vue'
+import LoginModal from "./LoginModal.vue";
 export default {
-  components:{
-    LoginModal
+  components: {
+    LoginModal,
   },
   data() {
     return {
-      bShowModal: false
+      bShowModal: false,
     };
   },
   methods: {
