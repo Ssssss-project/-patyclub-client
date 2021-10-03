@@ -2,7 +2,7 @@
     .main-bar {
         position: inherit;
         width: 100%;
-        background-color: #ebe8e5;
+        background-color: $backgorund-color;
         height: 50px;
         text-align: right;
     }
@@ -22,7 +22,7 @@
         & > div {
             height: 50px;
             width: 200px;
-            background-color: brown;
+            background-color: $text-color;
             color: $main-back-color;
             display: flex;
             align-items: center;
@@ -70,8 +70,8 @@
     .btns {
         height: 50px;
         width: 100px;
-        background-color: #ebe8e5;
-        border-color: #ebe8e5;
+        background-color: $backgorund-color;
+        border-color: $backgorund-color;
         border-style: none;
     }
     .btns:hover {
