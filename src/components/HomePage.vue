@@ -39,6 +39,7 @@
       :openModal="bShowModal"
       @close-modal="bShowModal = false"
     />
+
   </main>
 
 </template>
