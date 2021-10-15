@@ -1,6 +1,10 @@
 <template>
   <main id="Home">
     <div class="main-bar">
+      <button 
+        class="btns"
+        @click="bShowChat = true"
+        >測試聊天室</button>
       <button class="btns">所有活動</button>
       <button class="btns">創建活動</button>
       <button
@@ -39,6 +43,10 @@
       :openModal="bShowModal"
       @close-modal="bShowModal = false"
     />
+    <TestChat
+      :openModal="bShowChat"
+      @close-modal="bShowChat = false"
+    />
 
   </main>
 
@@ -46,9 +54,11 @@
 
 <script>
 import LoginModal from "./LoginModal.vue";
+import TestChat from "./TestChat.vue";
 export default {
   components: {
     LoginModal,
+    TestChat
   },
   data() {
     return {
@@ -62,6 +72,7 @@ export default {
         backgroundPosition: "bottom",
       },
       bShowModal: false,
+      bShowChat: false
     };
   },
   methods: {
