@@ -36,7 +36,7 @@ a {
 main {
     margin: auto;
     & {
-        max-width: 1400px;
+        max-width: 100vw;
         min-height: calc(100vh);
     }
 }

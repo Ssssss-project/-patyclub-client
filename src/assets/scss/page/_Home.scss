@@ -2,19 +2,76 @@
     .main-bar {
         position: inherit;
         width: 100%;
-        background-color: #ebe8e5;
+        background-color: $backgorund-color;
         height: 50px;
         text-align: right;
     }
 
     .container {
         height: calc(100vh - 50px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+    .first-step {
+        z-index: 2;
+        background: $main-color;
+    }
+    .second-step {
+        z-index: 2;
+        & > div {
+            height: 50px;
+            width: 200px;
+            background-color: $text-color;
+            color: $main-back-color;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .billboard {
+            position: absolute;
+            left: 42%;
+            top: 48%;
+        }
+        .hotActivity {
+            position: absolute;
+            left: 47%;
+            top: 53%;
+        }
+    }
+
+    .bg-image {
+        width: 100%;
+        height: calc(100% - 50px);
+        position: absolute;
+        top: 50px;
+        left: 0;
+    }
+
+    .opacity-set {
+        opacity: 0.6;
+    }
+
+    .disappearing {
+        display: block;
+        width: 40%;
+        height: auto;
+        opacity: 1;
+        transition: 1s;
+        cursor: pointer;
+    }
+
+    .first-step-leave-active {
+        width: 10%;
+        opacity: 0;
+        transition: 1s;
+    }
+
     .btns {
         height: 50px;
         width: 100px;
-        background-color: #ebe8e5;
-        border-color: #ebe8e5;
+        background-color: $backgorund-color;
+        border-color: $backgorund-color;
         border-style: none;
     }
     .btns:hover {
