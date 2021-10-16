@@ -2,7 +2,7 @@
     .main-bar {
         position: inherit;
         width: 100%;
-        background-color: $backgorund-color;
+        background-color: $color-light-200;
         height: 50px;
         text-align: right;
     }
@@ -15,15 +15,15 @@
     }
     .first-step {
         z-index: 2;
-        background: $main-color;
+        background: $color-primary-500;
     }
     .second-step {
         z-index: 2;
         & > div {
             height: 50px;
             width: 200px;
-            background-color: $text-color;
-            color: $main-back-color;
+            background-color: $color-brown-900;
+            color: $color-light-50;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -70,8 +70,8 @@
     .btns {
         height: 50px;
         width: 100px;
-        background-color: $backgorund-color;
-        border-color: $backgorund-color;
+        background-color: $color-light-200;
+        border-color: $color-light-200;
         border-style: none;
     }
     .btns:hover {
