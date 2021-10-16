@@ -14,7 +14,7 @@
         mode="out-in"
       >
         <div
-          class="first-step disappearing"
+          class="first-step"
           @click="showInfo"
           v-if="showFirstStep"
         >
@@ -26,7 +26,7 @@
           v-else-if="showSeconfStep"
         >
           <div class="billboard">公佈欄｜BillBoard</div>
-          <div class="hotActivity">活動精選｜Hot Activities</div>
+          <div class="hotActivity"><label>活動精選｜Hot Activities</label></div>
         </div>
       </transition>
 
