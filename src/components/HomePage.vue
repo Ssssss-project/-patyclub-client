@@ -2,7 +2,9 @@
   <main id="Home">
     <div class="main-bar">
       <button class="btns">所有活動</button>
-      <button class="btns">創建活動</button>
+            <router-link :to="`/activityCreate`">
+        <button class="btns">創建活動</button>
+      </router-link>
       <button
         class="btns"
         @click="bShowModal = true"
