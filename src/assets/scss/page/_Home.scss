@@ -20,7 +20,7 @@
         width: 40%;
         height: auto;
         opacity: 1;
-        transition: 1s;
+        transition: 0.3s;
         cursor: pointer;
     }
     .second-step {
@@ -35,27 +35,27 @@
             justify-content: center;
         }
         .billboard {
+            cursor: pointer;
             position: absolute;
             left: 42%;
             top: 48%;
+            transform-origin: 100% 50%;
+            animation: main 0.5s;
         }
         .hotActivity {
+            cursor: pointer;
             position: absolute;
             left: 47%;
             top: 53%;
-            animation-name: grow;
-            animation-duration: 0.5s;
+            animation: main 0.5s;
         }
     }
-
-    @keyframes grow {
-        from {
-            width: 0%;
-            height: 50px;
+    @keyframes main {
+        0% {
+            transform: scaleX(0);
         }
-        to {
-            width: 200px;
-            height: 50px;
+        100% {
+            transform: scaleX(1);
         }
     }
 

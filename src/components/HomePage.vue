@@ -26,7 +26,7 @@
           v-else-if="showSeconfStep"
         >
           <div class="billboard">公佈欄｜BillBoard</div>
-          <div class="hotActivity"><label>活動精選｜Hot Activities</label></div>
+          <div class="hotActivity">活動精選｜Hot Activities</div>
         </div>
       </transition>
 
