@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "@aspnet/signalr": "^1.0.27",
+    "@quasar/extras": "^1.0.0",
     "axios": "^0.21.3",
     "core-js": "^3.6.5",
+    "quasar": "^2.0.0",
     "vue": "^3.0.0",
     "vue-axios": "^3.2.5",
     "vue-class-component": "^8.0.0-0",
@@ -33,7 +35,8 @@
     "pug-plain-loader": "^1.1.0",
     "sass": "^1.39.2",
     "sass-loader": "^7.3.1",
-    "typescript": "~4.1.5"
+    "typescript": "~4.1.5",
+    "vue-cli-plugin-quasar": "~4.0.2"
   },
   "eslintConfig": {
     "root": true,

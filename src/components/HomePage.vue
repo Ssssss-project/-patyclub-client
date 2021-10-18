@@ -1,6 +1,9 @@
 <template>
   <main id="Home">
     <div class="main-bar">
+      <q-btn color="primary" icon="mail" label="On Left" />
+    <q-btn color="secondary" icon-right="mail" label="On Right" />
+    <q-btn color="red" icon="mail" icon-right="send" label="On Left and Right" />
       <button 
         class="btns"
         @click="bShowChat = true"
