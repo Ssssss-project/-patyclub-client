@@ -16,6 +16,12 @@
     .first-step {
         z-index: 2;
         background: $color-primary-500;
+        display: block;
+        width: 40%;
+        height: auto;
+        opacity: 1;
+        transition: 0.3s;
+        cursor: pointer;
     }
     .second-step {
         z-index: 2;
@@ -29,14 +35,27 @@
             justify-content: center;
         }
         .billboard {
+            cursor: pointer;
             position: absolute;
             left: 42%;
             top: 48%;
+            transform-origin: 100% 50%;
+            animation: main 0.5s;
         }
         .hotActivity {
+            cursor: pointer;
             position: absolute;
             left: 47%;
             top: 53%;
+            animation: main 0.5s;
+        }
+    }
+    @keyframes main {
+        0% {
+            transform: scaleX(0);
+        }
+        100% {
+            transform: scaleX(1);
         }
     }
 
@@ -50,15 +69,6 @@
 
     .opacity-set {
         opacity: 0.6;
-    }
-
-    .disappearing {
-        display: block;
-        width: 40%;
-        height: auto;
-        opacity: 1;
-        transition: 1s;
-        cursor: pointer;
     }
 
     .first-step-leave-active {
@@ -75,6 +85,6 @@
         border-style: none;
     }
     .btns:hover {
-        background-color: rgb(238, 184, 136);
+        background-color: $color-primary-300;
     }
 }

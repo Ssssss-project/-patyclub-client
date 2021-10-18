@@ -16,7 +16,7 @@
         mode="out-in"
       >
         <div
-          class="first-step disappearing"
+          class="first-step"
           @click="showInfo"
           v-if="showFirstStep"
         >
