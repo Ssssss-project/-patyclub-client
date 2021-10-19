@@ -1,12 +1,13 @@
 <template>
   <main id="Home">
     <div class="main-bar">
-      <button 
+
+      <button
         class="btns"
         @click="bShowChat = true"
-        >測試聊天室</button>
+      >測試聊天室</button>
       <button class="btns">所有活動</button>
-            <router-link :to="`/activityCreate`">
+      <router-link :to="`/activityCreate`">
         <button class="btns">創建活動</button>
       </router-link>
       <button
@@ -60,7 +61,7 @@ import TestChat from "./TestChat.vue";
 export default {
   components: {
     LoginModal,
-    TestChat
+    TestChat,
   },
   data() {
     return {
@@ -74,7 +75,7 @@ export default {
         backgroundPosition: "bottom",
       },
       bShowModal: false,
-      bShowChat: false
+      bShowChat: false,
     };
   },
   methods: {
