@@ -1,80 +1,10 @@
 #ActivityCreate {
-  .create-bar {
-    position: inherit;
-    width: 100%;
-    border-bottom: solid $color-light-400 1px;
-    height: 150px;
+  
+  .text-activity {
+    color: $color-primary-500;
   }
-  .progress-bar {
-    position: absolute;
-    top: 70px;
-    left: 25.5%;
-    width: 100%;
-  }
-  .child-bar {
-    position: inherit;
-    width: 100%;
-    height: 150px;
-    text-align: center;
-  }
-  .top-edge {
-    position: relative;
-    top: 120px;
-  }
-  .container {
-    width: 100%;
-    position: absolute;
-    z-index: 1;
-  }
-  .progressbar li {
-    float: left;
-    width: 6.2%;
-    position: relative;
-    text-align: center;
-    font-size: 12px;
-  }
-  .progressbar {
-    counter-reset: step;
-  }
-  .progressbar li:first-child:after {
-    content: none;
-  }
-  .progressbar li:before {
-    content: counter(step);
-    counter-increment: step;
-    width: 30px;
-    height: 30px;
-    border: 2px solid $color-primary-500;
-    display: block;
-    margin: 0 auto 10px auto;
-    border-radius: 50%;
-    line-height: 30px;
-    background: $color-primary-500;
-    color: $color-light-50;
-    text-align: center;
-    font-weight: bold;
-  }
-  .progressbar li:after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 3px;
-    background: $color-primary-500;
-    top: 15px;
-    left: -50%;
-    z-index: -1;
-  }
-  .progressbar li.active + li:after {
-    background: $color-skyblue-400;
-  }
-  /* .progressbar li.active + li:before {
-    border-color: #3aac5d;
-    background: #3aac5d;
-    color: white;
-  } */
-  .progressbar li.active:before {
-    border-color: $color-skyblue-400;
-    background: $color-skyblue-400;
-    color: $color-light-50;
+
+  .text-completed {
+    color: $color-skyblue-400;
   }
 }
