@@ -45,13 +45,12 @@ export default {
             showThirdStep: false,
             showBillBoardInfo: false,
             showActivitiesInfo: false,
-            // backgroundimg: {
-            //   backgroundImage:
-            //     "url(" + require("../assets/backgroundImage.png") + ")",
-            //   backgroundRepeat: "no-repeat",
-            //   backgroundAttachment: "fixed",
-            //   backgroundPosition: "bottom",
-            // },
+            backgroundimg: {
+                backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+                backgroundRepeat: "no-repeat",
+                backgroundAttachment: "fixed",
+                backgroundPosition: "bottom",
+            },
             bShowModal: false,
             bShowChat: false,
         };
