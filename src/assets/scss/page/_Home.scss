@@ -40,22 +40,53 @@
             left: 42%;
             top: 48%;
             transform-origin: 100% 50%;
-            animation: main 0.5s;
+            animation: second-step-animation 0.5s;
         }
         .hotActivity {
             cursor: pointer;
             position: absolute;
             left: 47%;
             top: 53%;
-            animation: main 0.5s;
+            animation: second-step-animation 0.5s;
         }
     }
-    @keyframes main {
+
+    .billboardInfo {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        animation: billboard-animation 0.5s;
+        .billboardInfo-right {
+            height: 100%;
+            width: 75%;
+            background-color: bisque;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .billboardInfo-left {
+            height: 100%;
+            width: 25%;
+        }
+    }
+
+    @keyframes second-step-animation {
         0% {
             transform: scaleX(0);
         }
         100% {
             transform: scaleX(1);
+        }
+    }
+
+    @keyframes billboard-animation {
+        0% {
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        100% {
+            transform: scaleX(1);
+            transform-origin: left center;
         }
     }
 
