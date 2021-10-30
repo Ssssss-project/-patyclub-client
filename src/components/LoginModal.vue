@@ -1,4 +1,4 @@
-<template>
+<!--<template>
   <div id="LoginModal">
     <transition name="slide-fade">
       <div v-if="openModal">
@@ -213,6 +213,139 @@ export default {
       this.bCheckPrivacy = false;
       this.bCheckGetEmail = false;
     },
+  },
+};
+</script>
+-->
+<template>
+  <q-dialog ref="dialog" @hide="onDialogHide" id="LoginModal">
+    <q-card style="width:400px" align="center">
+      <q-card-actions align="center">
+        <label class="welcome">歡迎光臨</label>
+      </q-card-actions>
+
+      <q-card-actions align="center">
+        <q-img
+          src="../assets/PatyLogo.png"
+          style="height: 159px; width: 278px"
+        />
+      </q-card-actions>
+
+      <q-card-section align="center" style="padding-bottom:0px">
+        <q-form @submit="onSubmit">
+          <q-input
+            filled
+            v-model="sLoginAccount"
+            label="Email/帳號"
+            style="width:278px"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || '請輸入email']"
+          />
+
+          <q-input
+            filled
+            :type="isPwd ? 'password' : 'text'"
+            v-model="sLoginPassword"
+            label="密碼"
+            style="width:278px"
+            lazy-rules
+            :rules="[(val) => (val && val.length > 0) || '請輸入密碼']"
+          >
+            <template v-slot:append>
+              <q-icon
+                :name="isPwd ? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"
+              />
+            </template>
+          </q-input>
+
+          <q-card-section align="right" class="forget">
+            <a class="forgetText" href="">忘記密碼了, 995 QwQ</a>
+          </q-card-section>
+
+          <q-card-section align="center">
+            <q-btn class="btn-login" label="登入" type="submit" />
+            <q-btn class="btn-regist" label="註冊" />
+          </q-card-section>
+        </q-form>
+      </q-card-section>
+
+      <q-card-section class="hr">
+        <span class="line"></span>
+        <span class="text">或者</span>
+        <span class="line"></span>
+      </q-card-section>
+
+      <q-card-section align="center">
+        <q-btn class="btn-google" label="以Google繼續" />
+        <q-btn class="btn-facebook" label="以Facebook繼續" />
+      </q-card-section>
+    </q-card>
+  </q-dialog>
+</template>
+
+<script>
+// import { apiGetLoginResult } from "@/apis/api/userRequest.ts";
+
+export default {
+  props: {},
+
+  emits: [
+    // REQUIRED
+    "ok",
+    "hide",
+  ],
+
+  methods: {
+    // following method is REQUIRED
+    show() {
+      this.$refs.dialog.show();
+    },
+
+    // following method is REQUIRED
+    hide() {
+      this.$refs.dialog.hide();
+    },
+
+    onDialogHide() {
+      // required to be emitted
+      // when QDialog emits "hide" event
+      this.$emit("hide");
+    },
+
+    onOKClick() {
+      this.$emit("ok");
+      // or with payload: this.$emit('ok', { ... })
+
+      // then hiding dialog
+      this.hide();
+    },
+
+    onCancelClick() {
+      this.hide();
+    },
+
+    onSubmit() {
+      this.onOKClick();
+
+      // apiGetLoginResult({
+      //   account: this.sLoginAccount,
+      //   password: this.sLoginPassword,
+      // }).then((response) => {
+      //   if (response.status == 200) {
+      //     alert("登入成功");
+      //   }
+      // });
+    },
+  },
+
+  data() {
+    return {
+      sLoginAccount: "",
+      sLoginPassword: "",
+      isPwd: true,
+    };
   },
 };
 </script>
