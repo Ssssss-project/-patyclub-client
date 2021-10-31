@@ -11,3 +11,6 @@ export const apiGetAllUser = () => request("get", "/GetEntityList/getAllUser");
 
 // 取得活躍使用者
 export const apiGetActiveUser = () => request("get", "/GetEntityList/getActiveUser");
+
+// 儲存活動
+export const apiSaveActivityData = (params :any) => request("post", "/Activity", params);
