@@ -1,224 +1,5 @@
-<!--<template>
-  <div id="LoginModal">
-    <transition name="slide-fade">
-      <div v-if="openModal">
-        <div class="overlay">
-          <div
-            class="modal"
-            v-if="bLoginOrRegeist"
-          >
-            <div class="btn-cancel">
-              <button @click="closeModal()">X</button>
-            </div>
-            <label class="welcome">歡迎光臨</label>
-            <img src="../assets/PatyLogo.png" />
-            <input
-              type="text"
-              placeholder="Email/帳號"
-              v-model="sLoginAccount"
-            />
-            <input
-              type="password"
-              placeholder="密碼"
-              v-model="sLoginPassword"
-            />
-            <div class="right">
-              <a
-                class="forget"
-                href=""
-              >忘記密碼了, 995 QwQ</a>
-            </div>
-            <button
-              class="btn-login"
-              @click="getLoginResult()"
-            >登入</button>
-            <button
-              class="btn-regist"
-              @click="bLoginOrRegeist = !bLoginOrRegeist"
-            >
-              註冊
-            </button>
-            <p />
-            <div class="hr">
-              <span class="line"></span>
-              <span class="text">或者</span>
-              <span class="line"></span>
-            </div>
-            <div>
-              <button class="btn-google">以Google繼續</button>
-              <button class="btn-facebook">以Facebook繼續</button>
-            </div>
-          </div>
-
-          <div
-            class="modal"
-            v-if="!bLoginOrRegeist"
-          >
-            <div class="btn-cancel">
-              <button @click="closeModal()">X</button>
-            </div>
-            <label class="register-text">成為<span><img
-                  src="../assets/PatyLogo.png"
-                  width="125"
-                /></span>的一分子 =)</label>
-
-            <div class="left">
-              <label class="register-text">帳號設定</label>
-              <input
-                type="text"
-                v-model="sRegisterAccount"
-              />
-            </div>
-
-            <div class="left">
-              <label class="register-text">密碼設定</label>
-              <input
-                type="password"
-                placeholder="輸入密碼"
-                v-model="sRegisterPassword"
-              />
-              <input
-                type="password"
-                placeholder="再次確認"
-                v-model="sRegisterConfirmPassword"
-              />
-              <div>
-                <button>
-                  <span>
-                    <i
-                      class="fas"
-                      :class="{
-                        'fa-eye-slash': true,
-                        'fa-eye': false,
-                      }"
-                    ></i>
-                  </span>
-                </button>
-              </div>
-            </div>
-
-            <div class="left">
-              <label class="register-text">連結信箱</label>
-              <input
-                type="text"
-                v-model="sRegisterEmail"
-              />
-            </div>
-
-            <div class="check-div">
-              <input
-                type="checkbox"
-                style="margin-right:5px;width:15px;height:15px;"
-                v-model="bCheckPrivacy"
-              />
-              <label class="check-text">我已經閱讀過且同意PAty club的服務條款以及隱私權政策。
-              </label>
-            </div>
-
-            <div class="check-div">
-              <input
-                type="checkbox"
-                style="margin-right:5px;width:15px;height:15px;"
-                v-model="bCheckGetEmail"
-              />
-              <label class="check-text">我知道PAty
-                club會寄送給我一些電子郵件，例如私人訊息、通知、公告訊息等，但我隨時可以在設定中取消這些信件的寄送。
-              </label>
-            </div>
-
-            <div>
-              <button
-                class="btn-regeist-regist"
-                style="margin-bottom:5px"
-                @click="registerHandler()"
-              >
-                註冊
-              </button>
-              <button
-                class="btn-regist"
-                @click="bLoginOrRegeist = !bLoginOrRegeist"
-              >
-                返回登入畫面
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </transition>
-  </div>
-</template>
-
-<script>
-import { apiGetLoginResult, apiPostRegister } from "@/apis/api/userRequest.ts";
-export default {
-  props: {
-    openModal: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      bLoginOrRegeist: true,
-      sLoginAccount: "",
-      sLoginPassword: "",
-      sRegisterAccount: "",
-      sRegisterPassword: "",
-      sRegisterConfirmPassword: "",
-      sRegisterEmail: "",
-      bCheckPrivacy: false,
-      bCheckGetEmail: false,
-    };
-  },
-  methods: {
-    closeModal() {
-      this.bLoginOrRegeist = true;
-      this.$emit("close-modal");
-    },
-    getLoginResult() {
-      apiGetLoginResult({
-        account: this.sLoginAccount,
-        password: this.sLoginPassword,
-      }).then((response) => {
-        if (response.status == 200) {
-          alert("登入成功");
-        }
-      });
-    },
-    registerHandler() {
-      if (
-        this.sRegisterPassword === this.sRegisterConfirmPassword &&
-        this.bCheckGetEmail &&
-        this.bCheckPrivacy
-      ) {
-        apiPostRegister({
-          account: this.sRegisterAccount,
-          password: this.sRegisterPassword,
-          email: this.sRegisterEmail,
-        }).then((response) => {
-          if (response.status == 200) {
-            alert("註冊成功");
-            this.resetData();
-          }
-        });
-      } else {
-        alert("密碼不符 或未勾選");
-      }
-    },
-    resetData() {
-      this.sRegisterAccount = "";
-      this.sRegisterPassword = "";
-      this.sRegisterConfirmPassword = "";
-      this.sRegisterEmail = "";
-      this.bCheckPrivacy = false;
-      this.bCheckGetEmail = false;
-    },
-  },
-};
-</script>
--->
 <template>
-  <q-dialog ref="dialog" @hide="onDialogHide" id="LoginModal">
+  <q-dialog ref="dialogRef" @hide="onDialogHide" id="LoginModal">
     <!-- login card -->
     <q-card style="width:400px" align="center" v-show="bLoginOrRegeist">
       <q-card-actions align="center">
@@ -235,15 +16,17 @@ export default {
       <q-card-section align="center" style="padding-bottom:0px">
         <q-form @submit="loginSubmit">
           <q-input
+            ref="LoginAccountRef"
             filled
             v-model="sLoginAccount"
             label="Email/帳號"
             style="width:278px"
-            :rules="[(val) => (val && val.length > 0) || '請輸入email']"
+            :rules="[(val) => (val && val.length > 0) || '請輸入email或帳號']"
           />
 
           <q-input
             filled
+            ref="LoginPasswordRef"
             :type="bLoginIsPwd ? 'password' : 'text'"
             v-model="sLoginPassword"
             label="密碼"
@@ -269,7 +52,10 @@ export default {
             <q-btn
               class="btn-transToReister"
               label="註冊"
-              @click="bLoginOrRegeist = !bLoginOrRegeist"
+              @click="
+                bLoginOrRegeist = !bLoginOrRegeist;
+                resetLoginData();
+              "
             />
           </q-card-section>
         </q-form>
@@ -292,7 +78,7 @@ export default {
     </q-card>
 
     <!-- register card -->
-    <q-card style="width:400px" align="center" v-show="!bLoginOrRegeist">
+    <q-card align="center" v-show="!bLoginOrRegeist">
       <q-card-section align="center">
         <label class="title-text"
           >成為
@@ -301,13 +87,14 @@ export default {
         >
       </q-card-section>
 
-      <q-card-section align="center">
+      <q-card-section align="center" class="NoPaddingTopBottom">
         <q-form @submit="registerSubmit">
           <q-card-section align="left">
             <label class="content-text">帳號設定</label>
             <q-input
-              ref="accountRef"
+              ref="RegisterAccountRef"
               filled
+              hide-bottom-space
               v-model="sRegisterAccount"
               label="輸入帳號"
               lazy-rules
@@ -316,7 +103,7 @@ export default {
 
             <label class="content-text">密碼設定</label>
             <q-input
-              ref="passwordRef"
+              ref="RegisterPasswordRef"
               filled
               v-model="sRegisterPassword"
               :type="bRegisterIsPwd ? 'password' : 'text'"
@@ -332,13 +119,15 @@ export default {
               </template>
             </q-input>
             <q-input
-              ref="confirmPasswordRef"
+              ref="RegisterConfirmPasswordRef"
               filled
+              hide-bottom-space
               v-model="sRegisterConfirmPassword"
               :type="bRegisterIsPwd ? 'password' : 'text'"
               label="再次確認密碼"
-              lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '請輸入密碼']"
+              :rules="[
+                (val) => val === sRegisterPassword || '密碼不符，請再次確認',
+              ]"
               ><template v-slot:append>
                 <q-icon
                   :name="bRegisterIsPwd ? 'visibility_off' : 'visibility'"
@@ -350,8 +139,9 @@ export default {
 
             <label class="content-text">連結信箱</label>
             <q-input
-              ref="emailRef"
+              ref="RegisterEmailRef"
               filled
+              hide-bottom-space
               v-model="sRegisterEmail"
               lazy-rules
               :rules="[(val) => (val && val.length > 0) || '請輸入信箱']"
@@ -362,15 +152,17 @@ export default {
               color="orange"
               v-model="bCheckPrivacy"
               label="我已經閱讀過且同意PAty club的服務條款以及隱私權政策。"
+              style="font-size: 10px;"
             />
           </q-card-section>
 
-          <q-card-section align="left">
+          <q-card-section align="left" class="NoPaddingTopBottom">
             <q-checkbox
               color="orange"
               v-model="bCheckGetEmail"
               label="我知道PAty
                 club會寄送給我一些電子郵件，例如私人訊息、通知、公告訊息等，但我隨時可以在設定中取消這些信件的寄送。"
+              style="font-size: 10px;"
             />
           </q-card-section>
 
@@ -381,8 +173,7 @@ export default {
               label="返回登入頁面"
               @click="
                 bLoginOrRegeist = !bLoginOrRegeist;
-                resetData();
-                reset();
+                resetRegisterData();
               "
             />
           </q-card-section>
@@ -393,126 +184,156 @@ export default {
 </template>
 
 <script>
-// import { apiGetLoginResult } from "@/apis/api/userRequest.ts";
+import { apiGetLoginResult, apiPostRegister } from "@/apis/api/userRequest.ts";
+import { useDialogPluginComponent, useQuasar } from "quasar";
 import { ref } from "vue";
+
 export default {
-  setup() {
-    const accountRef = ref(null);
-    const passwordRef = ref(null);
-    const confirmPasswordRef = ref(null);
-    const emailRef = ref(null);
-    return {
-      accountRef,
-      passwordRef,
-      confirmPasswordRef,
-      emailRef,
-      reset() {
-        accountRef.value.resetValidation();
-        passwordRef.value.resetValidation();
-        confirmPasswordRef.value.resetValidation();
-        emailRef.value.resetValidation();
-      },
-    };
-  },
   props: {},
 
-  emits: [
-    // REQUIRED
-    "ok",
-    "hide",
-  ],
+  emits: [...useDialogPluginComponent.emits],
 
-  data() {
-    return {
-      // trans Login and Register mode
-      bLoginOrRegeist: true,
+  setup() {
+    const $q = useQuasar();
+    const { dialogRef, onDialogHide, onDialogOK } = useDialogPluginComponent();
 
-      // Login mode
-      sLoginAccount: "",
-      sLoginPassword: "",
-      bLoginIsPwd: true,
+    // trans login and regeist
+    const bLoginOrRegeist = ref(true);
 
-      // Register mode
-      sRegisterAccount: "",
-      sRegisterPassword: "",
-      sRegisterConfirmPassword: "",
-      sRegisterEmail: "",
-      bRegisterIsPwd: true,
-      bCheckPrivacy: false,
-      bCheckGetEmail: false,
-    };
-  },
+    // login value
+    const sLoginAccount = ref("");
+    const LoginAccountRef = ref(null);
 
-  methods: {
-    // following method is REQUIRED
-    show() {
-      this.$refs.dialog.show();
-    },
+    const sLoginPassword = ref("");
+    const LoginPasswordRef = ref(null);
 
-    // following method is REQUIRED
-    hide() {
-      this.$refs.dialog.hide();
-    },
+    const bLoginIsPwd = ref(true);
+    
+    // register value
+    const sRegisterAccount = ref("");
+    const RegisterAccountRef = ref(null);
 
-    onDialogHide() {
-      // required to be emitted
-      // when QDialog emits "hide" event
-      this.$emit("hide");
-    },
+    const sRegisterPassword = ref("");
+    const RegisterPasswordRef = ref(null);
 
-    onOKClick() {
-      this.$emit("ok");
-      // or with payload: this.$emit('ok', { ... })
+    const sRegisterConfirmPassword = ref("");
+    const RegisterConfirmPasswordRef = ref(null);
 
-      // then hiding dialog
-      this.hide();
-    },
+    const sRegisterEmail = ref("");
+    const RegisterEmailRef = ref(null);
 
-    onCancelClick() {
-      this.hide();
-    },
+    const bCheckPrivacy = ref(false);
+    const bCheckGetEmail = ref(false);
 
-    loginSubmit() {
-      this.onOKClick();
+    const bRegisterIsPwd = ref(true);
 
-      // apiGetLoginResult({
-      //   account: this.sLoginAccount,
-      //   password: this.sLoginPassword,
-      // }).then((response) => {
-      //   if (response.status == 200) {
-      //     alert("登入成功");
-      //   }
-      // });
-    },
+    function loginSubmit() {
+      apiGetLoginResult({
+        account: sLoginAccount.value,
+        password: sLoginPassword.value,
+      }).then((response) => {
+        if (response.status == 200) {
+          $q.notify({
+            icon: "done",
+            color: "positive",
+            message: "登入成功",
+          });
 
-    registerSubmit() {
-      if (
-        this.sRegisterPassword === this.sRegisterConfirmPassword &&
-        this.bCheckGetEmail &&
-        this.bCheckPrivacy
-      ) {
-        // apiPostRegister({
-        //   account: this.sRegisterAccount,
-        //   password: this.sRegisterPassword,
-        //   email: this.sRegisterEmail,
-        // }).then((response) => {
-        //   if (response.status == 200) {
-        //     alert("註冊成功");
-        //     this.resetData();
-        //   }
-        // });
+          onDialogOK();
+        }
+      });
+    }
+
+    function registerSubmit() {
+      if (bCheckPrivacy.value !== true || bCheckGetEmail.value !== true) {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "請勾選服務條款",
+        });
       } else {
-        alert("密碼不符 或未勾選");
+        apiPostRegister({
+          account: sRegisterAccount.value,
+          password: sRegisterPassword.value,
+          email: sRegisterEmail.value,
+        }).then((response) => {
+          if (response.status == 200) {
+            $q.notify({
+              icon: "done",
+              color: "positive",
+              message: "註冊成功，請重新登入",
+            });
+            bLoginOrRegeist.value = true;
+            resetRegisterData();
+          }
+        });
       }
-    },
-    resetData() {
-      this.sRegisterAccount = "";
-      this.sRegisterPassword = "";
-      this.sRegisterConfirmPassword = "";
-      this.sRegisterEmail = "";
-      this.bCheckPrivacy = false;
-      this.bCheckGetEmail = false;
-    },
+    }
+
+    function resetLoginData() {
+      sLoginAccount.value = null;
+      LoginAccountRef.value.resetValidation();
+
+      sLoginPassword.value = null;
+      LoginPasswordRef.value.resetValidation();
+    }
+
+    function resetRegisterData() {
+      sRegisterAccount.value = null;
+      RegisterAccountRef.value.resetValidation();
+
+      sRegisterPassword.value = null;
+      RegisterPasswordRef.value.resetValidation();
+
+      sRegisterConfirmPassword.value = null;
+      RegisterConfirmPasswordRef.value.resetValidation();
+
+      sRegisterEmail.value = null;
+      RegisterEmailRef.value.resetValidation();
+
+      bCheckPrivacy.value = false;
+      bCheckGetEmail.value = false;
+    }
+
+    return {
+      // dialog require
+      dialogRef,
+      onDialogHide,
+
+      // login value
+      sLoginAccount,
+      LoginAccountRef,
+
+      sLoginPassword,
+      LoginPasswordRef,
+
+      // register return
+      sRegisterAccount,
+      RegisterAccountRef,
+
+      sRegisterPassword,
+      RegisterPasswordRef,
+
+      sRegisterConfirmPassword,
+      RegisterConfirmPasswordRef,
+
+      sRegisterEmail,
+      RegisterEmailRef,
+
+      bCheckPrivacy,
+      bCheckGetEmail,
+
+      bLoginOrRegeist,
+      bLoginIsPwd,
+      bRegisterIsPwd,
+
+      // functions
+      loginSubmit,
+      registerSubmit,
+      resetLoginData,
+      resetRegisterData,
+    };
   },
 };
 </script>
