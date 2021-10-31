@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import LoginModal from "./LoginModal.vue";
+import LoginDialog from "./LoginDialog.vue";
 import TestChat from "./TestChat.vue";
 import { useQuasar } from "quasar";
 export default {
@@ -34,7 +34,7 @@ export default {
     const $q = useQuasar();
     function openLoginDialog() {
       $q.dialog({
-        component: LoginModal,
+        component: LoginDialog,
         // componentProps: {
         //   message: "something",
         // },
