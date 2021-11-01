@@ -39,38 +39,86 @@
             position: absolute;
             left: 42%;
             top: 48%;
-            transform-origin: 100% 50%;
-            animation: second-step-animation 0.5s;
+            // transform-origin: 100% 50%;
+            animation: second-step-animation 0.3s;
         }
         .hotActivity {
             cursor: pointer;
             position: absolute;
             left: 47%;
             top: 53%;
-            animation: second-step-animation 0.5s;
+            animation: second-step-animation 0.3s;
         }
     }
 
     .billboardInfo {
+        z-index: 1;
         display: flex;
-        height: 100%;
+        height: 90%;
         width: 100%;
-        animation: billboard-animation 0.5s;
+        animation: billboard-animation 1s;
         .billboardInfo-right {
-            height: 100%;
-            width: 75%;
-            background-color: bisque;
+            width: 70%;
+            background-color: $color-light-200;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-end;
+            .tag {
+                color: $color-light-50;
+                background-color: $color-brown-900;
+                height: 51px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: rotate(-90deg);
+                margin: -50px;
+                width: 150px;
+                border-radius: 2px;
+            }
         }
-        .billboardInfo-left {
-            height: 100%;
-            width: 25%;
+    }
+    .hotActivityInfo {
+        z-index: 1;
+        display: flex;
+        height: 90%;
+        width: 100%;
+        animation: hotActivityInfo-animation 1s;
+        justify-content: flex-end;
+        .hotActivityInfo-right {
+            width: 70%;
+            background-color: $color-light-200;
+            display: flex;
+            align-items: center;
+            .tag {
+                color: $color-light-50;
+                background-color: $color-brown-900;
+                height: 51px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                transform: rotate(-90deg);
+                margin: -50px;
+                width: 150px;
+                border-radius: 2px;
+            }
         }
     }
 
-    @keyframes second-step-animation {
+    .tag-group {
+        height: 105px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .billboard-step-leave-active {
+        animation: billboard-animation-out 0.1s;
+    }
+    .hotActivity-step-leave-active {
+        animation: hotActivityInfo-animation-out 0.1s;
+    }
+
+    @-webkit-keyframes second-step-animation {
         0% {
             transform: scaleX(0);
         }
@@ -79,14 +127,46 @@
         }
     }
 
-    @keyframes billboard-animation {
+    @-webkit-keyframes billboard-animation {
         0% {
             transform: scaleX(0);
             transform-origin: left;
         }
         100% {
             transform: scaleX(1);
-            transform-origin: left center;
+            transform-origin: left;
+        }
+    }
+
+    @-webkit-keyframes billboard-animation-out {
+        0% {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        100% {
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+    }
+
+    @-webkit-keyframes hotActivityInfo-animation {
+        0% {
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+        100% {
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+    }
+    @-webkit-keyframes hotActivityInfo-animation-out {
+        0% {
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+        100% {
+            transform: scaleX(0);
+            transform-origin: right;
         }
     }
 
@@ -105,7 +185,7 @@
     .first-step-leave-active {
         width: 10%;
         opacity: 0;
-        transition: 1s;
+        transition: 0s;
     }
 
     .btns {
