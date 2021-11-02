@@ -6,7 +6,7 @@
             <router-link :to="`/activityCreate`">
                 <button class="btns">創建活動</button>
             </router-link>
-            <button class="btns" @click="bShowModal = true">登入</button>
+            <button class="btns" @click="openLoginDialog">登入</button>
         </div>
         <div class="container">
             <transition name="first-step" mode="out-in">
@@ -39,56 +39,80 @@
                 </div>
             </transition>
         </div>
-        <div class="bg-image" :class="{ 'opacity-set': isopacity }" :style="backgroundimg"></div>
-        <LoginModal :openModal="bShowModal" @close-modal="bShowModal = false" />
+        <div class="bg-image opacity-set" :style="backgroundimg"></div>
+
         <TestChat :openModal="bShowChat" @close-modal="bShowChat = false" />
     </main>
 </template>
 
 <script>
-import LoginModal from "./LoginModal.vue";
+import LoginDialog from "./LoginDialog.vue";
 import TestChat from "./TestChat.vue";
+import { useQuasar } from "quasar";
+import { ref } from "vue";
 export default {
-    components: {
-        LoginModal,
-        TestChat,
-    },
-    data() {
+    setup() {
+        const $q = useQuasar();
+        function openLoginDialog() {
+            $q.dialog({
+                component: LoginDialog,
+                // componentProps: {
+                //   message: "something",
+                // },
+            })
+                .onOk(() => {
+                    console.log("OK");
+                })
+                .onCancel(() => {
+                    console.log("Cancel");
+                });
+        }
+        const showFirstStep = ref(true);
+        const showSecondStep = ref(false);
+        const showBillBoardInfo = ref(false);
+        const showActivitiesInfo = ref(false);
+        const isopacity = ref(true);
+        const bShowChat = ref(false);
+        const backgroundimg = ref({
+            backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+            backgroundRepeat: "no-repeat",
+            backgroundAttachment: "fixed",
+            backgroundPosition: "bottom",
+        });
+
+        function showInfo() {
+            showFirstStep.value = false;
+            showSecondStep.value = true;
+            showBillBoardInfo.value = false;
+            showActivitiesInfo.value = false;
+        }
+        function showBillBoard() {
+            showSecondStep.value = false;
+            showBillBoardInfo.value = true;
+            showActivitiesInfo.value = false;
+        }
+        function showActivities() {
+            showSecondStep.value = false;
+            showBillBoardInfo.value = false;
+            showActivitiesInfo.value = true;
+        }
+
         return {
-            showFirstStep: true,
-            showSecondStep: false,
-            showThirdStep: false,
-            showBillBoardInfo: false,
-            showActivitiesInfo: false,
-            isopacity: true,
-            backgroundimg: {
-                backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
-                backgroundRepeat: "no-repeat",
-                backgroundAttachment: "fixed",
-                backgroundPosition: "bottom",
-            },
-            bShowModal: false,
-            bShowChat: false,
+            backgroundimg,
+            showFirstStep,
+            showSecondStep,
+            showBillBoardInfo,
+            showActivitiesInfo,
+            bShowChat,
+            isopacity,
+            openLoginDialog,
+            showInfo,
+            showBillBoard,
+            showActivities,
         };
     },
-    methods: {
-        showInfo() {
-            this.showFirstStep = false;
-            this.showSecondStep = true;
-            this.showBillBoardInfo = false;
-            this.showActivitiesInfo = false;
-        },
-        showBillBoard() {
-            this.showSecondStep = false;
-            this.showBillBoardInfo = true;
-            this.showActivitiesInfo = false;
-        },
-        showActivities() {
-            this.showSecondStep = false;
-            this.showBillBoardInfo = false;
-            this.showActivitiesInfo = true;
-        },
-        routeLoginPage() {},
+    components: {
+        TestChat,
     },
 };
 </script>
