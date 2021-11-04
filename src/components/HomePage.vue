@@ -10,17 +10,17 @@
         </div>
         <div class="container">
             <transition name="first-step" mode="out-in">
-                <div class="first-step" @click="showInfo" v-if="showFirstStep">
+                <div class="first-step" @click="showInfo" v-if="showInfoButton.showFirstStep">
                     <img src="../assets/PatyLogo.png" />
                 </div>
-                <div class="second-step" v-else-if="showSecondStep">
+                <div class="second-step" v-else-if="showInfoButton.showSecondStep">
                     <div class="billboard" @click="showBillBoard">公佈欄｜BillBoard</div>
                     <div class="hotActivity" @click="showActivities">活動精選｜Hot Activities</div>
                 </div>
             </transition>
             <transition name="billboard-step">
-                <div class="CardInfo billboard-info" v-if="showBillBoardInfo">
-                    <div class="CardInfo-right CardInfo-right-bill">
+                <div class="CardInfo billboard-info" v-if="showInfoButton.showBillBoardInfo">
+                    <div class="CardInfo-right CardInfo-right-bill" @mouseleave="showInfo">
                         <div class="tag-group tag-group-billboard">
                             <div class="tag tag-billboard">公佈欄｜BillBoard</div>
                         </div>
@@ -28,7 +28,7 @@
                 </div>
             </transition>
             <transition name="hotActivity-step">
-                <div class="CardInfo hotActivity-info" v-if="showActivitiesInfo">
+                <div class="CardInfo hotActivity-info" v-if="showInfoButton.showActivitiesInfo">
                     <div class="CardInfo-right CardInfo-right-hot" @mouseleave="showInfo">
                         <div class="tag-group tag-group-hotActivity">
                             <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
@@ -85,42 +85,41 @@ export default {
                     console.log("Cancel");
                 });
         }
-        const showFirstStep = ref(true);
-        const showSecondStep = ref(false);
-        const showBillBoardInfo = ref(false);
-        const showActivitiesInfo = ref(false);
+        const showInfoButton = ref({
+            showFirstStep: true,
+            showSecondStep: false,
+            showBillBoardInfo: false,
+            showActivitiesInfo: false,
+        });
         const isopacity = ref(true);
         const bShowChat = ref(false);
         const backgroundimg = ref({
-            // backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+            backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
             backgroundRepeat: "no-repeat",
             backgroundAttachment: "fixed",
             backgroundPosition: "bottom",
         });
 
         function showInfo() {
-            showFirstStep.value = false;
-            showSecondStep.value = true;
-            showBillBoardInfo.value = false;
-            showActivitiesInfo.value = false;
+            showInfoButton.value.showFirstStep = false;
+            showInfoButton.value.showSecondStep = true;
+            showInfoButton.value.showBillBoardInfo = false;
+            showInfoButton.value.showActivitiesInfo = false;
         }
         function showBillBoard() {
-            showSecondStep.value = false;
-            showBillBoardInfo.value = true;
-            showActivitiesInfo.value = false;
+            showInfoButton.value.showSecondStep = false;
+            showInfoButton.value.showBillBoardInfo = true;
+            showInfoButton.value.showActivitiesInfo = false;
         }
         function showActivities() {
-            showSecondStep.value = false;
-            showBillBoardInfo.value = false;
-            showActivitiesInfo.value = true;
+            showInfoButton.value.showSecondStep = false;
+            showInfoButton.value.showBillBoardInfo = false;
+            showInfoButton.value.showActivitiesInfo = true;
         }
 
         return {
+            showInfoButton,
             backgroundimg,
-            showFirstStep,
-            showSecondStep,
-            showBillBoardInfo,
-            showActivitiesInfo,
             bShowChat,
             isopacity,
             openLoginDialog,
