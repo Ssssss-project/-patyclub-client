@@ -51,45 +51,30 @@
         }
     }
 
-    .billboardInfo {
+    .CardInfo {
         z-index: 1;
         display: flex;
         height: 90%;
         width: 100%;
-        animation: billboard-animation 1s;
-        .billboardInfo-right {
+        .CardInfo-right {
             width: 70%;
             background-color: $color-light-200;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            .tag {
-                color: $color-light-50;
-                background-color: $color-brown-900;
 
+            .tag-group {
+                height: 37%;
+                width: 50%;
                 display: flex;
-                justify-content: center;
+                flex-direction: row;
                 align-items: center;
-                // transform: rotate(-90deg);
-                writing-mode: vertical-rl;
-                text-orientation: sideways;
-                transform: rotate(-180deg);
-                border-radius: 2px;
             }
-        }
-    }
-    .hotActivityInfo {
-        z-index: 1;
-        display: flex;
-        height: 90%;
-        width: 100%;
-        animation: hotActivityInfo-animation 1s;
-        justify-content: flex-end;
-        .hotActivityInfo-right {
-            width: 70%;
-            background-color: $color-light-200;
-            display: flex;
-            align-items: center;
+            .tag-group-billboard {
+                justify-content: flex-end;
+            }
+            .tag-group-hotActivity {
+                justify-content: flex-start;
+            }
             .tag {
                 color: $color-light-50;
                 background-color: $color-brown-900;
@@ -97,11 +82,18 @@
                 justify-content: center;
                 align-items: center;
                 border-radius: 2px;
-                writing-mode: vertical-rl;
-                text-orientation: sideways;
-                transform: rotate(-180deg);
                 padding: 10px;
                 z-index: 2;
+            }
+            .tag-billboard {
+                writing-mode: vertical-rl;
+                text-orientation: sideways;
+                transform: rotate(-180deg);
+            }
+            .tag-hotActivity {
+                writing-mode: vertical-rl;
+                text-orientation: sideways;
+                transform: rotate(-180deg);
             }
             .information-bg {
                 background-color: $color-light-50;
@@ -145,15 +137,19 @@
                 }
             }
         }
+        .CardInfo-right-bill {
+            justify-content: flex-end;
+        }
+        .CardInfo-right-hot {
+            justify-content: flex-start;
+        }
     }
-
-    .tag-group {
-        height: 37%;
-        width: 50%;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
+    .billboard-info {
+        animation: billboard-animation 1s;
+    }
+    .hotActivity-info {
+        animation: hotActivityInfo-animation 1s;
+        justify-content: flex-end;
     }
 
     .billboard-step-leave-active {

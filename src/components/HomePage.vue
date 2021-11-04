@@ -19,19 +19,19 @@
                 </div>
             </transition>
             <transition name="billboard-step">
-                <div class="billboardInfo" v-if="showBillBoardInfo">
-                    <div class="billboardInfo-right" @mouseleave="showInfo">
-                        <div class="tag-group">
-                            <div class="tag">公佈欄｜BillBoard</div>
+                <div class="CardInfo billboard-info" v-if="showBillBoardInfo">
+                    <div class="CardInfo-right CardInfo-right-bill">
+                        <div class="tag-group tag-group-billboard">
+                            <div class="tag tag-billboard">公佈欄｜BillBoard</div>
                         </div>
                     </div>
                 </div>
             </transition>
             <transition name="hotActivity-step">
-                <div class="hotActivityInfo" v-if="showActivitiesInfo">
-                    <div class="hotActivityInfo-right">
-                        <div class="tag-group">
-                            <div class="tag">活動精選｜Hot Activities</div>
+                <div class="CardInfo hotActivity-info" v-if="showActivitiesInfo">
+                    <div class="CardInfo-right CardInfo-right-hot" @mouseleave="showInfo">
+                        <div class="tag-group tag-group-hotActivity">
+                            <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
                             <div class="information-bg scrollbarCol">
                                 <ul class="timeline">
                                     <li class="event">
