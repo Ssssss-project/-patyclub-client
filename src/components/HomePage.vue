@@ -35,7 +35,7 @@
                             <div class="information-bg scrollbarCol">
                                 <ul class="timeline">
                                     <li class="event">
-                                        <p>Text1</p>
+                                        <p>測試git</p>
                                     </li>
                                     <li class="event">
                                         <p>Text2</p>
