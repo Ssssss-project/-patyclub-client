@@ -2,12 +2,11 @@
 @import "utils/Mixin";
 @import "utils/Variables";
 
-
 // base
 @import "base/Reset";
 @import "base/Base";
 @import "base/Button";
-
+@import "base/Scrollbar";
 
 // page
 @import "page/Home";

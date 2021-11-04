@@ -20,10 +20,9 @@
             </transition>
             <transition name="billboard-step">
                 <div class="billboardInfo" v-if="showBillBoardInfo">
-                    <div class="billboardInfo-right">
+                    <div class="billboardInfo-right" @mouseleave="showInfo">
                         <div class="tag-group">
                             <div class="tag">公佈欄｜BillBoard</div>
-                            <div class="tag" @click="showActivities">活動精選｜Hot Activities</div>
                         </div>
                     </div>
                 </div>
@@ -32,8 +31,27 @@
                 <div class="hotActivityInfo" v-if="showActivitiesInfo">
                     <div class="hotActivityInfo-right">
                         <div class="tag-group">
-                            <div class="tag" @click="showBillBoard">公佈欄｜BillBoard</div>
                             <div class="tag">活動精選｜Hot Activities</div>
+                            <div class="information-bg scrollbarCol">
+                                <ul class="timeline">
+                                    <li class="event">
+                                        <p>Text1</p>
+                                    </li>
+                                    <li class="event">
+                                        <p>Text2</p>
+                                    </li>
+                                    <li class="event">
+                                        <p>Text3</p>
+                                    </li>
+
+                                    <li class="event">
+                                        <p>Text4</p>
+                                    </li>
+                                    <li class="event">
+                                        <p>Text5</p>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -74,7 +92,7 @@ export default {
         const isopacity = ref(true);
         const bShowChat = ref(false);
         const backgroundimg = ref({
-            backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+            // backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
             backgroundRepeat: "no-repeat",
             backgroundAttachment: "fixed",
             backgroundPosition: "bottom",
