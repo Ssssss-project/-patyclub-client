@@ -1,5 +1,5 @@
 <template>
-  <div id="ActivityCreate">
+  <main id="ActivityCreate">
     <div class="mainContainer">
       <q-stepper class="no-shadow" v-model="step" ref="stepper" alternative-labels animated active-color="themeColor" done-color="completed">
         <q-step :name="1" title="活動基本資料" icon="settings" :done="step > 1">
@@ -38,16 +38,16 @@
             <q-btn class="btn-next-step" @click="$refs.stepper.next()" :label="step === 8 ? 'Finish' : 'Continue'" flat></q-btn>
             <q-btn v-if="step > 1" flat @click="$refs.stepper.previous()" label="Back" class="q-ml-sm"></q-btn>
             <br /><br />
-            <q-btn class="btn-next-step" @click="save()">儲存</q-btn>
+            <q-btn class="btn-next-step" @click="save">儲存</q-btn>
           </q-stepper-navigation>
         </template>
 
       </q-stepper>
     </div>
-  </div>
+  </main>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
 import { apiSaveActivityData} from "@/apis/api/userRequest.ts";
 import basicInfo from "@/components/ActivityCreatePage/basicInfo.vue";
@@ -58,37 +58,23 @@ import review from "@/components/ActivityCreatePage/review";
 import reviewPass from "@/components/ActivityCreatePage/reviewPass";
 import release from "@/components/ActivityCreatePage/release";
 
-export default {
-  components: {
-    basicInfo,
-    formDesign,
-    designCompleted,
-    preview,
-    review,
-    reviewPass,
-    release,
-  },
-  setup() {
-    return {
-      step: ref(1),
-      sActivityTitle: ref("")
-    };
-  },
-  methods: {
-    save() {
-      apiSaveActivityData({
-        id: 1,
-        eventIntroduction: this.sActivityTitle,
-      }).then((response) => {
-        if (response.status == 200) {
-          alert("儲存成功");
-        }
-      });
-    },
-    getTitle({event}) {
-      this.sActivityTitle = event;
-      console.log(this.sActivityTitle);
-    },
-  }
-};
+const step = ref(1);
+const sActivityTitle = ref("");
+
+function save() {
+  apiSaveActivityData({
+    id: 1,
+    eventIntroduction: sActivityTitle.value,
+  }).then((response) => {
+    if (response.status == 200) {
+      alert("儲存成功");
+    }
+  });
+}
+
+function getTitle({event}) {
+  sActivityTitle.value = event;
+  console.log(sActivityTitle.value);
+}
+
 </script>

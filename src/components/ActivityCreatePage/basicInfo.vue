@@ -6,21 +6,16 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { ref } from "vue";
-export default {
- setup() {
-    return {
-      eventIntroduction: ref(""),
-    }
-  },
-  methods: {
-    getitle(event){
-      this.$emit('get-title', {
-        event: event
-      })
-    },
-  }
+
+const eventIntroduction = ref("");
+
+function getitle(event){
+  this.$emit('get-title', {
+    event: event
+  })
 }
+
 </script>
 
