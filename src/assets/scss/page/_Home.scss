@@ -86,9 +86,8 @@
                 z-index: 2;
             }
             .tag-billboard {
-                writing-mode: vertical-rl;
+                writing-mode: vertical-lr;
                 text-orientation: sideways;
-                transform: rotate(-180deg);
             }
             .tag-hotActivity {
                 writing-mode: vertical-rl;
