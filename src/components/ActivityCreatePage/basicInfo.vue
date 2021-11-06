@@ -27,7 +27,7 @@
       <div class="column">
         <div class="text-field">其他附件</div>
         <div class="file-field">
-          <q-file bottom-slots v-model="dataField" counter max-files="12" borderless>
+          <q-file multiple append bottom-slots v-model="dataField" counter max-files="12" borderless>
             <template v-slot:append>
               <q-icon v-if="dataField !== null" name="close" @click="dataField = null" class="cursor-pointer" />
               <q-icon name="create_new_folder" @click.stop />
