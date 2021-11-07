@@ -2,9 +2,7 @@
   <div class="basicInfo">
     <div class="page-title">活動基本資料</div>
     <div class="text-title">活動名稱</div>
-    <q-input v-model="eventIntroduction" class="input-title" @update:modelValue="event => getitle(event)"  borderless placeholder="30字以內"/>
-    <div class="text-category">活動類別</div>
-    <q-select class="select-category" v-model="eventCategory" :options="options" borderless/>
+    <q-input v-model="eventTitle" class="input-title" @update:modelValue="event => getitle(event)"  borderless placeholder="30字以內"/>
     <div class="row">
       <div class="column">
         <div class="text-date">活動日期</div>
@@ -37,6 +35,32 @@
         </div>
       </div>
     </div>
+    <div class="text-image">活動圖片</div>
+    <q-uploader class="uploader-image" multiple append url="http://localhost:8080/upload"/>
+    <div class="text-introduction">活動簡介</div>
+    <q-input class="input-introduction" v-model="text" filled type="textarea"/>
+    <div class="row">
+      <div class="column">
+        <div class="text-category">活動類別</div>
+        <q-select class="select-category" v-model="eventCategory" :options="options" borderless/>
+      </div>
+      <div class="column">
+        <div class="text-ageLimit">年齡限制</div>
+        <q-select class="select-ageLimit" v-model="ageLimit" :options="options" borderless/>
+      </div>
+    </div>
+    <div class="row">
+      <div class="column">
+        <div class="text-numberLimit">人數限制</div>
+        <q-input class="input-numberLimit" v-model="numberLimit" borderless/>
+      </div>
+      <div class="column">
+        <div class="text-cost">參與費用</div>
+        <q-input class="input-cost" v-model="cost"  borderless/>
+      </div>
+    </div>
+    <div class="text-addTag">增加標籤</div>
+    <q-input class="input-addTag" v-model="tag"  borderless/>
   </div>
 </template>
 
@@ -44,11 +68,15 @@
 import { ref } from "vue";
 
 // const variable
-const eventIntroduction = ref("");
+const eventTitle = ref("");
 const options = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'];
 const eventCategory = ref("");
 const eventDate = ref("");
 const dataField = ref(null);
+const ageLimit = ref("");
+const numberLimit = ref("");
+const cost = ref("");
+const tag = ref("");
 
 
 // set now date

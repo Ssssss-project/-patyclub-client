@@ -42,7 +42,7 @@
       position: relative;
       width: 150px;
       height: 25px;
-      top: 50px;
+      top: 40px;
       font-size: 9px;
       line-height: 16px;
       color: $color-brown-900;
@@ -55,7 +55,7 @@
   
       .basicInfo{
 
-        height: 1200px;
+        height: 1100px;
 
         .page-title{
           position: relative;
@@ -64,6 +64,7 @@
           line-height: 33px;
           text-align: center;
           color: $color-primary-500;
+          margin-bottom:50px;
         }
   
         .text-title{
@@ -83,13 +84,16 @@
           padding-left: 10px;
           background: $color-light-200;
           border-radius: 5px;
+          .q-field__control{
+            height: 30px;
+          }
         }
 
         .text-date{
           position: relative;
           width: 72px;
           left: 82px;
-          top: 70px;
+          top: 110px;
           font-size: 18px;
           color: $color-brown-900;
         }
@@ -98,16 +102,19 @@
           position: relative;
           width: 240px;
           left: 80px;
-          top: 72px;
+          top: 112px;
           padding-left: 10px;
           background: $color-light-200;
           border-radius: 5px;
+          .q-field__control{
+            height: 30px;
+          }
         }
 
         .text-field{
           position: relative;
           left: -78px;
-          top: 70px;
+          top: 110px;
           font-size: 18px;
           color: $color-brown-900;
         }
@@ -116,7 +123,7 @@
           position: relative;
           width: 450px;
           left: 110px;
-          top: 72px;
+          top: 112px;
           padding: 0px 10px 0px 10px;
           background: $color-light-200;
           border-radius: 5px;
@@ -125,24 +132,145 @@
           } 
         }
 
+        .text-image{
+          position: relative;
+          width: 72px;
+          left: 82px;
+          top: 140px;
+          font-size: 18px;
+          color: $color-brown-900;
+        }
+
+        .uploader-image{
+          position: relative;
+          width: 240px;
+          height: 180px;
+          left: 80px;
+          top: 150px;
+        }
+
+        .text-introduction{
+          position: relative;
+          width: 72px;
+          left: 82px;
+          top: 190px;
+          font-size: 18px;
+          color: $color-brown-900;
+        }
+
+        .input-introduction{
+          position: relative;
+          width: 85%;
+          left: 80px;
+          top: 200px;
+        }
+
         .text-category{
           position: relative;
           width: 72px;
           height: 21px;
           left: 82px;
-          top: 560px;
+          top: 250px;
+          font-size: 18px;
+          color: $color-brown-900;
+        }
+  
+        .select-category{
+          position: relative;
+          width: 320px;
+          left: 80px;
+          top: 260px;
+          padding-left: 10px;
+          background: $color-light-200;
+          border-radius: 5px;
+        }
+
+        .text-ageLimit{
+          position: relative;
+          width: 72px;
+          height: 21px;
+          left: 162px;
+          top: 250px;
+          font-size: 18px;
+          color: $color-brown-900;
+        }
+  
+        .select-ageLimit{
+          position: relative;
+          width: 320px;
+          left: 156px;
+          top: 260px;
+          padding-left: 10px;
+          background: $color-light-200;
+          border-radius: 5px;
+        }
+
+        .text-numberLimit{
+          position: relative;
+          width: 72px;
+          height: 21px;
+          left: 82px;
+          top: 290px;
+          font-size: 18px;
+          color: $color-brown-900;
+        }
+  
+        .input-numberLimit{
+          position: relative;
+          width: 320px;
+          left: 80px;
+          top: 300px;
+          padding-left: 10px;
+          background: $color-light-200;
+          border-radius: 5px;
+          .q-field__control{
+            height: 30px;
+          }
+        }
+
+        .text-cost{
+          position: relative;
+          width: 72px;
+          height: 21px;
+          left: 162px;
+          top: 290px;
+          font-size: 18px;
+          color: $color-brown-900;
+        }
+  
+        .input-cost{
+          position: relative;
+          width: 320px;
+          left: 156px;
+          top: 300px;
+          padding-left: 10px;
+          background: $color-light-200;
+          border-radius: 5px;
+          .q-field__control{
+            height: 30px;
+          }
+        }
+
+        .text-addTag{
+          position: relative;
+          width: 72px;
+          left: 82px;
+          top: 340px;
           font-size: 18px;
           color: $color-brown-900;
         }
 
-        .select-category{
+        .input-addTag{
           position: relative;
-          width: 350px;
-          left: 80px;
-          top: 570px;
+          width: 715px;
+          left: 82px;
+          top: 345px;
           padding-left: 10px;
           background: $color-light-200;
           border-radius: 5px;
+          .q-field__control{
+            height: 30px;
+          }
         }
       }
     }
@@ -174,9 +302,7 @@
     align-content: center;
   }
 
-  .q-field__control{
-    height: 30px;
-  }
+
 
   .q-field__bottom--animated {
     transform: translateY(100%);
@@ -188,6 +314,13 @@
 
   .q-field--with-bottom {
     padding-bottom: 0px;
+  }
+
+  .q-gutter-y-xs, .q-gutter-xs {
+    background: $color-primary-500;
+    border-radius:5px 5px 0px 0px;
+    margin-left: 0px;
+    height: 40px;
   }
 
   .cursor-pointer {
