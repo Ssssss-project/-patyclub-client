@@ -304,7 +304,7 @@ export default {
       bCheckGetEmail.value = false;
     }
 
-    // ajv 驗證
+    // import ajv 驗證
     const Ajv = require("ajv");
     const ajv = new Ajv();
 
@@ -336,8 +336,6 @@ export default {
     }
 
     return {
-      emailValidateHandler,
-      passowrdValidateHandler,
       // dialog require
       dialogRef,
       onDialogHide,
@@ -374,6 +372,10 @@ export default {
       registerSubmit,
       resetLoginData,
       resetRegisterData,
+
+      // validate functions
+      emailValidateHandler,
+      passowrdValidateHandler,
     };
   },
 };
