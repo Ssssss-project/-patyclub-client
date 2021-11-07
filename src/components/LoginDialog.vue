@@ -109,7 +109,11 @@
               :type="bRegisterIsPwd ? 'password' : 'text'"
               label="輸入密碼"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '請輸入密碼']"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0 && passowrdValidateHandler()) ||
+                  '請輸入密碼',
+              ]"
               ><template v-slot:append>
                 <q-icon
                   :name="bRegisterIsPwd ? 'visibility_off' : 'visibility'"
@@ -144,7 +148,11 @@
               hide-bottom-space
               v-model="sRegisterEmail"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '請輸入信箱']"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0 && emailValidateHandler()) ||
+                  '請輸入正確信箱',
+              ]"
             />
           </q-card-section>
           <q-card-section align="left">
@@ -296,7 +304,40 @@ export default {
       bCheckGetEmail.value = false;
     }
 
+    // ajv 驗證
+    const Ajv = require("ajv");
+    const ajv = new Ajv();
+
+    // 定義ajv schema
+    const passwordSchema = {
+      type: "string",
+      pattern: "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$",
+    };
+
+    const emailSchema = {
+      type: "string",
+      format: "email",
+    };
+
+    // 編譯schema
+    const passwordValidate = ajv.compile(passwordSchema);
+    const emailValidate = ajv.compile(emailSchema);
+
+    function passowrdValidateHandler() {
+      const valid = passwordValidate(sRegisterPassword.value);
+      if (!valid) console.log(passwordValidate.errors);
+      return valid;
+    }
+
+    function emailValidateHandler() {
+      const valid = emailValidate(sRegisterEmail.value);
+      if (!valid) console.log(emailValidate.errors);
+      return valid;
+    }
+
     return {
+      emailValidateHandler,
+      passowrdValidateHandler,
       // dialog require
       dialogRef,
       onDialogHide,

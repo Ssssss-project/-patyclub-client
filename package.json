@@ -10,6 +10,7 @@
   "dependencies": {
     "@aspnet/signalr": "^1.0.27",
     "@quasar/extras": "^1.0.0",
+    "ajv": "^6.12.6",
     "axios": "^0.21.3",
     "core-js": "^3.6.5",
     "quasar": "^2.0.0",
