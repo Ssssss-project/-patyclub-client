@@ -11,3 +11,6 @@ export const apiGetAllUser = () => request("get", "/GetEntityList/getAllUser");
 
 // 取得活躍使用者
 export const apiGetActiveUser = () => request("get", "/GetEntityList/getActiveUser");
+
+//取得活動資訊
+export const apiGetActivity = () => request("get","/GetEntityList/getSpecialEvent");

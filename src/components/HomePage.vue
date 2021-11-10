@@ -84,6 +84,21 @@
                   <li class="event">
                     <p>Text5</p>
                   </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -108,6 +123,7 @@ import LoginDialog from "./LoginDialog.vue";
 import TestChat from "./TestChat.vue";
 import { useQuasar } from "quasar";
 import { ref } from "vue";
+import { apiGetActivity } from "@/apis/api/userRequest.ts";
 export default {
   setup() {
     const $q = useQuasar();
@@ -155,6 +171,9 @@ export default {
       showInfoButton.value.showSecondStep = false;
       showInfoButton.value.showBillBoardInfo = false;
       showInfoButton.value.showActivitiesInfo = true;
+      apiGetActivity().then((response) => {
+        console.log(response.data.data);
+      });
     }
 
     return {
