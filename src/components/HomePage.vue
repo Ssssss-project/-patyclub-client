@@ -1,66 +1,121 @@
 <template>
-    <main id="Home">
-        <div class="main-bar">
-            <button class="btns" @click="bShowChat = true">測試聊天室</button>
-            <button class="btns">所有活動</button>
-            <router-link :to="`/activityCreate`">
-                <button class="btns">創建活動</button>
-            </router-link>
-            <button class="btns" @click="openLoginDialog">登入</button>
+  <main id="Home">
+    <div class="main-bar">
+      <button
+        class="btns"
+        @click="bShowChat = true"
+      >測試聊天室</button>
+      <button class="btns">所有活動</button>
+      <router-link :to="`/activityCreate`">
+        <button class="btns">創建活動</button>
+      </router-link>
+      <button
+        class="btns"
+        @click="openLoginDialog"
+      >登入</button>
+    </div>
+    <div class="container">
+      <transition
+        name="first-step"
+        mode="out-in"
+      >
+        <div
+          class="first-step"
+          @click="showInfo"
+          v-if="showInfoButton.showFirstStep"
+        >
+          <img src="../assets/PatyLogo.png" />
         </div>
-        <div class="container">
-            <transition name="first-step" mode="out-in">
-                <div class="first-step" @click="showInfo" v-if="showInfoButton.showFirstStep">
-                    <img src="../assets/PatyLogo.png" />
-                </div>
-                <div class="second-step" v-else-if="showInfoButton.showSecondStep">
-                    <div class="billboard" @click="showBillBoard">公佈欄｜BillBoard</div>
-                    <div class="hotActivity" @click="showActivities">活動精選｜Hot Activities</div>
-                </div>
-            </transition>
-            <transition name="billboard-step">
-                <div class="CardInfo billboard-info" v-if="showInfoButton.showBillBoardInfo">
-                    <div class="CardInfo-right CardInfo-right-bill" @mouseleave="showInfo">
-                        <div class="tag-group tag-group-billboard">
-                            <div class="tag tag-billboard">公佈欄｜BillBoard</div>
-                        </div>
-                    </div>
-                </div>
-            </transition>
-            <transition name="hotActivity-step">
-                <div class="CardInfo hotActivity-info" v-if="showInfoButton.showActivitiesInfo">
-                    <div class="CardInfo-right CardInfo-right-hot" @mouseleave="showInfo">
-                        <div class="tag-group tag-group-hotActivity">
-                            <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
-                            <div class="information-bg scrollbarCol">
-                                <ul class="timeline">
-                                    <li class="event">
-                                        <p>測試git</p>
-                                    </li>
-                                    <li class="event">
-                                        <p>Text2</p>
-                                    </li>
-                                    <li class="event">
-                                        <p>Text3</p>
-                                    </li>
-
-                                    <li class="event">
-                                        <p>Text4</p>
-                                    </li>
-                                    <li class="event">
-                                        <p>Text5</p>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </transition>
+        <div
+          class="second-step"
+          v-else-if="showInfoButton.showSecondStep"
+        >
+          <div
+            class="billboard"
+            @click="showBillBoard"
+          >公佈欄｜BillBoard</div>
+          <div
+            class="hotActivity"
+            @click="showActivities"
+          >活動精選｜Hot Activities</div>
         </div>
-        <div class="bg-image opacity-set" :style="backgroundimg"></div>
+      </transition>
+      <transition name="billboard-step">
+        <div
+          class="CardInfo billboard-info"
+          v-if="showInfoButton.showBillBoardInfo"
+        >
+          <div
+            class="CardInfo-right CardInfo-right-bill"
+            @mouseleave="showInfo"
+          >
+            <div class="tag-group tag-group-billboard">
+              <div class="tag tag-billboard">公佈欄｜BillBoard</div>
+            </div>
+          </div>
+        </div>
+      </transition>
+      <transition name="hotActivity-step">
+        <div
+          class="CardInfo hotActivity-info"
+          v-if="showInfoButton.showActivitiesInfo"
+        >
+          <div
+            class="CardInfo-right CardInfo-right-hot"
+            @mouseleave="showInfo"
+          >
+            <div class="tag-group tag-group-hotActivity">
+              <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
+              <div class="information-bg scrollbarCol">
+                <ul class="timeline">
+                  <li class="event">
+                    <p>測試git</p>
+                  </li>
+                  <li class="event">
+                    <p>Text22222</p>
+                  </li>
+                  <li class="event">
+                    <p>Text3</p>
+                  </li>
 
-        <TestChat :openModal="bShowChat" @close-modal="bShowChat = false" />
-    </main>
+                  <li class="event">
+                    <p>Text4</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                  <li class="event">
+                    <p>Text5</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
+    <div
+      class="bg-image opacity-set"
+      :style="backgroundimg"
+    ></div>
+
+    <TestChat
+      :openModal="bShowChat"
+      @close-modal="bShowChat = false"
+    />
+  </main>
 </template>
 
 <script>
@@ -68,68 +123,72 @@ import LoginDialog from "./LoginDialog.vue";
 import TestChat from "./TestChat.vue";
 import { useQuasar } from "quasar";
 import { ref } from "vue";
+import { apiGetActivity } from "@/apis/api/userRequest.ts";
 export default {
-    setup() {
-        const $q = useQuasar();
-        function openLoginDialog() {
-            $q.dialog({
-                component: LoginDialog,
-                // componentProps: {
-                //   message: "something",
-                // },
-            })
-                .onOk(() => {
-                    console.log("OK");
-                })
-                .onCancel(() => {
-                    console.log("Cancel");
-                });
-        }
-        const showInfoButton = ref({
-            showFirstStep: true,
-            showSecondStep: false,
-            showBillBoardInfo: false,
-            showActivitiesInfo: false,
+  setup() {
+    const $q = useQuasar();
+    function openLoginDialog() {
+      $q.dialog({
+        component: LoginDialog,
+        // componentProps: {
+        //   message: "something",
+        // },
+      })
+        .onOk(() => {
+          console.log("OK");
+        })
+        .onCancel(() => {
+          console.log("Cancel");
         });
-        const isopacity = ref(true);
-        const bShowChat = ref(false);
-        const backgroundimg = ref({
-            backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
-            backgroundRepeat: "no-repeat",
-            backgroundAttachment: "fixed",
-            backgroundPosition: "bottom",
-        });
+    }
+    const showInfoButton = ref({
+      showFirstStep: true,
+      showSecondStep: false,
+      showBillBoardInfo: false,
+      showActivitiesInfo: false,
+    });
+    const isopacity = ref(true);
+    const bShowChat = ref(false);
+    const backgroundimg = ref({
+      backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+      backgroundRepeat: "no-repeat",
+      backgroundAttachment: "fixed",
+      backgroundPosition: "bottom",
+    });
 
-        function showInfo() {
-            showInfoButton.value.showFirstStep = false;
-            showInfoButton.value.showSecondStep = true;
-            showInfoButton.value.showBillBoardInfo = false;
-            showInfoButton.value.showActivitiesInfo = false;
-        }
-        function showBillBoard() {
-            showInfoButton.value.showSecondStep = false;
-            showInfoButton.value.showBillBoardInfo = true;
-            showInfoButton.value.showActivitiesInfo = false;
-        }
-        function showActivities() {
-            showInfoButton.value.showSecondStep = false;
-            showInfoButton.value.showBillBoardInfo = false;
-            showInfoButton.value.showActivitiesInfo = true;
-        }
+    function showInfo() {
+      showInfoButton.value.showFirstStep = false;
+      showInfoButton.value.showSecondStep = true;
+      showInfoButton.value.showBillBoardInfo = false;
+      showInfoButton.value.showActivitiesInfo = false;
+    }
+    function showBillBoard() {
+      showInfoButton.value.showSecondStep = false;
+      showInfoButton.value.showBillBoardInfo = true;
+      showInfoButton.value.showActivitiesInfo = false;
+    }
+    function showActivities() {
+      showInfoButton.value.showSecondStep = false;
+      showInfoButton.value.showBillBoardInfo = false;
+      showInfoButton.value.showActivitiesInfo = true;
+      apiGetActivity().then((response) => {
+        console.log(response.data.data);
+      });
+    }
 
-        return {
-            showInfoButton,
-            backgroundimg,
-            bShowChat,
-            isopacity,
-            openLoginDialog,
-            showInfo,
-            showBillBoard,
-            showActivities,
-        };
-    },
-    components: {
-        TestChat,
-    },
+    return {
+      showInfoButton,
+      backgroundimg,
+      bShowChat,
+      isopacity,
+      openLoginDialog,
+      showInfo,
+      showBillBoard,
+      showActivities,
+    };
+  },
+  components: {
+    TestChat,
+  },
 };
 </script>
