@@ -68,37 +68,9 @@
               <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
               <div class="information-bg scrollbarCol">
                 <ul class="timeline">
-                  <li class="event">
-                    <p>測試git</p>
-                  </li>
-                  <li class="event">
-                    <p>Text22222</p>
-                  </li>
-                  <li class="event">
-                    <p>Text3</p>
-                  </li>
-
-                  <li class="event">
-                    <p>Text4</p>
-                  </li>
-                  <li class="event">
-                    <p>Text5</p>
-                  </li>
-                  <li class="event">
-                    <p>Text5</p>
-                  </li>
-                  <li class="event">
-                    <p>Text5</p>
-                  </li>
-                  <li class="event">
-                    <p>Text5</p>
-                  </li>
-                  <li class="event">
-                    <p>Text5</p>
-                  </li>
-                  <li class="event">
-                    <p>Text5</p>
-                  </li>
+                   <li class="event" v-for="i in allActivity" :key="i">
+                      <p>{{ i.eventTitle }}</p>
+                    </li>
                 </ul>
               </div>
             </div>
@@ -141,6 +113,7 @@ export default {
           console.log("Cancel");
         });
     }
+    const allActivity = ref([])
     const showInfoButton = ref({
       showFirstStep: true,
       showSecondStep: false,
@@ -172,7 +145,7 @@ export default {
       showInfoButton.value.showBillBoardInfo = false;
       showInfoButton.value.showActivitiesInfo = true;
       apiGetActivity().then((response) => {
-        console.log(response.data.data);
+        allActivity.value = response.data.data;
       });
     }
 
@@ -181,6 +154,7 @@ export default {
       backgroundimg,
       bShowChat,
       isopacity,
+      allActivity,
       openLoginDialog,
       showInfo,
       showBillBoard,
