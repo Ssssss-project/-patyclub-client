@@ -34,21 +34,8 @@
                             <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
                             <div class="information-bg scrollbarCol">
                                 <ul class="timeline">
-                                    <li class="event">
-                                        <p>測試git</p>
-                                    </li>
-                                    <li class="event">
-                                        <p>Text2</p>
-                                    </li>
-                                    <li class="event">
-                                        <p>Text3</p>
-                                    </li>
-
-                                    <li class="event">
-                                        <p>Text4</p>
-                                    </li>
-                                    <li class="event">
-                                        <p>Text5</p>
+                                    <li class="event" v-for="i in allActivity" :key="i">
+                                        <p>{{ i.eventTitle }}</p>
                                     </li>
                                 </ul>
                             </div>
@@ -64,6 +51,8 @@
 </template>
 
 <script>
+import { apiGetActive } from "@/apis/api/userRequest.ts";
+
 import LoginDialog from "./LoginDialog.vue";
 import TestChat from "./TestChat.vue";
 import { useQuasar } from "quasar";
@@ -91,6 +80,7 @@ export default {
             showBillBoardInfo: false,
             showActivitiesInfo: false,
         });
+        const allActivity = ref([]);
         const isopacity = ref(true);
         const bShowChat = ref(false);
         const backgroundimg = ref({
@@ -115,13 +105,20 @@ export default {
             showInfoButton.value.showSecondStep = false;
             showInfoButton.value.showBillBoardInfo = false;
             showInfoButton.value.showActivitiesInfo = true;
+            apiGetActive().then((response) => {
+                if (response.status == 200) {
+                    allActivity.value = response.data.data;
+                }
+            });
+            console.log(allActivity.value.length);
+            allActivity.value.map((item) => console.log(item));
         }
-
         return {
             showInfoButton,
             backgroundimg,
             bShowChat,
             isopacity,
+            allActivity,
             openLoginDialog,
             showInfo,
             showBillBoard,
