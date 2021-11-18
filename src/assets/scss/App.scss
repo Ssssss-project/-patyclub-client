@@ -8,7 +8,11 @@
 @import "base/Button";
 @import "base/Scrollbar";
 
+// components
+@import "components/Head";
+
 // page
 @import "page/Home";
 @import "page/LoginDialog";
 @import "page/ActivityCreate";
+@import "page/ActivityView";

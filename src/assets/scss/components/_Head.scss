@@ -1,0 +1,18 @@
+#Head {
+  position: inherit;
+  width: 100%;
+  background-color: $color-light-200;
+  height: 50px;
+  text-align: right;
+
+  .btns {
+    height: 50px;
+    width: 100px;
+    background-color: $color-light-200;
+    border-color: $color-light-200;
+    border-style: none;
+  }
+  .btns:hover {
+    background-color: $color-primary-300;
+  }
+}
