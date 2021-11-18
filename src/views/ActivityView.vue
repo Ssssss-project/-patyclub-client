@@ -2,7 +2,9 @@
     <main id="ActivityView">
         <Head />
         <div class="container">
-            <CardList />
+            <div class="card-list">
+                <card-list />
+            </div>
         </div>
     </main>
 </template>
