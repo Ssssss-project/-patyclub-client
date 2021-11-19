@@ -1,14 +1,34 @@
 #ActivityView {
+    .container {
+        height: calc(100vh - 50px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .activity-main {
+        display: flex;
+        height: 100%;
+    }
+    .event-category {
+        width: 20%;
+        max-height: 80%;
+        .q-tree__node {
+            background-color: $color-primary-300;
+        }
+    }
     .card-list {
-        width: 70%;
+        width: 78%;
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
+        max-height: 80%;
+        overflow-y: auto;
     }
 
     .my-card {
         width: 100%;
         max-width: 250px;
+        max-height: 400px;
         margin: 10px;
     }
     .absolute {
