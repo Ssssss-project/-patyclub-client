@@ -1,5 +1,5 @@
 <template>
-    <q-card class="my-card" v-for="(data, idx) in Activity" :key="idx">
+    <q-card v-ripple class="my-card cursor-pointer q-hoverable" v-for="(data, idx) in Activity" :key="idx">
         <img :src="data.image" />
         <div color="primary" class="absolute">
             <span>{{ data.Time }}</span>
