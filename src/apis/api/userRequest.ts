@@ -1,4 +1,7 @@
+import axios from "axios";
 import request from "../https";
+
+const URL = "https://localhost:5001/api";
 
 // 註冊
 export const apiPostRegister = (params: any) => request("post", "/Register", params);
@@ -13,4 +16,16 @@ export const apiGetAllUser = () => request("get", "/GetEntityList/getAllUser");
 export const apiGetActiveUser = () => request("get", "/GetEntityList/getActiveUser");
 
 //取得活動資訊
-export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
+// export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
+
+//api get function writing
+export async function apiGetActivity() {
+    const res = await axios({
+        headers: {
+            "Content-Type": "application/json;",
+        },
+        method: "GET",
+        url: `${URL}/Event/getSpecialEvent`,
+    });
+    return res.data;
+}

@@ -110,8 +110,8 @@ export default {
       showInfoButton.value.showBillBoardInfo = false;
       showInfoButton.value.showActivitiesInfo = true;
       apiGetActivity().then((response) => {
-        allActivity.value = response.data.data;
-        ActivityInformation.value = response.data.data[0].eventTitle;
+        allActivity.value = response.data;
+        ActivityInformation.value = response.data[0].eventTitle;
       });
     }
 
