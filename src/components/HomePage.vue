@@ -87,7 +87,6 @@
 
   </main>
 </template>
-
 <script>
 import Head from "./Head.vue";
 import LoginDialog from "./LoginDialog.vue";
@@ -121,7 +120,7 @@ export default {
       showActivitiesInfo: false,
     });
     const isopacity = ref(true);
-    const bShowChat = ref(false);
+
     const backgroundimg = ref({
       backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
       backgroundRepeat: "no-repeat",
@@ -153,7 +152,6 @@ export default {
     return {
       showInfoButton,
       backgroundimg,
-      bShowChat,
       isopacity,
       allActivity,
       ActivityInformation,
