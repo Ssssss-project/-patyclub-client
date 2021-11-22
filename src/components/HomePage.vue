@@ -1,21 +1,44 @@
 <template>
   <main id="Home">
+
     <Head />
     <div class="container">
-      <transition name="first-step" mode="out-in">
-        <div class="first-step" @click="showInfo" v-if="showInfoButton.showFirstStep">
+      <transition
+        name="first-step"
+        mode="out-in"
+      >
+        <div
+          class="first-step"
+          @click="showInfo"
+          v-if="showInfoButton.showFirstStep"
+        >
           <img src="../assets/PatyLogo.png" />
         </div>
-        <div class="second-step" v-else-if="showInfoButton.showSecondStep">
-          <div class="billboard" @click="showBillBoard">公佈欄｜BillBoard</div>
-          <div class="hotActivity" @click="showActivities">
+        <div
+          class="second-step"
+          v-else-if="showInfoButton.showSecondStep"
+        >
+          <div
+            class="billboard"
+            @click="showBillBoard"
+          >公佈欄｜BillBoard</div>
+          <div
+            class="hotActivity"
+            @click="showActivities"
+          >
             活動精選｜Hot Activities
           </div>
         </div>
       </transition>
       <transition name="billboard-step">
-        <div class="CardInfo billboard-info" v-if="showInfoButton.showBillBoardInfo">
-          <div class="CardInfo-right CardInfo-right-bill" @mouseleave="showInfo">
+        <div
+          class="CardInfo billboard-info"
+          v-if="showInfoButton.showBillBoardInfo"
+        >
+          <div
+            class="CardInfo-right CardInfo-right-bill"
+            @mouseleave="showInfo"
+          >
             <div class="tag-group tag-group-billboard">
               <div class="tag tag-billboard">公佈欄｜BillBoard</div>
             </div>
@@ -23,14 +46,25 @@
         </div>
       </transition>
       <transition name="hotActivity-step">
-        <div class="CardInfo hotActivity-info" v-if="showInfoButton.showActivitiesInfo">
-          <div class="CardInfo-right CardInfo-right-hot" @mouseleave="showInfo">
+        <div
+          class="CardInfo hotActivity-info"
+          v-if="showInfoButton.showActivitiesInfo"
+        >
+          <div
+            class="CardInfo-right CardInfo-right-hot"
+            @mouseleave="showInfo"
+          >
             <div class="tag-group tag-group-hotActivity">
               <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
               <div class="information-bg">
                 <div class="information-list scrollbarCol">
                   <ul class="timeline">
-                    <li @mouseover="ActivityInformation = i.eventTitle" class="event" v-for="i in allActivity" :key="i">
+                    <li
+                      @mouseover="ActivityInformation = i.eventTitle"
+                      class="event"
+                      v-for="i in allActivity"
+                      :key="i"
+                    >
                       <p>{{ i.eventTitle }}</p>
                     </li>
                   </ul>
@@ -46,16 +80,17 @@
         </div>
       </transition>
     </div>
-    <div class="bg-image opacity-set" :style="backgroundimg"></div>
+    <div
+      class="bg-image opacity-set"
+      :style="backgroundimg"
+    ></div>
 
-    <TestChat :openModal="bShowChat" @close-modal="bShowChat = false" />
   </main>
 </template>
 
 <script>
 import Head from "./Head.vue";
 import LoginDialog from "./LoginDialog.vue";
-import TestChat from "./TestChat.vue";
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import { apiGetActivity } from "@/apis/api/userRequest.ts";
@@ -129,7 +164,6 @@ export default {
     };
   },
   components: {
-    TestChat,
     Head,
   },
 };
