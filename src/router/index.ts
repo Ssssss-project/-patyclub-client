@@ -7,6 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/Home.vue"),
   },
   {
+
     path: "/activityCreate",
     name: "activityCreate",
     component: () => import("../views/ActivityCreate.vue"),
@@ -16,6 +17,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "activityView",
     component: () => import("../views/ActivityView.vue"),
   },
+  {
+    path: '/user/resetPassword/:token',
+    name: 'resetPassword',
+    component: () => import('../views/ResetPassword.vue')
+  }
 ];
 
 const router = createRouter({

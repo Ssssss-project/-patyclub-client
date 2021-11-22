@@ -44,7 +44,12 @@
           </q-input>
 
           <q-card-section align="right" class="forget">
-            <a class="forgetText" href="">忘記密碼了, 995 QwQ</a>
+            <q-btn
+              flat
+              class="btn-forget"
+              label="忘記密碼了, 995 QwQ"
+              @click="forgetPwdDialog = true"
+            />
           </q-card-section>
 
           <q-card-section align="center">
@@ -109,7 +114,11 @@
               :type="bRegisterIsPwd ? 'password' : 'text'"
               label="輸入密碼"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '請輸入密碼']"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0 && passowrdValidateHandler()) ||
+                  '請輸入密碼',
+              ]"
               ><template v-slot:append>
                 <q-icon
                   :name="bRegisterIsPwd ? 'visibility_off' : 'visibility'"
@@ -144,7 +153,11 @@
               hide-bottom-space
               v-model="sRegisterEmail"
               lazy-rules
-              :rules="[(val) => (val && val.length > 0) || '請輸入信箱']"
+              :rules="[
+                (val) =>
+                  (val && val.length > 0 && emailValidateHandler(val)) ||
+                  '請輸入正確信箱',
+              ]"
             />
           </q-card-section>
           <q-card-section align="left">
@@ -181,10 +194,59 @@
       </q-card-section>
     </q-card>
   </q-dialog>
+  <!-- forget pwd and sent email-->
+  <q-dialog
+    id="ForgetPwdDialog"
+    v-model="forgetPwdDialog"
+    transition-show="scale"
+    transition-hide="scale"
+  >
+    <q-card style="width: 300px">
+      <q-card-section class="row items-center">
+        <div class="text-h6">重設密碼</div>
+        <q-space />
+        <q-btn
+          icon="close"
+          flat
+          round
+          dense
+          v-close-popup
+          @click="resetPwsData()"
+        />
+      </q-card-section>
+      <q-card-section>
+        <label class="emailText">請填寫信箱</label>
+        <q-input
+          ref="SendEmailRef"
+          outlined
+          v-model="sSendEmail"
+          color="orange"
+          hide-bottom-space
+          :rules="[
+            (val) =>
+              (val && val.length > 0 && emailValidateHandler(val)) ||
+              '請輸入正確信箱',
+          ]"
+        >
+          <template v-slot:prepend>
+            <q-icon name="email" />
+          </template>
+        </q-input>
+      </q-card-section>
+
+      <q-card-actions align="center">
+        <q-btn flat label="送出" class="btn_submit" @click="sentEmailForReset()" />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
-import { apiGetLoginResult, apiPostRegister } from "@/apis/api/userRequest.ts";
+import {
+  apiPostLoginResult,
+  apiPostRegister,
+  apiPostForgetPwd,
+} from "@/apis/api/userRequest.ts";
 import { useDialogPluginComponent, useQuasar } from "quasar";
 import { ref } from "vue";
 
@@ -208,7 +270,7 @@ export default {
     const LoginPasswordRef = ref(null);
 
     const bLoginIsPwd = ref(true);
-    
+
     // register value
     const sRegisterAccount = ref("");
     const RegisterAccountRef = ref(null);
@@ -227,8 +289,13 @@ export default {
 
     const bRegisterIsPwd = ref(true);
 
+    // send email
+    const forgetPwdDialog = ref(false);
+    const sSendEmail = ref("");
+    const SendEmailRef = ref(null);
+
     function loginSubmit() {
-      apiGetLoginResult({
+      apiPostLoginResult({
         account: sLoginAccount.value,
         password: sLoginPassword.value,
       }).then((response) => {
@@ -271,6 +338,27 @@ export default {
       }
     }
 
+    function sentEmailForReset() {
+      apiPostForgetPwd( {email:sSendEmail.value} ).then((response) => {
+        if (response.status == 200) {
+          $q.notify({
+            icon: "done",
+            color: "positive",
+            message: "信件發送成功，請至信箱接收",
+          });
+          resetPwsData();
+          forgetPwdDialog.value = false;
+        } else {
+          $q.notify({
+            color: "red-5",
+            textColor: "white",
+            icon: "warning",
+            message: "信件不存在，請確認信箱",
+          });
+        }
+      });
+    }
+
     function resetLoginData() {
       sLoginAccount.value = null;
       LoginAccountRef.value.resetValidation();
@@ -294,6 +382,42 @@ export default {
 
       bCheckPrivacy.value = false;
       bCheckGetEmail.value = false;
+    }
+
+    function resetPwsData() {
+      sSendEmail.value = null;
+      SendEmailRef.value.resetValidation();
+    }
+
+    // import ajv 驗證
+    const Ajv = require("ajv");
+    const ajv = new Ajv();
+
+    // 定義ajv schema
+    const passwordSchema = {
+      type: "string",
+      pattern: "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$",
+    };
+
+    const emailSchema = {
+      type: "string",
+      format: "email",
+    };
+
+    // 編譯schema
+    const passwordValidate = ajv.compile(passwordSchema);
+    const emailValidate = ajv.compile(emailSchema);
+
+    function passowrdValidateHandler() {
+      const valid = passwordValidate(sRegisterPassword.value);
+      if (!valid) console.log(passwordValidate.errors);
+      return valid;
+    }
+
+    function emailValidateHandler(value) {
+      const valid = emailValidate(value);
+      if (!valid) console.log(emailValidate.errors);
+      return valid;
     }
 
     return {
@@ -333,6 +457,17 @@ export default {
       registerSubmit,
       resetLoginData,
       resetRegisterData,
+
+      // validate functions
+      emailValidateHandler,
+      passowrdValidateHandler,
+
+      // forget pwd dialog
+      forgetPwdDialog,
+      sSendEmail,
+      SendEmailRef,
+      resetPwsData,
+      sentEmailForReset,
     };
   },
 };

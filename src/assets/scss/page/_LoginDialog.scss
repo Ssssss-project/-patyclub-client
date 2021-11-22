@@ -7,9 +7,14 @@
     width: 278px;
     padding: 0;
   }
-  .forgetText {
-    color: $color-primary-500;
+  .btn-forget {
+    color: $color-primary-300;
+    background-color: transparent;
     font-size: 10px;
+    &:hover {
+      color: $color-primary-300;
+      background-color: transparent;
+    }
   }
 
   .btn-login {
@@ -102,8 +107,37 @@
       background: $color-primary-500;
     }
   }
+
   .NoPaddingTopBottom {
     padding-top: 0;
     padding-bottom: 0;
+  }
+}
+
+#ForgetPwdDialog{
+  .btn_close {
+    font-size: 15px;
+    background-color: transparent;
+    padding-bottom: 0;
+  }
+
+  .btn_submit{
+    width: 100%;
+    font-size: 15px;
+    background-color: $color-primary-300;
+    &:disabled {
+      background-color:transparent;
+      border-style: solid;
+      border-width: 1px;
+    }
+  }
+
+  .resetText {
+    font-size: 15px;
+    font-family: "PingFang TC", 微軟正黑體, sans-serif;
+  }
+
+  .emailText {
+    font-weight: bold;
   }
 }
