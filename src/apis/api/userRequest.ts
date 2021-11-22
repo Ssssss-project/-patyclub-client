@@ -16,16 +16,4 @@ export const apiGetAllUser = () => request("get", "/GetEntityList/getAllUser");
 export const apiGetActiveUser = () => request("get", "/GetEntityList/getActiveUser");
 
 //取得活動資訊
-// export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
-
-//api get function writing
-export async function apiGetActivity() {
-    const res = await axios({
-        headers: {
-            "Content-Type": "application/json;",
-        },
-        method: "GET",
-        url: `${URL}/Event/getSpecialEvent`,
-    });
-    return res.data;
-}
+export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");

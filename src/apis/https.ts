@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { Method } from "axios";
 import { alertMsg } from "./utils";
 
 /**
@@ -64,17 +64,19 @@ instance.interceptors.response.use(
   }
 );
 
-export default function(method: string, url: string, data: any = null) {
-  method = method.toLowerCase();
-  if (method == "post") {
-    return instance.post(url, data);
-  } else if (method == "get") {
-    return instance.get(url, { params: data });
-  } else if (method == "delete") {
-    return instance.delete(url, { params: data });
-  } else if (method == "put") {
-    return instance.put(url, data);
-  } else {
-    console.log("未知method : " + method);
-  }
+const URL = "https://localhost:5001/api";
+
+export default async function(method: Method, url: string, data: any = null,token:string="") {
+  const sMethod = method.toLowerCase();
+  const requestOption = sMethod=="get"||sMethod=="delete"?{params:{data}}:{data}
+  const res =await axios({
+    headers: {
+        "Content-Type": "application/json;",
+        "Authoriztion":token,
+    },
+    method,
+    url: `${URL}${url}`,
+    ...requestOption
+  });
+  return res.data;
 }
