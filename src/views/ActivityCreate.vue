@@ -39,7 +39,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { apiSaveEventData } from "@/apis/api/eventRequest.ts";
+// import { apiSaveEventData } from "@/apis/api/eventRequest.ts";
 import basicInfo from "@/components/ActivityCreatePage/basicInfo.vue";
 import formDesign from "@/components/ActivityCreatePage/formDesign.vue";
 import preview from "@/components/ActivityCreatePage/preview";
@@ -50,11 +50,11 @@ let allChildPara = {};
 
 
 function save() {
-  apiSaveEventData(allChildPara.basicInfo).then((response) => {
-    if (response.status == 200) {
-      alert("儲存成功");
-    }
-  });
+  // apiSaveEventData(allChildPara.basicInfo).then((response) => {
+  //   if (response.status == 200) {
+  //     alert("儲存成功");
+  //   }
+  // });
 }
 
 // 取得子元件emit
