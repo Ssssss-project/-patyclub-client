@@ -51,7 +51,8 @@
     .childComponent{
 
       position: relative;
-      height: 600px;
+      height: 800px;
+      width: 100%;
   
       .basicInfo{
 
@@ -294,15 +295,13 @@
   .q-select__dropdown-icon {
     color: $color-light-200;
     background: $color-primary-500;
-    transition: transform 0s;
+    transition: transform 0.2s;
     border-radius: 5px;
     height: 100%;
     width: 30px;
     padding-top: 0px;
     align-content: center;
   }
-
-
 
   .q-field__bottom--animated {
     transform: translateY(100%);
@@ -326,4 +325,9 @@
   .cursor-pointer {
     color: $color-primary-500;
   }
+
+  .q-stepper--horizontal .q-stepper__step-inner {
+    padding: 24px;
+    width: 1000px;
+}
 }

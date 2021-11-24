@@ -2,16 +2,16 @@
   <div class="basicInfo">
     <div class="page-title">活動基本資料</div>
     <div class="text-title">活動名稱</div>
-    <q-input v-model="eventTitle" class="input-title" @update:modelValue="event => getitle(event)"  borderless placeholder="30字以內"/>
+    <q-input v-model="eventTitle" class="input-title" @update:modelValue="event => getPara('eventTitle',event)"  borderless placeholder="30字以內"/>
     <div class="row">
       <div class="column">
         <div class="text-date">活動日期</div>
         <div class="select-date">
-          <q-input v-model="eventDate" borderless>
+          <q-input v-model="eventStDate" @update:modelValue="event => getPara('eventStDate',event)"  borderless>
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy ref="qDateProxy" transition-show="scale" transition-hide="scale">
-                  <q-date v-model="eventDate" color="yellow-9">
+                  <q-date v-model="eventStDate" @update:modelValue="event => getPara('eventStDate',event)" color="yellow-9">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="#deb06b" flat />
                     </div>
@@ -36,9 +36,9 @@
       </div>
     </div>
     <div class="text-image">活動圖片</div>
-    <q-uploader class="uploader-image" multiple append url="http://localhost:8080/upload"/>
+    <q-uploader class="uploader-image" multiple append url="https://localhost:5001/api/Event/createEvent"/>
     <div class="text-introduction">活動簡介</div>
-    <q-input class="input-introduction" v-model="text" filled type="textarea"/>
+    <q-input class="input-introduction" v-model="eventIntroduction" @update:modelValue="event => getPara('eventIntroduction',event)" filled type="textarea"/>
     <div class="row">
       <div class="column">
         <div class="text-category">活動類別</div>
@@ -56,7 +56,7 @@
       </div>
       <div class="column">
         <div class="text-cost">參與費用</div>
-        <q-input class="input-cost" v-model="cost"  borderless/>
+        <q-input class="input-cost" v-model="cost" @update:modelValue="event => getPara('cost',event)" borderless/>
       </div>
     </div>
     <div class="text-addTag">增加標籤</div>
@@ -66,31 +66,56 @@
 
 <script setup>
 import { ref } from "vue";
+import { defineEmits } from 'vue'
 
 // const variable
 const eventTitle = ref("");
 const options = ['Google', 'Facebook', 'Twitter', 'Apple', 'Oracle'];
 const eventCategory = ref("");
-const eventDate = ref("");
+const eventStDate = ref("");
 const dataField = ref(null);
 const ageLimit = ref("");
 const numberLimit = ref("");
 const cost = ref("");
 const tag = ref("");
+const eventIntroduction = ref("");
+const emit = defineEmits(['get-para']);
 
-
+let savePara = {};
 // set now date
 let newdate = new Date();
 let year = newdate.getFullYear();
 let month = newdate.getMonth() + 1 < 10? "0" + (newdate.getMonth() + 1): newdate.getMonth() + 1;
 let date  = newdate.getDate() < 10? "0" + newdate.getDate(): newdate.getDate();
-eventDate.value =  year + "/" + month + "/" + date;
+eventStDate.value =  year + "/" + month + "/" + date;
+getPara('eventStDate', eventStDate.value);
 
 
 // methods
-function getitle(event){
-  this.$emit("get-title", {
-    event: event
+function getPara(key, event){
+  switch(key){
+    case 'eventTitle':
+      savePara.eventTitle = event;
+      break;
+
+    case 'eventStDate':
+      savePara.eventStDate = event;
+      break;
+
+    case 'eventIntroduction':
+      savePara.eventIntroduction = event;
+      break;
+
+    case 'cost':
+      savePara.cost = event;
+      break;
+    
+    default:
+      break;
+  }
+
+  emit('get-para', {
+    event: savePara
   })
 }
 
