@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div class="top-edge">
-      <p>報名表設計</p>
-      <br/>
-      <button @click="nextStep()">下一步</button>
-    </div>
+    <p>報名表設計</p>
+    <br />
+    <button @click="nextStep()">下一步</button>
   </div>
 </template>
 

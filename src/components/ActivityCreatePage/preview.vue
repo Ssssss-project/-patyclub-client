@@ -1,10 +1,8 @@
 <template>
   <div>
-    <div class="top-edge">
-      <p>預覽</p>
-      <br/>
-      <button @click="nextStep()">下一步</button>
-    </div>
+    <p>預覽</p>
+    <br />
+    <button @click="nextStep()">下一步</button>
   </div>
 </template>
 
