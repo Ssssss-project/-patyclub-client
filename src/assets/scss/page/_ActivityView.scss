@@ -12,9 +12,6 @@
     .event-category {
         width: 20%;
         max-height: 80%;
-        .q-tree__node {
-            background-color: $color-primary-300;
-        }
     }
     .card-list {
         width: 78%;
@@ -28,11 +25,11 @@
     .my-card {
         width: 100%;
         max-width: 250px;
-        max-height: 400px;
+        height: 300px;
         margin: 10px;
         & > img {
             width: 100%;
-            min-height: 160px;
+            min-height: 200px;
             max-height: 160px;
             object-fit: cover;
             flex: 1;
@@ -49,5 +46,14 @@
         }
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
+    }
+    .q-pt-none {
+        background-color: #0e0e0ea3;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        left: 0px;
+        bottom: 0px;
+        color: white;
     }
 }
