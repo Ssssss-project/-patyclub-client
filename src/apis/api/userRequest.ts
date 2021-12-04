@@ -10,6 +10,9 @@ export const apiPostLoginResult = (params: any) => request("post", "/User/login"
 // 忘記密碼
 export const apiPostForgetPwd = (params: any) => request("post", "/User/forgetPwd", params);
 
+// 重置密碼
+export const apiPutResetPwd = (params: any) => request("put", "/User/changePwdWithToken", params);
+
 // 取得所有使用者
 export const apiGetAllUser = () => request("get", "/User/getAllUser");
 
