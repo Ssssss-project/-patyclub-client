@@ -36,7 +36,7 @@
       </div>
     </div>
     <div class="text-image">活動圖片</div>
-    <q-uploader class="uploader-image" multiple append url="https://localhost:5001/api/Event/createEvent"/>
+    <q-uploader class="uploader-image" :factory="factoryFn" multiple append url="https://localhost:5001/api/Event/dataUpload"/>
     <div class="text-introduction">活動簡介</div>
     <q-input class="input-introduction" v-model="eventIntroduction" @update:modelValue="event => getPara('eventIntroduction',event)" filled type="textarea"/>
     <div class="row">
@@ -62,6 +62,9 @@
     <div class="text-addTag">增加標籤</div>
     <q-input class="input-addTag" v-model="tag"  borderless/>
   </div>
+
+  <q-img :src="preview" height="300px" width="700px"/>
+ 
 </template>
 
 <script setup>
@@ -80,6 +83,7 @@ const cost = ref("");
 const tag = ref("");
 const eventIntroduction = ref("");
 const emit = defineEmits(['get-para']);
+const preview = ref(null);
 
 let savePara = {};
 // set now date
@@ -117,6 +121,21 @@ function getPara(key, event){
   emit('get-para', {
     event: savePara
   })
+}
+
+function factoryFn (file) {
+  // return new Promise((resolve, reject) => {
+  //   // Retrieve JWT token from your store.
+  //   const token = "myToken";
+  //   resolve({
+  //     url: 'https://localhost:5001/api/Event/dataUpload',
+  //     method: 'POST',
+  //     headers: [
+  //       { name: 'Authorization', value: `Bearer ${token}` }
+  //     ]
+  //   })
+  // })
+  preview.value = file[0].__img.currentSrc;
 }
 
 </script>

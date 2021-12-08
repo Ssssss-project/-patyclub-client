@@ -18,3 +18,9 @@ export const apiGetActiveUser = () => request("get", "/User/getActiveUser");
 
 //取得活動資訊
 export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
+
+//新建活動
+export const apiSaveEventData = (params: any) => request("post", "/Event/createEvent", params);
+
+//檔案上傳
+export const apiDataUpload = () => request("post", "/Event/dataUpload");

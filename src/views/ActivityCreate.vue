@@ -20,7 +20,7 @@
         </q-step>
 
         <q-step :name="3" class="childComponent" title="預覽" icon="visibility" :done="step > 4">
-          <preview></preview>
+          <ActivityDetailsView></ActivityDetailsView>
         </q-step>
 
         <template v-slot:navigation>
@@ -39,10 +39,10 @@
 
 <script setup>
 import { ref } from "vue";
-// import { apiSaveEventData } from "@/apis/api/eventRequest.ts";
+import { apiSaveEventData } from "@/apis/api/userRequest.ts";
 import basicInfo from "@/components/ActivityCreatePage/basicInfo.vue";
 import formDesign from "@/components/ActivityCreatePage/formDesign.vue";
-import preview from "@/components/ActivityCreatePage/preview";
+import ActivityDetailsView from "@/components/ActivityDetailsView";
 
 const step = ref(1);
 
@@ -50,11 +50,11 @@ let allChildPara = {};
 
 
 function save() {
-  // apiSaveEventData(allChildPara.basicInfo).then((response) => {
-  //   if (response.status == 200) {
-  //     alert("儲存成功");
-  //   }
-  // });
+  apiSaveEventData(allChildPara.basicInfo).then((response) => {
+    if (response.status == 200) {
+      alert("儲存成功");
+    }
+  });
 }
 
 // 取得子元件emit
