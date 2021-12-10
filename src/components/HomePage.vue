@@ -1,7 +1,6 @@
 <template>
+  <Head />
   <main id="Home">
-
-    <Head />
     <div class="container">
       <transition
         name="first-step"
