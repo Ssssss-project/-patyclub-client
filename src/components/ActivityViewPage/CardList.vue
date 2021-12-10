@@ -1,7 +1,7 @@
 <template>
     <q-card
         v-ripple
-        class="my-card cursor-pointer q-hoverable"
+        class="my-card cursor-pointer "
         v-for="(data, idx) in Activity"
         :key="idx"
         @mouseover="data.showInfo = true"
@@ -13,14 +13,21 @@
             <div class="text-h6">{{ data.title }}</div>
             <div class="text-subtitle2">by {{ data.author }}</div>
         </q-card-section>
-        <div color="primary" class="absolute">
+        <div class="timeline">
             <span>{{ data.Time }}</span>
         </div>
-        <q-card-section class="q-pt-none" v-if="data.showInfo">
+
+        <div class="q-pt-none" v-if="data.showInfo">
             <div class="text-h6">{{ data.title }}</div>
-            {{ data.lorem }}
-            <div class="text-subtitle2">by {{ data.author }}</div>
-        </q-card-section>
+            <div class="hover-content scrollbarCol">
+                <span>{{ data.lorem }}</span>
+                <div class="text-subtitle2">by {{ data.author }}</div>
+            </div>
+
+            <div class="timeline">
+                <span>{{ data.Time }}</span>
+            </div>
+        </div>
     </q-card>
 </template>
 
@@ -36,7 +43,7 @@ export default {
                 author: "John Doe",
                 image: "https://cdn.quasar.dev/img/mountains.jpg",
                 lorem:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 showInfo: false,
             },
             {
