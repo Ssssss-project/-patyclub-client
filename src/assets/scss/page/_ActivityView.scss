@@ -20,6 +20,9 @@
         width: 20%;
         max-height: 640px;
         overflow-y: auto;
+        .q-pa-md{
+            padding: 16px 6px;
+        }
     }
     .card-list {
         width: 79%;

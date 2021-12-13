@@ -1,7 +1,9 @@
 <template>
   <header id="Head">
     <button class="btns" @click="bShowChat = true">測試聊天室</button>
-    <button class="btns">所有活動</button>
+    <router-link :to="`/activityView`">
+      <button class="btns">所有活動</button>
+    </router-link>
     <router-link :to="`/activityCreate`">
       <button class="btns">創建活動</button>
     </router-link>
