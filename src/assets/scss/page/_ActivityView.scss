@@ -2,11 +2,12 @@
     .container {
         height: calc(100vh - 50px);
         display: flex;
-        justify-content: center;
         align-items: center;
+        flex-direction: column;
     }
     .activity-main {
         display: flex;
+        flex-direction: column;
         height: 100%;
     }
     .event-category {
@@ -14,7 +15,7 @@
         max-height: 80%;
     }
     .card-list {
-        width: 78%;
+        width: 79%;
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
@@ -68,5 +69,65 @@
         bottom: 0px;
         color: $color-light-50;
         padding: 19px 0px;
+    }
+    .activity-information {
+        display: flex;
+    }
+    .activity-filter {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 22px;
+        .right-btn {
+            min-width: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            & > button {
+                margin-top: 5px;
+            }
+        }
+        .left-search {
+            color: $color-brown-900;
+            & > div {
+                display: flex;
+                align-items: center;
+                & > label:first-child {
+                    margin-right: 5px;
+                    max-height: 10px;
+                }
+            }
+            .q-field {
+                min-width: 150px;
+                height: 25px;
+                margin-top: 5px;
+            }
+
+            .q-field__native {
+                padding: 0;
+                height: 10px;
+                min-height: 25px;
+            }
+            .q-field__append {
+                height: 25px;
+            }
+            .q-field__control {
+                min-height: 25px;
+            }
+            .q-field__control-container {
+                min-height: 25px;
+            }
+            .select-category {
+                position: relative;
+                border-radius: 5px;
+                border: 1px solid $color-primary-300;
+            }
+            .q-select__dropdown-icon {
+                color: $color-light-200;
+                background: $color-primary-500;
+                transition: transform 0.2s;
+                border-radius: 5px;
+                margin-top: -1px;
+            }
+        }
     }
 }
