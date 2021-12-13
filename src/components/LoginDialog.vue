@@ -310,7 +310,14 @@ export default {
           message: "登入成功",
         });
 
-        onDialogOK();
+          onDialogOK({ name: "Yuuuu" });
+      }).catch(() => {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "密碼錯誤",
+        });
       });
     }
 
