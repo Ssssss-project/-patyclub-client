@@ -3,46 +3,13 @@
     <main id="ActivityView">
         <div class="container">
             <div class="activity-main">
+                <div class="head-block">
+                </div>
                 <div class="activity-filter">
-                    <div class="right-btn">
-                        <q-btn
-                            style="background: #eeb888; color: #402e32;border:1px solid black;"
-                            label="全部"
-                            size="sm"
-                        />
-                        <q-btn
-                            style="background: #ffffff; color: #402e32 ;border:1px solid black;"
-                            label="精選"
-                            size="sm"
-                        />
-                    </div>
-                    <div class="left-search">
-                        <div>
-                            <label>檢視</label>
-                            <q-select
-                                class="select-category"
-                                v-model="model"
-                                :options="options"
-                                borderless
-                                dense
-                                options-dense
-                            />
-                        </div>
-                        <div>
-                            <label>排序</label>
-                            <q-select
-                                class="select-category"
-                                v-model="model"
-                                :options="options"
-                                borderless
-                                dense
-                                options-dense
-                            />
-                        </div>
-                    </div>
+                    <activity-filter />
                 </div>
                 <div class="activity-information">
-                    <div class="event-category">
+                    <div class="event-category scrollbarCol">
                         <event-category />
                     </div>
                     <div class="card-list scrollbarCol">
@@ -58,6 +25,7 @@
 import Head from "../components/Head.vue";
 import CardList from "../components/ActivityViewPage/CardList.vue";
 import EventCategory from "../components/ActivityViewPage/EventCategory.vue";
+import ActivityFilter from "../components/ActivityViewPage/ActivityFilter.vue";
 
 import { ref } from "vue";
 
@@ -74,6 +42,7 @@ export default {
         Head,
         CardList,
         EventCategory,
+        ActivityFilter,
     },
 };
 </script>
