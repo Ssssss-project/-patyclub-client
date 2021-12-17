@@ -30,7 +30,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 4% 10%;
+  padding: 4% 15%;
 }
 
 #nav {

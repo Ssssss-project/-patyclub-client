@@ -114,26 +114,7 @@ export default {
                 lorem:
                     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
                 showInfo: false,
-            },
-            {
-                title: "花蓮七星潭",
-                Time: "2 Days 1 hour",
-                author: "John Doe",
-                image: "https://cdn.unwire.hk/wp-content/uploads/2017/01/monkeys-streetview.jpg",
-                lorem:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                showInfo: false,
-            },
-            {
-                title: "花蓮七星潭",
-                Time: "2 Days 1 hour",
-                author: "John Doe",
-                image: "https://cdn.unwire.hk/wp-content/uploads/2017/01/monkeys-streetview.jpg",
-                lorem:
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                showInfo: false,
-            },
-            
+            }
         ]);
         return {
             Activity,

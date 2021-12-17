@@ -11,9 +11,9 @@
     }
     .event-category {
         width: 20%;
-        max-height: 640px;
+        max-height: 700px;
         overflow-y: auto;
-        .q-pa-md{
+        .q-pa-md {
             padding: 16px 6px;
         }
     }
@@ -22,14 +22,14 @@
         display: flex;
         justify-content: flex-start;
         flex-wrap: wrap;
-        max-height: 640px;
+        max-height: 700px;
         overflow-y: auto;
     }
 
     .my-card {
         width: 100%;
-        max-width: 250px;
-        height: 300px;
+        max-width: 240px;
+        height: 330px;
         margin: 10px;
         & > img {
             width: 100%;
@@ -72,6 +72,7 @@
         bottom: 0px;
         color: $color-light-50;
         padding: 19px 0px;
+        border-radius: 5px;
     }
     .activity-information {
         display: flex;
