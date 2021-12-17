@@ -1,7 +1,6 @@
 <template>
-  <Head />
   <main id="Home">
-    <div class="container">
+    <div id="Home-container" class="container">
       <transition
         name="first-step"
         mode="out-in"
@@ -36,7 +35,7 @@
         >
           <div
             class="CardInfo-right CardInfo-right-bill"
-            @mouseleave="showInfo"
+ 
           >
             <div class="tag-group tag-group-billboard">
               <div class="tag tag-billboard">公佈欄｜BillBoard</div>
@@ -87,7 +86,6 @@
   </main>
 </template>
 <script>
-import Head from "./Head.vue";
 import LoginDialog from "./LoginDialog.vue";
 import { useQuasar } from "quasar";
 import { ref } from "vue";
@@ -159,9 +157,6 @@ export default {
       showBillBoard,
       showActivities,
     };
-  },
-  components: {
-    Head,
   },
 };
 </script>

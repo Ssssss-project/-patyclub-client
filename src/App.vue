@@ -1,8 +1,6 @@
 <template>
   <Head />
-  <div class="container">
     <router-view />
-  </div>
 </template>
 
 <script>
@@ -25,13 +23,7 @@ export default {
   color: #2c3e50;
 }
 
-.container {
-  height: calc(100vh - 50px);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 4% 15%;
-}
+
 
 #nav {
   padding: 10px;

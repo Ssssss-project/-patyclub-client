@@ -1,17 +1,19 @@
 <template>
     <main id="ActivityView">
-        <div class="activity-main">
-            <div class="head-block">
-            </div>
-            <div class="activity-filter">
-                <activity-filter />
-            </div>
-            <div class="activity-information">
-                <div class="event-category scrollbarCol">
-                    <event-category />
+        <div class="container">
+            <div class="activity-main">
+                <div class="head-block">
                 </div>
-                <div class="card-list scrollbarCol">
-                    <card-list />
+                <div class="activity-filter">
+                    <activity-filter />
+                </div>
+                <div class="activity-information">
+                    <div class="event-category scrollbarCol">
+                        <event-category />
+                    </div>
+                    <div class="card-list scrollbarCol">
+                        <card-list />
+                    </div>
                 </div>
             </div>
         </div>
