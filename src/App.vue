@@ -1,6 +1,20 @@
 <template>
-  <router-view />
+  <Head />
+  <div class="container">
+    <router-view />
+  </div>
 </template>
+
+<script>
+import Head from "./components/Head.vue";
+
+export default {
+    components: {
+        Head,
+    },
+};
+</script>
+
 
 <style lang="scss">
 #app {
@@ -9,6 +23,14 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+.container {
+  height: calc(100vh - 50px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 4% 10%;
 }
 
 #nav {
