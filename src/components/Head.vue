@@ -1,5 +1,6 @@
 <template>
   <header id="Head">
+    <button class="btns" @click="testToken()">測試token</button>
     <button class="btns" @click="bShowChat = true">測試聊天室</button>
     <router-link :to="`/activityView`">
       <button class="btns">所有活動</button>
@@ -17,12 +18,16 @@
       flat
       class="afterLoginBtn"
     >
-      Hi, {{ personalInfo.name }}
-      <q-menu transition-show="flip-right" transition-hide="flip-left" style="backgroundColor:#deb06b">
+      Hi, {{ personalInfo.userName }}
+      <q-menu
+        transition-show="flip-right"
+        transition-hide="flip-left"
+        style="backgroundColor:#deb06b"
+      >
         <q-list>
           <q-item clickable v-close-popup>
             <q-item-section avatar>
-              <q-icon name="settings"/>
+              <q-icon name="settings" />
             </q-item-section>
             <q-item-section caption>
               <q-item-label>設定</q-item-label>
@@ -30,7 +35,7 @@
           </q-item>
           <q-item clickable v-close-popup>
             <q-item-section avatar>
-              <q-icon name="list_alt"/>
+              <q-icon name="list_alt" />
             </q-item-section>
             <q-item-section caption>
               <q-item-label>我的活動</q-item-label>
@@ -38,15 +43,15 @@
           </q-item>
           <q-item clickable v-close-popup>
             <q-item-section avatar>
-              <q-icon name="military_tech"/>
+              <q-icon name="military_tech" />
             </q-item-section>
             <q-item-section caption>
               <q-item-label>成就系統</q-item-label>
             </q-item-section>
           </q-item>
-          <q-item clickable v-close-popup>
+          <q-item clickable v-close-popup @click="logOut()">
             <q-item-section avatar>
-              <q-icon name="exit_to_app"/>
+              <q-icon name="exit_to_app" />
             </q-item-section>
             <q-item-section caption>
               <q-item-label>登出</q-item-label>
@@ -82,6 +87,9 @@ import LoginDialog from "./LoginDialog.vue";
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import * as signalR from "@aspnet/signalr";
+import store from "@/store";
+import jwt_decode from "jwt-decode";
+import { apiGetActiveUser } from "@/apis/api/userRequest.ts";
 export default {
   setup() {
     const $q = useQuasar();
@@ -90,8 +98,17 @@ export default {
       $q.dialog({
         component: LoginDialog,
       })
-        .onOk((response) => {
-          personalInfo.value = response;
+        .onOk((token) => {
+          let decoded = jwt_decode(token);
+          console.log("token :" + token);
+          console.log("token decode:" + JSON.stringify(decoded, null, 2));
+
+          personalInfo.value = decoded;
+
+          store.dispatch("setAuth", {
+            sToken: token,
+            bIsLogin: true,
+          });
         })
         .onCancel(() => {
           console.log("Cancel");
@@ -144,8 +161,36 @@ export default {
         receiveMsg.value.push({ sendFrom: res1, msg: [res2] });
       });
     }
+
+    function checkIsLogin() {
+      let userStore = store.getters.getUserStore;
+      if (userStore.bIsLogin) {
+        let decoded = jwt_decode(userStore.sToken);
+        personalInfo.value = decoded;
+      } else {
+        personalInfo.value = null;
+      }
+    }
+
+    function logOut() {
+      store
+        .dispatch("setAuth", {
+          sToken: "",
+          bIsLogin: false,
+        })
+        .then(() => {
+          checkIsLogin();
+        });
+    }
+
+    function testToken() {
+      apiGetActiveUser().then((res) => {
+        console.log(res);
+      });
+    }
     connectHub();
     listenHub();
+    checkIsLogin();
 
     return {
       personalInfo,
@@ -156,6 +201,9 @@ export default {
       connectHub,
       clickSubmit,
       listenHub,
+      checkIsLogin,
+      logOut,
+      testToken,
     };
   },
   components: {},

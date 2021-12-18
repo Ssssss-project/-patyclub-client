@@ -1,5 +1,6 @@
 import axios, { Method } from "axios";
 import { alertMsg } from "./utils";
+import store from "@/store";
 
 /**
  * 請求失敗的統一處理
@@ -23,6 +24,11 @@ const errorHandler = (status: number, msg: string) => {
       alertMsg("409:帳號重複" + msg);
       break;
 
+    // 500: 認證未過
+    case 500:
+      alertMsg("500:認證未過" + msg);
+      break;
+      
     // 其他錯誤訊息，直接拋出提示
     default:
       alertMsg("沒有攔截到錯誤");
@@ -47,7 +53,7 @@ instance.interceptors.request.use(
 // response攔截器
 instance.interceptors.response.use(
   (response) => {
-    return response;
+    return response.data;
   },
   (error) => {
     const { response } = error;
@@ -64,19 +70,34 @@ instance.interceptors.response.use(
   }
 );
 
-const URL = "https://localhost:5001/api";
+// const URL = "https://localhost:5001/api";
 
-export default async function(method: Method, url: string, data: any = null,token:string="") {
+// export default async function(method: Method, url: string, data: any = null,token:string="") {
+//   const sMethod = method.toLowerCase();
+//   const requestOption = sMethod=="get"||sMethod=="delete"?{params:{data}}:{data}
+//   const res =await axios({
+//     headers: {
+//         "Content-Type": "application/json;",
+//         "Authoriztion":token,
+//     },
+//     method,
+//     url: `${URL}${url}`,
+//     ...requestOption
+//   });
+//   return res.data;
+// }
+
+export default async function(method: Method, url: string, data: any = null) {
   const sMethod = method.toLowerCase();
-  const requestOption = sMethod=="get"||sMethod=="delete"?{params:{data}}:{data}
-  const res =await axios({
+  const requestOption = sMethod == "get" || sMethod == "delete" ? { params:{ data } } : {data}
+  const token = store.getters.getUserStore.sToken;
+  return await instance({
     headers: {
-        "Content-Type": "application/json;",
-        "Authoriztion":token,
+      "Content-Type": "application/json;",
+      "Authoriztion": token
     },
     method,
-    url: `${URL}${url}`,
+    url: `${url}`,
     ...requestOption
-  });
-  return res.data;
+  })
 }
