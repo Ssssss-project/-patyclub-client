@@ -9,7 +9,7 @@ const store:any = createStore({
   },
   plugins: [
     createPersistedState({
-      storage: window.localStorage,
+      storage: window.sessionStorage,
     }),
   ],
 });

@@ -303,14 +303,14 @@ export default {
       apiPostLoginResult({
         account: sLoginAccount.value,
         password: sLoginPassword.value,
-      }).then(() => {
+      }).then((response) => {
         $q.notify({
           icon: "done",
           color: "positive",
           message: "登入成功",
         });
 
-          onDialogOK({ name: "Yuuuu" });
+          onDialogOK(response.data);
       }).catch(() => {
         $q.notify({
           color: "red-5",

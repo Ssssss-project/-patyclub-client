@@ -87,13 +87,15 @@ import LoginDialog from "./LoginDialog.vue";
 import { useQuasar } from "quasar";
 import { ref } from "vue";
 import * as signalR from "@aspnet/signalr";
-import store from "@/store";
 import jwt_decode from "jwt-decode";
 import { apiGetActiveUser } from "@/apis/api/userRequest.ts";
+import { useStore } from "vuex";
 export default {
   setup() {
     const $q = useQuasar();
     const personalInfo = ref(null);
+    const store = useStore();
+    
     function openLoginDialog() {
       $q.dialog({
         component: LoginDialog,
