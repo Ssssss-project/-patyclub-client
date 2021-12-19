@@ -13,12 +13,12 @@
     </button>
     <q-btn
       v-if="personalInfo"
-      icon-right="img:heartSolid.svg"
+      icon-right="img:https://localhost:5001/Data/APEX.jpg"
       no-caps
       flat
       class="afterLoginBtn"
     >
-      Hi, {{ personalInfo.userName }}
+      Hi,{{ personalInfo.userName }}&nbsp;&nbsp;&nbsp;
       <q-menu
         transition-show="flip-right"
         transition-hide="flip-left"
