@@ -44,18 +44,18 @@
         <template v-slot:navigation>
           <q-stepper-navigation>
             <q-btn
-              class="btn-step"
-              @click="$refs.stepper.next()"
-              :label="step === 8 ? 'Finish' : 'Continue'"
-              flat
-            ></q-btn>
-            <q-btn
               v-if="step > 1"
               flat
               @click="$refs.stepper.previous()"
               label="Back"
               class="btn-step"
               style="margin-left: 5px"
+            ></q-btn>
+            <q-btn
+              class="btn-step"
+              @click="$refs.stepper.next()"
+              :label="step === 8 ? 'Finish' : 'Continue'"
+              flat
             ></q-btn>
             <br />
             <q-btn class="btn-step" style="margin-top: 5px" @click="save"

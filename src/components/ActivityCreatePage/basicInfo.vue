@@ -9,63 +9,59 @@
       borderless
       placeholder="30字以內"
     />
-    <div class="row">
-      <div class="column">
-        <div class="text-date">活動日期</div>
-        <div class="select-date">
-          <q-input
-            v-model="eventStDate"
-            @update:modelValue="(event) => getPara('eventStDate', event)"
-            borderless
-          >
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy
-                  ref="qDateProxy"
-                  transition-show="scale"
-                  transition-hide="scale"
+    <div class="date_file_text">
+      <div class="text-date">活動日期</div>
+      <div class="text-field">其他附件</div>
+    </div>
+    <div class="date_file_input">
+      <div class="select-date">
+        <q-input
+          v-model="eventStDate"
+          @update:modelValue="(event) => getPara('eventStDate', event)"
+          borderless
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="eventStDate"
+                  @update:modelValue="(event) => getPara('eventStDate', event)"
+                  color="yellow-9"
                 >
-                  <q-date
-                    v-model="eventStDate"
-                    @update:modelValue="
-                      (event) => getPara('eventStDate', event)
-                    "
-                    color="yellow-9"
-                  >
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="#deb06b" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
-        </div>
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="#deb06b" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
       </div>
-      <div class="column">
-        <div class="text-field">其他附件</div>
-        <div class="file-field">
-          <q-file
-            multiple
-            append
-            bottom-slots
-            v-model="dataField"
-            counter
-            max-files="12"
-            borderless
-          >
-            <template v-slot:append>
-              <q-icon
-                v-if="dataField !== null"
-                name="close"
-                @click="dataField = null"
-                class="cursor-pointer"
-              />
-              <q-icon name="create_new_folder" @click.stop />
-            </template>
-            <template v-slot:hint />
-          </q-file>
-        </div>
+      <div class="file-field">
+        <q-file
+          multiple
+          append
+          bottom-slots
+          v-model="dataField"
+          counter
+          max-files="12"
+          borderless
+        >
+          <template v-slot:append>
+            <q-icon
+              v-if="dataField !== null"
+              name="close"
+              @click="dataField = null"
+              class="cursor-pointer"
+            />
+            <q-icon name="create_new_folder" @click.stop />
+          </template>
+          <template v-slot:hint />
+        </q-file>
       </div>
     </div>
     <div class="text-image">活動圖片</div>
@@ -78,40 +74,37 @@
       filled
       type="textarea"
     />
-    <div class="row">
-      <div class="column">
-        <div class="text-category">活動類別</div>
-        <q-select
-          class="select-category"
-          v-model="eventCategory"
-          :options="options"
-          borderless
-        />
-      </div>
-      <div class="column">
-        <div class="text-ageLimit">年齡限制</div>
-        <q-select
-          class="select-ageLimit"
-          v-model="ageLimit"
-          :options="options"
-          borderless
-        />
-      </div>
+    <div class="category_ageLimit_text">
+      <div class="text-category">活動類別</div>
+      <div class="text-ageLimit">年齡限制</div>
     </div>
-    <div class="row">
-      <div class="column">
-        <div class="text-numberLimit">人數限制</div>
-        <q-input class="input-numberLimit" v-model="numberLimit" borderless />
-      </div>
-      <div class="column">
-        <div class="text-cost">參與費用</div>
-        <q-input
-          class="input-cost"
-          v-model="cost"
-          @update:modelValue="(event) => getPara('cost', event)"
-          borderless
-        />
-      </div>
+    <div class="category_ageLimit_input">
+      <q-select
+        class="select-category"
+        v-model="eventCategory"
+        :options="options"
+        borderless
+      />
+      <q-select
+        class="select-ageLimit"
+        v-model="ageLimit"
+        :options="options"
+        borderless
+      />
+    </div>
+
+    <div class="numberLimit_cost_text">
+      <div class="text-numberLimit">人數限制</div>
+      <div class="text-cost">參與費用</div>
+    </div>
+    <div class="numberLimit_cost_input">
+      <q-input class="input-numberLimit" v-model="numberLimit" borderless />
+      <q-input
+        class="input-cost"
+        v-model="cost"
+        @update:modelValue="(event) => getPara('cost', event)"
+        borderless
+      />
     </div>
     <div class="text-addTag">增加標籤</div>
     <q-input class="input-addTag" v-model="tag" borderless />
@@ -139,12 +132,17 @@ const preview = ref(null);
 const emit = defineEmits(["get-para"]);
 const allChildPara = defineProps(["allChildPara"]);
 
-let savePara = allChildPara.allChildPara.basicInfo ? allChildPara.allChildPara.basicInfo : {};
+let savePara = allChildPara.allChildPara.basicInfo
+  ? allChildPara.allChildPara.basicInfo
+  : {};
 
 // set now date
 let newDate = new Date();
 let year = newDate.getFullYear();
-let month = newDate.getMonth() + 1 < 10 ? "0" + (newDate.getMonth() + 1) : newDate.getMonth() + 1;
+let month =
+  newDate.getMonth() + 1 < 10
+    ? "0" + (newDate.getMonth() + 1)
+    : newDate.getMonth() + 1;
 let date = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
 eventStDate.value = year + "/" + month + "/" + date;
 getPara("eventStDate", eventStDate.value);
@@ -188,10 +186,10 @@ function factoryFn(file) {
 
   return new Promise((resolve, reject) => {
     resolve({
-      url: 'https://localhost:5001/api/Event/dataUpload',
-      method: 'POST',
-    })
-  })
+      url: "https://localhost:5001/api/Event/dataUpload",
+      method: "POST",
+    });
+  });
 }
 </script>
 

@@ -1,12 +1,6 @@
 #ActivityCreate {
 
-  .main-bar {
-    position: inherit;
-    width: 100%;
-    background-color: $color-light-200;
-    height: 50px;
-    text-align: right;
-  }
+  height: 100%;
 
   .btns {
     height: 50px;
@@ -25,6 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100%;
 
     .text-themeColor {
       color: $color-primary-500;
@@ -42,7 +37,6 @@
       position: relative;
       width: 150px;
       height: 25px;
-      top: 40px;
       font-size: 9px;
       line-height: 16px;
       color: $color-brown-900;
@@ -50,38 +44,30 @@
 
     .childComponent{
 
-      position: relative;
-      height: 800px;
-      width: 100%;
-  
-      .basicInfo{
+      height: calc(100vh - 250px);
 
-        height: 1100px;
+      .basicInfo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-left: 15%;
 
         .page-title{
-          position: relative;
-          top: 55px;
           font-size: 28px;
           line-height: 33px;
-          text-align: center;
           color: $color-primary-500;
-          margin-bottom:50px;
+          margin-bottom:20px;
+          margin-left: -10%;
         }
   
         .text-title{
-          position: relative;
           width: 72px;
-          left: 82px;
-          top: 80px;
           font-size: 18px;
           color: $color-brown-900;
         }
   
         .input-title{
-          position: relative;
           width: 720px;
-          left: 80px;
-          top: 82px;
           padding-left: 10px;
           background: $color-light-200;
           border-radius: 5px;
@@ -90,182 +76,183 @@
           }
         }
 
-        .text-date{
-          position: relative;
-          width: 72px;
-          left: 82px;
-          top: 110px;
-          font-size: 18px;
-          color: $color-brown-900;
-        }
+        .date_file_text{
 
-        .select-date{
-          position: relative;
-          width: 240px;
-          left: 80px;
-          top: 112px;
-          padding-left: 10px;
-          background: $color-light-200;
-          border-radius: 5px;
-          .q-field__control{
-            height: 30px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-top: 30px;
+
+          .text-date{
+            width: 72px;
+            font-size: 18px;
+            color: $color-brown-900;
+          }
+
+          .text-field{
+            margin-left: 198px;
+            font-size: 18px;
+            color: $color-brown-900;
           }
         }
 
-        .text-field{
-          position: relative;
-          left: -78px;
-          top: 110px;
-          font-size: 18px;
-          color: $color-brown-900;
-        }
+        .date_file_input{
+          display: flex;
+          flex-direction: row;
+          align-items: center;
 
-        .file-field{
-          position: relative;
-          width: 450px;
-          left: 110px;
-          top: 112px;
-          padding: 0px 10px 0px 10px;
-          background: $color-light-200;
-          border-radius: 5px;
-          .material-icons {
-            color: $color-primary-500;
-          } 
-        }
+          .file-field{
+            position: relative;
+            width: 450px;
+            padding: 0px 10px 0px 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+            margin-left: 48px;
+            .material-icons {
+              color: $color-primary-500;
+            } 
+          }
 
+          .select-date{
+            padding-left: 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+            .q-field__control{
+              height: 30px;
+            }
+          }
+        }
+        
         .text-image{
-          position: relative;
+          margin-top: 30px;
           width: 72px;
-          left: 82px;
-          top: 140px;
           font-size: 18px;
           color: $color-brown-900;
         }
 
         .uploader-image{
-          position: relative;
           width: 240px;
           height: 180px;
-          left: 80px;
-          top: 150px;
         }
 
         .text-introduction{
-          position: relative;
+          margin-top: 30px;
           width: 72px;
-          left: 82px;
-          top: 190px;
           font-size: 18px;
           color: $color-brown-900;
         }
 
         .input-introduction{
-          position: relative;
           width: 85%;
-          left: 80px;
-          top: 200px;
         }
 
-        .text-category{
-          position: relative;
-          width: 72px;
-          height: 21px;
-          left: 82px;
-          top: 250px;
-          font-size: 18px;
-          color: $color-brown-900;
-        }
-  
-        .select-category{
-          position: relative;
-          width: 320px;
-          left: 80px;
-          top: 260px;
-          padding-left: 10px;
-          background: $color-light-200;
-          border-radius: 5px;
-        }
+        .category_ageLimit_text{
 
-        .text-ageLimit{
-          position: relative;
-          width: 72px;
-          height: 21px;
-          left: 162px;
-          top: 250px;
-          font-size: 18px;
-          color: $color-brown-900;
-        }
-  
-        .select-ageLimit{
-          position: relative;
-          width: 320px;
-          left: 156px;
-          top: 260px;
-          padding-left: 10px;
-          background: $color-light-200;
-          border-radius: 5px;
-        }
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          margin-top: 30px;
 
-        .text-numberLimit{
-          position: relative;
-          width: 72px;
-          height: 21px;
-          left: 82px;
-          top: 290px;
-          font-size: 18px;
-          color: $color-brown-900;
-        }
-  
-        .input-numberLimit{
-          position: relative;
-          width: 320px;
-          left: 80px;
-          top: 300px;
-          padding-left: 10px;
-          background: $color-light-200;
-          border-radius: 5px;
-          .q-field__control{
-            height: 30px;
+          .text-category{
+            width: 72px;
+            height: 21px;
+            font-size: 18px;
+            color: $color-brown-900;
+          }
+
+          .text-ageLimit{
+            margin-left: 337px;
+            width: 72px;
+            height: 21px;
+            font-size: 18px;
+            color: $color-brown-900;
           }
         }
 
-        .text-cost{
-          position: relative;
-          width: 72px;
-          height: 21px;
-          left: 162px;
-          top: 290px;
-          font-size: 18px;
-          color: $color-brown-900;
-        }
+        .category_ageLimit_input{
+
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .select-category{
+            width: 320px;
+            padding-left: 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+            margin: 5px 0px 0px 0px;
+          }
   
-        .input-cost{
-          position: relative;
-          width: 320px;
-          left: 156px;
-          top: 300px;
-          padding-left: 10px;
-          background: $color-light-200;
-          border-radius: 5px;
-          .q-field__control{
-            height: 30px;
+          .select-ageLimit{
+            width: 320px;
+            padding-left: 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+            margin: 5px 0px 0px 90px;
+          }
+        }
+
+        .numberLimit_cost_text{
+
+          margin-top: 30px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .text-numberLimit{
+            width: 72px;
+            height: 21px;
+            font-size: 18px;
+            color: $color-brown-900;
+          }
+
+          .text-cost{
+            margin-left: 337px;
+            width: 72px;
+            height: 21px;
+            font-size: 18px;
+            color: $color-brown-900;
+          }
+
+        }
+
+        .numberLimit_cost_input{
+
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .input-numberLimit{
+            width: 320px;
+            padding-left: 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+            .q-field__control{
+              height: 30px;
+            }
+          }
+  
+          .input-cost{
+            width: 320px;
+            padding-left: 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+            margin: 5px 0px 0px 90px;
+            .q-field__control{
+              height: 30px;
+            }
           }
         }
 
         .text-addTag{
-          position: relative;
+          margin-top: 30px;
           width: 72px;
-          left: 82px;
-          top: 340px;
           font-size: 18px;
           color: $color-brown-900;
         }
 
         .input-addTag{
-          position: relative;
-          width: 715px;
-          left: 82px;
-          top: 345px;
+          width: 732px;
           padding-left: 10px;
           background: $color-light-200;
           border-radius: 5px;
