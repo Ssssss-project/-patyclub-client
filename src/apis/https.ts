@@ -90,11 +90,12 @@ instance.interceptors.response.use(
 export default async function(method: Method, url: string, data: any = null) {
   const sMethod = method.toLowerCase();
   const requestOption = sMethod == "get" || sMethod == "delete" ? { params:{ data } } : {data}
+  // 有token則自動帶
   const token = store.getters.getUserStore.sToken;
   return await instance({
     headers: {
       "Content-Type": "application/json;",
-      "Authoriztion": token
+      "Authorization": "Bearer " + token
     },
     method,
     url: `${url}`,

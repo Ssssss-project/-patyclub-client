@@ -1,3 +1,5 @@
+import jwt_decode from "jwt-decode";
+
 const initUserStore = () => {
   return {
     sToken: "",
@@ -27,6 +29,10 @@ export const auth = {
   getters: {
     getUserStore: (state: object) => {
       return state
+    },
+
+    getUserInfo: (state: any) => {
+      return jwt_decode(state.sToken)
     },
   }
 };

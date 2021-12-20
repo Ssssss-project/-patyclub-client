@@ -167,8 +167,7 @@ export default {
     function checkIsLogin() {
       let userStore = store.getters.getUserStore;
       if (userStore.bIsLogin) {
-        let decoded = jwt_decode(userStore.sToken);
-        personalInfo.value = decoded;
+        personalInfo.value = store.getters.getUserInfo;
       } else {
         personalInfo.value = null;
       }
