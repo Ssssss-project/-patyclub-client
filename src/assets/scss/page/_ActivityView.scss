@@ -6,7 +6,7 @@
     }
     .head-block {
         margin: 20px 22px 20px 22px;
-        min-height: 40%;
+        min-height: 300px;
         background: $color-light-500;
     }
     .event-category {
@@ -17,13 +17,18 @@
             padding: 16px 6px;
         }
     }
-    .card-list {
+    .card-set {
         width: 79%;
         display: flex;
-        justify-content: flex-start;
-        flex-wrap: wrap;
-        max-height: 700px;
-        overflow-y: auto;
+        flex-direction: column;
+        align-items: center;
+        .card-list {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            // max-height: 700px;
+            overflow-y: auto;
+        }
     }
 
     .my-card {
