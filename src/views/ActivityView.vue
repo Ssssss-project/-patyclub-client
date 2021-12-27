@@ -14,7 +14,14 @@
                         <div class="card-list scrollbarCol">
                             <card-list />
                         </div>
-                        <q-pagination v-model="page" color="orange-12" :min="1" :max="15" :max-pages="6" :input="true"/>
+                        <q-pagination
+                            v-model="page"
+                            color="orange-12"
+                            :min="1"
+                            :max="15"
+                            :max-pages="6"
+                            :input="true"
+                        />
                     </div>
                 </div>
             </div>
@@ -33,7 +40,7 @@ export default {
     setup() {
         const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
         const model = ref(options[0]);
-        const page = ref(1)
+        const page = ref(1);
         return {
             options,
             model,
