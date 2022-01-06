@@ -44,8 +44,8 @@
             object-fit: cover;
             flex: 1;
         }
-        @include desktop {
-            max-width: 220px;
+        @include laptop {
+            max-width: 250px;
             height: 330px;
         }
     }
@@ -61,7 +61,7 @@
     }
     .timeline:before,
     .timeline:after {
-        content: '';
+        content: "";
         flex: 1 1;
         border-bottom: 1px solid;
         margin: auto;
@@ -100,6 +100,16 @@
             justify-content: center;
             & > button {
                 margin-top: 5px;
+            }
+            .activity-all{
+                background: $color-primary-300; 
+                color: $color-brown-900;
+                border:1px solid $color-dark-900;
+            }
+            .activity-recommended{
+                background: $color-light-50; 
+                color: $color-brown-900;
+                border:1px solid $color-dark-900;
             }
         }
         .select-category {

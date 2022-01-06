@@ -2,37 +2,30 @@
   <div class="right-search">
     <div class="right-btn">
       <q-btn
-        style="background: #eeb888; color: #402e32;border:1px solid black;"
+        class="activity-all"
         label="全部"
         size="md"
       />
       <q-btn
-        style="background: #ffffff; color: #402e32 ;border:1px solid black;"
+        class="activity-recommended"
         label="精選"
         size="md"
       />
     </div>
     <div>
-      <q-select
-        v-model="searchWords"
-        use-input
-        use-chips
-        multiple
-        borderless
-        input-debounce="0"
-        @new-value="createValue"
-        :options="filterOptions"
-        @filter="filterFn"
-        class="select-category"
-        dropdown-icon="search"
-        style="max-width:250px"
-      />
-      <div class="search-words">
+      <div class="col-3">
+        <q-input v-model="searchWords" @keydown.enter="submit(searchWords)">
+          <template v-slot:append>
+            <q-icon name="search" @click="submit(searchWords)" class="cursor-pointer"/>
+          </template>
+        </q-input>
+      </div>
+      <div>
         <span
           v-for="val in stringOptions"
           :key="val"
         >
-          {{ val }}
+          <q-chip dense size="md">{{val}}  <q-icon name="close" @click="text = ''" class="cursor-pointer" /></q-chip>
         </span>
       </div>
     </div>
@@ -71,41 +64,21 @@ export default {
     const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
     const model = ref(options[0]);
     const stringOptions = [];
-    const filterOptions = ref(stringOptions);
     const searchWords = ref(null);
 
-    const createValue = (val, done) => {
-      if (!stringOptions.includes(val)) {
-        stringOptions.push(val);
-        done(val, "add-unique");
-      }
-    };
+    const submit = (refKey) => {
+      stringOptions.push(refKey)
+      searchWords.value = ""
+    }
 
-    const filterFn = (val, update) => {
-      update(() => {
-        if (val === "") {
-          filterOptions.value = stringOptions;
-        } else {
-          const needle = val;
-          filterOptions.value = stringOptions.filter(
-            (v) => v.indexOf(needle) > -1
-          );
-        }
-      });
-    };
-    const inputValue = (val) => {
-      console.log(val);
-    };
+    
 
     return {
       options,
       model,
       stringOptions,
-      filterOptions,
       searchWords,
-      filterFn,
-      createValue,
-      inputValue,
+      submit
     };
   },
   components: {},
