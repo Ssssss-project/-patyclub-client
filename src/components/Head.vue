@@ -18,7 +18,7 @@
       flat
       class="afterLoginBtn"
     >
-      Hi,{{ personalInfo.userName }}&nbsp;&nbsp;&nbsp;
+      Hi,{{ personalInfo.name }}&nbsp;&nbsp;&nbsp;
       <q-menu
         transition-show="flip-right"
         transition-hide="flip-left"
@@ -88,33 +88,31 @@ import { useQuasar } from "quasar";
 import { ref } from "vue";
 import * as signalR from "@aspnet/signalr";
 import jwt_decode from "jwt-decode";
-import { apiGetActiveUser } from "@/apis/api/userRequest.ts";
+import { apiGetUserProfile } from "@/apis/api/userRequest.ts";
 import { useStore } from "vuex";
 export default {
   setup() {
     const $q = useQuasar();
     const personalInfo = ref(null);
     const store = useStore();
-    
+
     function openLoginDialog() {
       $q.dialog({
         component: LoginDialog,
-      })
-        .onOk((token) => {
-          let decoded = jwt_decode(token);
-          console.log("token :" + token);
-          console.log("token decode:" + JSON.stringify(decoded, null, 2));
-
-          personalInfo.value = decoded;
-
-          store.dispatch("setAuth", {
-            sToken: token,
-            bIsLogin: true,
-          });
-        })
-        .onCancel(() => {
-          console.log("Cancel");
+      }).onOk((response) => {
+        let decoded = jwt_decode(response.token);
+        console.log("token :" + response.token);
+        console.log("token decode:" + JSON.stringify(decoded, null, 2));
+        // 儲存token
+        store.dispatch("setAuth", {
+          sToken: response.token,
+          bIsLogin: true,
         });
+        // 取得使用者資訊
+        apiGetUserProfile({userAccount:decoded.userName}).then((profileResponse) => {
+          personalInfo.value = profileResponse.data;
+        });
+      });
     }
     const bShowChat = ref(false);
     const hubConnection = ref(
@@ -167,7 +165,10 @@ export default {
     function checkIsLogin() {
       let userStore = store.getters.getUserStore;
       if (userStore.bIsLogin) {
-        personalInfo.value = store.getters.getUserInfo;
+        // 取得使用者資訊
+        apiGetUserProfile({userAccount:store.getters.getUserInfo.userName}).then((profileResponse) => {
+          personalInfo.value = profileResponse.data;
+        });
       } else {
         personalInfo.value = null;
       }
@@ -183,11 +184,8 @@ export default {
           checkIsLogin();
         });
     }
-
     function testToken() {
-      apiGetActiveUser().then((res) => {
-        console.log(res);
-      });
+      store.dispatch("refreshAndSetAuth");
     }
     connectHub();
     listenHub();

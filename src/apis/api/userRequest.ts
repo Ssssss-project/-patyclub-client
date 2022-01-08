@@ -13,6 +13,9 @@ export const apiPostForgetPwd = (params: any) => request("post", "/User/forgetPw
 // 重置密碼
 export const apiPutResetPwd = (params: any) => request("put", "/User/changePwdWithToken", params);
 
+//取得使用者資訊
+export const apiGetUserProfile = (params: any) => request("get", "/User/getUserProfile", params);
+
 // 取得所有使用者
 export const apiGetAllUser = () => request("get", "/User/getAllUser");
 
@@ -21,3 +24,8 @@ export const apiGetActiveUser = () => request("get", "/User/getActiveUser");
 
 //取得活動資訊
 export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
+
+//更新JWT token
+export const apiGetRefreshToken = () => request("get", "/Security/refreshJWT");
+
+
