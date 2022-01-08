@@ -13,7 +13,7 @@
     </button>
     <q-btn
       v-if="personalInfo"
-      icon-right="img:https://localhost:5001/Data/APEX.jpg"
+      :icon-right="personalInfo.headStickerPath"
       no-caps
       flat
       class="afterLoginBtn"
@@ -110,7 +110,13 @@ export default {
         });
         // 取得使用者資訊
         apiGetUserProfile({userAccount:decoded.userName}).then((profileResponse) => {
+          console.log("profile:" + JSON.stringify(profileResponse.data, null, 2));
           personalInfo.value = profileResponse.data;
+          if (personalInfo.value.headStickerPath == "") {
+            personalInfo.value.headStickerPath = "account_circle";
+          } else {
+            personalInfo.value.headStickerPath = "img:https://localhost:5001" + personalInfo.value.headStickerPath;
+          }
         });
       });
     }
@@ -168,6 +174,11 @@ export default {
         // 取得使用者資訊
         apiGetUserProfile({userAccount:store.getters.getUserInfo.userName}).then((profileResponse) => {
           personalInfo.value = profileResponse.data;
+          if (personalInfo.value.headStickerPath == "") {
+            personalInfo.value.headStickerPath = "account_circle";
+          } else {
+            personalInfo.value.headStickerPath = "img:https://localhost:5001" + personalInfo.value.headStickerPath;
+          }
         });
       } else {
         personalInfo.value = null;
