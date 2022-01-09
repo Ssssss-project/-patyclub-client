@@ -1,7 +1,5 @@
 #ActivityCreate {
 
-  height: 100%;
-
   .btns {
     height: 50px;
     width: 100px;
@@ -19,7 +17,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
 
     .text-themeColor {
       color: $color-primary-500;
@@ -316,5 +313,5 @@
   .q-stepper--horizontal .q-stepper__step-inner {
     padding: 24px;
     width: 1000px;
-}
+  }
 }
