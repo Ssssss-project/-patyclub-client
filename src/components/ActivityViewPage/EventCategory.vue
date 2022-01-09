@@ -1,6 +1,6 @@
 <template>
     <div class="q-pa-md q-gutter-sm">
-        <q-tree :nodes="simple" node-key="label" />
+        <q-tree :nodes="simple" node-key="label" color="red" control-color="red" />
     </div>
 </template>
 
@@ -10,7 +10,7 @@ export default {
         return {
             simple: [
                 {
-                    label: "Satisfied customers (with avatar)",
+                    label: "APEX",
                     avatar: "",
                     children: [
                         {
@@ -32,31 +32,24 @@ export default {
                     ],
                 },
                 {
-                    label: "Satisfied customers 2 (with avatar)",
+                    label: "LOL",
                     avatar: "",
                     children: [
                         {
-                            label: "Good food (with icon)",
+                            label: "name4",
                             icon: "",
-                            children: [{ label: "Quality ingredients" }, { label: "Good recipe" }],
+                           children: [{ label: "event1" }, { label: "event2" }],
                         },
                         {
-                            label: "Good service (disabled node with icon)",
+                            label: "name5",
                             icon: "",
                             disabled: false,
-                            children: [{ label: "Prompt attention" }, { label: "Professional waiter" }],
+                            children: [{ label: "event1" }, { label: "event2" }],
                         },
                         {
-                            label: "Pleasant surroundings (with icon)",
+                            label: "name6",
                             icon: "",
-                            children: [
-                                {
-                                    label: "Happy atmosphere (with image)",
-                                    img: "",
-                                },
-                                { label: "Good table presentation" },
-                                { label: "Pleasing decor" },
-                            ],
+                           children: [{ label: "event1" }, { label: "event2" }],
                         },
                     ],
                 },

@@ -81,10 +81,19 @@
 <script setup>
 import { ref } from "vue";
 import { defineProps } from "vue";
+import { apiGetEvent } from "@/apis/api/userRequest.ts";
 
 const temp = defineProps(["preview"]);
 const preview = temp.preview ? temp.preview[0].__img.currentSrc : "";
 const tab = ref("one");
+
+getEvent();
+
+function getEvent() {
+  apiGetEvent("1").then((response) => {
+      console.log(response.data[0]);
+  });
+}
 
 function test() {
   console.log(preview.preview);

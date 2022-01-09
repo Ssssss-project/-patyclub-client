@@ -235,7 +235,12 @@
       </q-card-section>
 
       <q-card-actions align="center">
-        <q-btn flat label="送出" class="btn_submit" @click="sentEmailForReset()" />
+        <q-btn
+          flat
+          label="送出"
+          class="btn_submit"
+          @click="sentEmailForReset()"
+        />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -299,15 +304,20 @@ export default {
         account: sLoginAccount.value,
         password: sLoginPassword.value,
       }).then((response) => {
-        if (response.status == 200) {
-          $q.notify({
-            icon: "done",
-            color: "positive",
-            message: "登入成功",
-          });
+        $q.notify({
+          icon: "done",
+          color: "positive",
+          message: "登入成功",
+        });
 
-          onDialogOK();
-        }
+          onDialogOK(response.data);
+      }).catch(() => {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "密碼錯誤",
+        });
       });
     }
 
@@ -339,8 +349,8 @@ export default {
     }
 
     function sentEmailForReset() {
-      apiPostForgetPwd( {email:sSendEmail.value} ).then((response) => {
-        if (response.status == 200) {
+      apiPostForgetPwd({ userEmail: sSendEmail.value })
+        .then(() => {
           $q.notify({
             icon: "done",
             color: "positive",
@@ -348,15 +358,15 @@ export default {
           });
           resetPwsData();
           forgetPwdDialog.value = false;
-        } else {
+        })
+        .catch(() => {
           $q.notify({
             color: "red-5",
             textColor: "white",
             icon: "warning",
             message: "信件不存在，請確認信箱",
           });
-        }
-      });
+        });
     }
 
     function resetLoginData() {

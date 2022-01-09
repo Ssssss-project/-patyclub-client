@@ -2,14 +2,13 @@
   <div>
     <q-card-section horizontal>
       <q-card-section class="card">
-          <router-link :to="`/`">
-              <q-img src="../assets/PatyLogo.png" width="350px"/>
-          </router-link>
-        
+        <router-link :to="`/`">
+          <q-img src="../assets/PatyLogo.png" width="350px" />
+        </router-link>
       </q-card-section>
 
       <q-card-section class="card1">
-        <q-form @submit="resetPassowrd" style="width:80%">
+        <q-form @submit="resetPassowrd()" style="width:80%">
           <q-card-section align="left">
             <label>密碼設定(至少六碼)</label>
             <q-input
@@ -58,11 +57,16 @@
 </template>
 
 <script>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
+import { apiPutResetPwd } from "@/apis/api/userRequest.ts";
+import { useQuasar } from "quasar";
 
 export default {
   setup() {
+    const $q = useQuasar();
+
+    const router = useRouter();
     const route = useRoute();
     const token = ref("");
 
@@ -98,6 +102,27 @@ export default {
     function resetPassowrd() {
       console.log("token:" + token.value);
       console.log("password:" + sPassword.value);
+      apiPutResetPwd({
+        token: token.value,
+        newPwd: sPassword.value,
+      })
+        .then(() => {
+          $q.notify({
+            icon: "done",
+            color: "positive",
+            message: "密碼修改成功，請重新登入",
+          });
+          router.push({ path: "/" });
+        })
+        .catch(() => {
+          $q.notify({
+            color: "red-5",
+            textColor: "white",
+            icon: "warning",
+            message: "憑證過期，請重新發送信件",
+          });
+          router.push({ path: "/" });
+        });
     }
 
     return {
@@ -113,7 +138,7 @@ export default {
 <style lang="scss">
 .card {
   background-color: lightgray;
-  height: 600px;
+  height: 750px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -121,7 +146,7 @@ export default {
 }
 
 .card1 {
-  height: 600px;
+  height: 750px;
   width: 100%;
   display: flex;
   justify-content: left;
