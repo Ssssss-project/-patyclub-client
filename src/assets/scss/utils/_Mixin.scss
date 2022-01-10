@@ -1,5 +1,5 @@
 @mixin laptop {
-    @media (min-device-width: 1030px) and (max-device-width: 1366px) {
+    @media (max-width: 1500px) {
         @content;
     }
 }
