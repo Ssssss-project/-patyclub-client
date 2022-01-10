@@ -1,9 +1,8 @@
 <template>
   <div id="ActivityDetailsView">
     <div class="main">
-      <!-- <q-img :src="preview" height="300px" width="700px"/> -->
       <q-img
-        src="https://placeimg.com/500/300/nature"
+        :src="appendixPath"
         height="360px"
         width="900px"
       />
@@ -18,7 +17,7 @@
           <div class="icon_info">
             <q-icon class="display" size="30px" name="monetization_on" />
             <div class="icon_text">參與費用</div>
-            <label>NT 150</label>
+            <label>NT {{ cost }}</label>
           </div>
           <div class="icon_info">
             <q-icon class="display" size="30px" name="schedule" />
@@ -28,13 +27,14 @@
           <div class="icon_info">
             <q-icon class="display" size="30px" name="timer" />
             <div class="icon_text">報名截止倒數</div>
-            <label>5天12小時</label>
+            <label>{{ signUpEdDate }}</label>
           </div>
         </div>
         <div class="C2">
           <div class="C2_L">
             <div class="C2_L_1">
               <div class="C2_L_1_L">創辦人</div>
+              <div class="user_name">{{ createUserName }}</div>
             </div>
             <div class="C2_L_2">
               <q-btn class="C2_L_btn" icon="favorite">收藏</q-btn>
@@ -44,58 +44,119 @@
           <q-btn class="btn-apply" icon="person_add_alt_1">我要報名</q-btn>
         </div>
       </div>
-      <div class="title">我是標題，鳶嘴山一日攻頂教學</div>
+      <div class="title">{{ eventTitle }}</div>
       <div class="q-pa-md">
-      <q-card class="main_tab">
-        <q-tabs v-model="tab" class="tab_title">
-          <q-tab label="活動簡介" name="one" />
-          <q-tab label="活動細項" name="two" />
-          <q-tab label="注意事項" name="three" />
-          <q-tab label="其他附件" name="four" />
-        </q-tabs>
-        <q-separator />
-        <q-tab-panels v-model="tab" animated>
-          <q-tab-panel name="one">
-            The QCard component is a great way to display important pieces of
-            grouped content.
-          </q-tab-panel>
-          <q-tab-panel name="two">
-            With so much content to display at once, and often so little screen
-            real-estate, Cards have fast become the design pattern of choice for
-            many companies, including the likes of Google and Twitter.
-          </q-tab-panel>
-          <q-tab-panel name="three">
-          </q-tab-panel>
-          <q-tab-panel name="four">
-          </q-tab-panel>
-        </q-tab-panels>
-      </q-card>
-    </div>
+        <q-card class="main_tab">
+          <q-tabs v-model="tab" class="tab_title">
+            <q-tab label="活動簡介" name="one" />
+            <q-tab label="活動細項" name="two" />
+            <q-tab label="注意事項" name="three" />
+            <q-tab label="其他附件" name="four" />
+          </q-tabs>
+          <q-separator />
+          <q-tab-panels v-model="tab" animated>
+            <q-tab-panel name="one">
+              {{ eventIntroduction }}
+            </q-tab-panel>
+            <q-tab-panel name="two">
+              {{ eventDetail }}
+            </q-tab-panel>
+            <q-tab-panel name="three">
+              {{ eventAttantion }}
+            </q-tab-panel>
+            <q-tab-panel name="four"> </q-tab-panel>
+          </q-tab-panels>
+        </q-card>
+      </div>
     </div>
   </div>
 </template>
-
-<style>
-</style>
 
 <script setup>
 import { ref } from "vue";
 import { defineProps } from "vue";
 import { apiGetEvent } from "@/apis/api/userRequest.ts";
+import { apiGetEventAppendix } from "@/apis/api/userRequest.ts";
+import store from "@/store";
+import jwt_decode from "jwt-decode";
+
+/********************const variable********************/
 
 const temp = defineProps(["preview"]);
 const preview = temp.preview ? temp.preview[0].__img.currentSrc : "";
 const tab = ref("one");
+const token = store.getters.getUserStore.sToken; // 取得token
+const decoded = jwt_decode(token); // 解析token
+const createUserName = decoded["userName"]; // 活動創建人姓名
+const cost = ref(""); // 參與費用
+const signUpEdDate = ref(""); // 報名截止倒數
+const eventTitle = ref("");   // 活動標題
+const eventIntroduction = ref("");  // 活動簡介
+const eventDetail = ref("")   // 活動細項
+const eventAttantion = ref("")  // 注意事項
+const appendixPath = ref("");
 
-getEvent();
+/********************const variable end********************/
 
+
+
+getEvent(); // 進入此頁面後先讀取活動資訊(創建活動時)
+
+
+
+
+/********************methods********************/
+
+// 讀取活動資訊
 function getEvent() {
   apiGetEvent("1").then((response) => {
-      console.log(response.data[0]);
+    let eventObj = response.data[0];
+    console.log(eventObj);
+
+    // 報名截止倒數處理
+    let newDate = new Date();
+    let dateTemp = new Date(eventObj.signUpEdDate);
+    let difference = (dateTemp.getTime() - newDate.getTime()) / 1000;
+    let signUpEdDateStr = formatSecToStr(difference);
+    
+    // 將資料帶回畫面
+    cost.value = eventObj.cost;
+    eventTitle.value = eventObj.eventTitle;
+    eventIntroduction.value = eventObj.eventIntroduction;
+    eventDetail.value = eventObj.eventDetail;
+    eventAttantion.value = eventObj.eventAttantion;
+    signUpEdDate.value = signUpEdDateStr;
   });
+
+  // 取得活動附件路徑
+  apiGetEventAppendix("1").then((response) => {
+    appendixPath.value = "https://localhost:5001" + response.data[0].appendixPath;
+  });
+}
+
+// 將日期相差秒數轉為"幾天幾小時幾分幾秒"顯示
+function formatSecToStr(seconds) {
+  let daySec = 24 * 60 * 60;
+  let hourSec = 60 * 60;
+  let minuteSec = 60;
+  let dd = Math.floor(seconds / daySec);
+  let hh = Math.floor((seconds % daySec) / hourSec);
+  let mm = Math.floor((seconds % hourSec) / minuteSec);
+  let ss = Math.round(seconds % minuteSec);
+  if (dd > 0) {
+    return dd + "天" + hh + "小時" + mm + "分鐘" + ss + "秒";
+  } else if (hh > 0) {
+    return hh + "小時" + mm + "分鐘" + ss + "秒";
+  } else if (mm > 0) {
+    return "分鐘" + ss + "秒";
+  } else {
+    return ss + "秒";
+  }
 }
 
 function test() {
   console.log(preview.preview);
 }
+
+/********************methods end********************/
 </script>

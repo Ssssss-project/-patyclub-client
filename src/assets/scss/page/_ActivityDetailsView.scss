@@ -62,9 +62,23 @@
     }
     
     .C2_L_1 {
+        display: flex;
+        flex-direction: row;
         height: 49px;
         width: 202px;
         border: 1.5px solid #402e32;
+    }
+
+    .user_name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 175px;
+        font-size: 16px;
+        color: #945B47;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
     }
     
     .C2_L_2 {

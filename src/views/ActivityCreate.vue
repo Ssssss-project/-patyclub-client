@@ -1,6 +1,5 @@
 <template>
   <main id="ActivityCreate">
-    <Head />
     <div class="mainContainer">
       <q-stepper
         class="no-shadow"

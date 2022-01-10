@@ -25,15 +25,17 @@ export const apiGetActiveUser = () => request("get", "/User/getActiveUser");
 //取得活動資訊
 export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
 
-<<<<<<< HEAD
 //新建活動
 export const apiSaveEventData = (params: any) => request("post", "/Event/createEvent", params);
 
 //檔案上傳
 export const apiDataUpload = () => request("post", "/Event/dataUpload");
-=======
+
 //更新JWT token
 export const apiGetRefreshToken = () => request("get", "/Security/refreshJWT");
 
+// 取得單筆活動
+export const apiGetEvent = (params: any) => request("get", "/Event/getEvent/" + params);
 
->>>>>>> origin/JWT-auth
+// 取得活動附件
+export const apiGetEventAppendix = (params: any) => request("get", "/Event/getEventAppendix/" + params);

@@ -116,7 +116,8 @@ import { ref } from "vue";
 import { defineEmits } from "vue";
 import { defineProps } from "vue";
 
-// const variable
+/********************const variable********************/
+
 const eventTitle = ref("");
 const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
 const eventCategory = ref("");
@@ -128,9 +129,11 @@ const cost = ref("");
 const tag = ref("");
 const eventIntroduction = ref("");
 const preview = ref(null);
-
 const emit = defineEmits(["get-para"]);
 const allChildPara = defineProps(["allChildPara"]);
+
+/********************const variable end********************/
+
 
 let savePara = allChildPara.allChildPara.basicInfo
   ? allChildPara.allChildPara.basicInfo
@@ -145,9 +148,16 @@ let month =
     : newDate.getMonth() + 1;
 let date = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
 eventStDate.value = year + "/" + month + "/" + date;
-getPara("eventStDate", eventStDate.value);
 
-// methods
+
+
+getPara("eventStDate", eventStDate.value);  // 進入頁面後處理各項參數
+
+
+
+/********************methods********************/
+
+// 參數處理
 function getPara(key, event) {
   switch (key) {
     case "eventTitle":
@@ -174,6 +184,7 @@ function getPara(key, event) {
       break;
   }
 
+  // 與父元件參數做連結
   emit("get-para", {
     event: savePara,
   });
@@ -191,5 +202,7 @@ function factoryFn(file) {
     });
   });
 }
+
+/********************methods end********************/
 </script>
 
