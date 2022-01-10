@@ -195,12 +195,12 @@ function factoryFn(file) {
   preview.value = file;
   getPara("preview", preview.value);
 
-  return new Promise((resolve, reject) => {
-    resolve({
-      url: "https://localhost:5001/api/Event/dataUpload",
-      method: "POST",
-    });
-  });
+  // return new Promise((resolve, reject) => {
+  //   resolve({
+  //     url: "https://localhost:5001/api/Event/dataUpload",
+  //     method: "POST",
+  //   });
+  // });
 }
 
 /********************methods end********************/

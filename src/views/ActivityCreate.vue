@@ -68,7 +68,6 @@
 </template>
 
 <script setup>
-import Head from "../components/Head.vue";
 import { ref } from "vue";
 import { apiSaveEventData } from "@/apis/api/userRequest.ts";
 import basicInfo from "@/components/ActivityCreatePage/basicInfo.vue";
@@ -89,15 +88,15 @@ function save() {
   // factoryFn(allChildPara.basicInfo.preview);
 }
 
-function factoryFn(file) {
-  console.log(file);
-  return new Promise((resolve, reject) => {
-    resolve({
-      url: "https://localhost:5001/api/Event/dataUpload",
-      method: "POST",
-    });
-  });
-}
+// function factoryFn(file) {
+//   console.log(file);
+//   return new Promise((resolve, reject) => {
+//     resolve({
+//       url: "https://localhost:5001/api/Event/dataUpload",
+//       method: "POST",
+//     });
+//   });
+// }
 
 // 取得子元件emit
 function getPara({ event }) {

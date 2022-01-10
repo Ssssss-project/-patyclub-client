@@ -74,7 +74,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { defineProps } from "vue";
+// import { defineProps } from "vue";
 import { apiGetEvent } from "@/apis/api/userRequest.ts";
 import { apiGetEventAppendix } from "@/apis/api/userRequest.ts";
 import store from "@/store";
@@ -82,8 +82,8 @@ import jwt_decode from "jwt-decode";
 
 /********************const variable********************/
 
-const temp = defineProps(["preview"]);
-const preview = temp.preview ? temp.preview[0].__img.currentSrc : "";
+// const temp = defineProps(["preview"]);
+// const preview = temp.preview ? temp.preview[0].__img.currentSrc : "";
 const tab = ref("one");
 const token = store.getters.getUserStore.sToken; // 取得token
 const decoded = jwt_decode(token); // 解析token
@@ -154,9 +154,9 @@ function formatSecToStr(seconds) {
   }
 }
 
-function test() {
-  console.log(preview.preview);
-}
+// function test() {
+//   console.log(preview.preview);
+// }
 
 /********************methods end********************/
 </script>
