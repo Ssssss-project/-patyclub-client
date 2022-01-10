@@ -1,22 +1,27 @@
 #Head {
-  position: inherit;
-  width: 100%;
-  background-color: $color-light-200;
-  height: 50px;
-  text-align: right;
-
-  .btns {
-    height: 50px;
-    width: 100px;
+    position: inherit;
+    width: 100%;
     background-color: $color-light-200;
-    border-color: $color-light-200;
-    border-style: none;
-  }
-  .btns:hover {
-    background-color: $color-primary-300;
-  }
+    height: 50px;
+    text-align: right;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .homelogo {
+        margin-left: 10px;
+    }
+    .btns {
+        height: 50px;
+        width: 100px;
+        background-color: $color-light-200;
+        border-color: $color-light-200;
+        border-style: none;
+    }
+    .btns:hover {
+        background-color: $color-primary-300;
+    }
 
-  .afterLoginBtn {
-    background-color: $color-light-350;
-  }
+    .afterLoginBtn {
+        background-color: $color-light-350;
+    }
 }

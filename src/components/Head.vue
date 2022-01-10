@@ -1,62 +1,96 @@
 <template>
   <header id="Head">
-    <button class="btns" @click="bShowChat = true">測試聊天室</button>
-    <router-link :to="`/activityView`">
-      <button class="btns">所有活動</button>
+    <router-link :to="`/`">
+      <img
+        class="homelogo"
+        src="../assets/PatyIcon.png"
+      >
     </router-link>
-    <router-link :to="`/activityCreate`">
-      <button class="btns">創建活動</button>
-    </router-link>
-    <button v-if="!personalInfo" class="btns" @click="openLoginDialog">
-      登入
-    </button>
-    <q-btn
-      v-if="personalInfo"
-      icon-right="img:heartSolid.svg"
-      no-caps
-      flat
-      class="afterLoginBtn"
-    >
-      Hi, {{ personalInfo.name }}
-      <q-menu transition-show="flip-right" transition-hide="flip-left" style="backgroundColor:#deb06b">
-        <q-list>
-          <q-item clickable v-close-popup>
-            <q-item-section avatar>
-              <q-icon name="settings"/>
-            </q-item-section>
-            <q-item-section caption>
-              <q-item-label>設定</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-close-popup>
-            <q-item-section avatar>
-              <q-icon name="list_alt"/>
-            </q-item-section>
-            <q-item-section caption>
-              <q-item-label>我的活動</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-close-popup>
-            <q-item-section avatar>
-              <q-icon name="military_tech"/>
-            </q-item-section>
-            <q-item-section caption>
-              <q-item-label>成就系統</q-item-label>
-            </q-item-section>
-          </q-item>
-          <q-item clickable v-close-popup>
-            <q-item-section avatar>
-              <q-icon name="exit_to_app"/>
-            </q-item-section>
-            <q-item-section caption>
-              <q-item-label>登出</q-item-label>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-menu>
-    </q-btn>
+    <div>
+      <button
+        class="btns"
+        @click="bShowChat = true"
+      >測試聊天室</button>
+      <router-link :to="`/activityView`">
+        <button class="btns">所有活動</button>
+      </router-link>
+      <router-link :to="`/activityCreate`">
+        <button class="btns">創建活動</button>
+      </router-link>
+      <button
+        v-if="!personalInfo"
+        class="btns"
+        @click="openLoginDialog"
+      >
+        登入
+      </button>
+      <q-btn
+        v-if="personalInfo"
+        icon-right="img:heartSolid.svg"
+        no-caps
+        flat
+        class="afterLoginBtn"
+      >
+        Hi, {{ personalInfo.name }}
+        <q-menu
+          transition-show="flip-right"
+          transition-hide="flip-left"
+          style="backgroundColor:#deb06b"
+        >
+          <q-list>
+            <q-item
+              clickable
+              v-close-popup
+            >
+              <q-item-section avatar>
+                <q-icon name="settings" />
+              </q-item-section>
+              <q-item-section caption>
+                <q-item-label>設定</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-close-popup
+            >
+              <q-item-section avatar>
+                <q-icon name="list_alt" />
+              </q-item-section>
+              <q-item-section caption>
+                <q-item-label>我的活動</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-close-popup
+            >
+              <q-item-section avatar>
+                <q-icon name="military_tech" />
+              </q-item-section>
+              <q-item-section caption>
+                <q-item-label>成就系統</q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item
+              clickable
+              v-close-popup
+            >
+              <q-item-section avatar>
+                <q-icon name="exit_to_app" />
+              </q-item-section>
+              <q-item-section caption>
+                <q-item-label>登出</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </q-menu>
+      </q-btn>
+    </div>
   </header>
-  <q-dialog v-model="bShowChat" :position="position">
+  <q-dialog
+    v-model="bShowChat"
+    :position="position"
+  >
     <q-card style="width: 350 px">
       <q-card-section class="column items-center no-wrap">
         <div style="width: 100%">
@@ -70,9 +104,19 @@
           <!-- <li>{{item.sendFrom}}  說  {{item.msg}}</li> -->
         </div>
 
-        <q-input v-model="sendFrom" label="姓名" />
-        <q-input v-model="text" label="訊息" />
-        <q-btn flat round @click="clickSubmit()">發送</q-btn>
+        <q-input
+          v-model="sendFrom"
+          label="姓名"
+        />
+        <q-input
+          v-model="text"
+          label="訊息"
+        />
+        <q-btn
+          flat
+          round
+          @click="clickSubmit()"
+        >發送</q-btn>
       </q-card-section>
     </q-card>
   </q-dialog>
