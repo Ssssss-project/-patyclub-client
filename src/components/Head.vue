@@ -130,7 +130,7 @@ export default {
           bIsLogin: true,
         });
         // 取得使用者資訊
-        apiGetUserProfile({userAccount:decoded.userName}).then((profileResponse) => {
+        apiGetUserProfile({userAccount:decoded.account}).then((profileResponse) => {
           console.log("profile:" + JSON.stringify(profileResponse.data, null, 2));
           personalInfo.value = profileResponse.data;
           if (personalInfo.value.headStickerPath == "") {
@@ -193,7 +193,7 @@ export default {
       let userStore = store.getters.getUserStore;
       if (userStore.bIsLogin) {
         // 取得使用者資訊
-        apiGetUserProfile({userAccount:store.getters.getUserInfo.userName}).then((profileResponse) => {
+        apiGetUserProfile({userAccount:store.getters.getUserInfo.account}).then((profileResponse) => {
           personalInfo.value = profileResponse.data;
           if (personalInfo.value.headStickerPath == "") {
             personalInfo.value.headStickerPath = "account_circle";
