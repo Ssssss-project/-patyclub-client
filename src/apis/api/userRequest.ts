@@ -1,8 +1,20 @@
 import axios from "axios";
 import request from "../https";
 
+//interface definition
+export interface EventType {
+    id: number;
+    eventTitle: string;
+    eventIntroduction: string;
+    signUpStDate: string;
+    signUpEdDate: string;
+    eventStDate: string;
+    eventEdDate: string;
+    owner: string;
+}
+
 // 註冊帳號
-export const apiPostRegister = (params :any) => request("post", "/User/Register", params);
+export const apiPostRegister = (params: any) => request("post", "/User/Register", params);
 
 // 取得密碼驗證
 export const apiPostLoginResult = (params: any) => request("post", "/User/login", params);
@@ -24,6 +36,10 @@ export const apiGetActiveUser = () => request("get", "/User/getActiveUser");
 
 //取得活動資訊
 export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
+
+//依條件篩選活動
+export const apiGetEventWithCondition = (params: { category?: number; tag?: string; eventStDate: string }) =>
+    request("post", "/Event/getEventWithConditions", params);
 
 //新建活動
 export const apiSaveEventData = (params: any) => request("post", "/Event/createEvent", params);
