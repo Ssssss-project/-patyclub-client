@@ -20,7 +20,7 @@
           <basicInfo :allChildPara="allChildPara" @get-para="getPara" />
         </q-step>
 
-        <q-step
+        <!-- <q-step
           :name="2"
           class="childComponent"
           title="報名表設計"
@@ -28,10 +28,10 @@
           :done="step > 2"
         >
           <formDesign />
-        </q-step>
+        </q-step> -->
 
         <q-step
-          :name="3"
+          :name="2"
           class="childComponent"
           title="預覽"
           icon="visibility"
@@ -70,20 +70,53 @@
 <script setup>
 import { ref } from "vue";
 import { apiSaveEventData } from "@/apis/api/userRequest.ts";
+import { apiUpdateEventData } from "@/apis/api/userRequest.ts";
 import basicInfo from "@/components/ActivityCreatePage/basicInfo.vue";
-import formDesign from "@/components/ActivityCreatePage/formDesign.vue";
+// import formDesign from "@/components/ActivityCreatePage/formDesign.vue";
 import ActivityDetailsView from "@/components/ActivityDetailsView";
 
 const step = ref(1);
 
 let allChildPara = {};
+let eventId = 0;
 
-function save() {
-  apiSaveEventData(allChildPara.basicInfo).then((response) => {
-    if (response.status == 200) {
-      alert("儲存成功");
-    }
+createdSave(); // 進入畫面後自動新建一筆活動
+
+
+
+
+/********************methods********************/
+
+// 進入畫面時自動儲存
+function createdSave() {
+  apiSaveEventData().then((response) => {
+    eventId = response.data.id;
+    console.log("created ok");
   });
+}
+
+// 儲存按鈕
+function save() {
+  allChildPara.basicInfo.id = eventId;  // EventMst id
+
+  // 處理後端接收用的eventAppendixList資料
+  let eventAppendixTemp = {};
+  let eventAppendixArray = [];
+  allChildPara.eventAppendixList.appendixPath.forEach(function (value, index) {
+    // 根據appendixPath的數量建立同等數量的array, 並在每筆array加入eventMstId
+    eventAppendixTemp.eventMstId = eventId;
+    eventAppendixTemp.appendixPath = value;
+    eventAppendixArray[index] = eventAppendixTemp;
+  });
+
+  let Event = {};
+  Event.eventMst = allChildPara.basicInfo;
+  Event.eventAppendixList = eventAppendixArray;
+
+  apiUpdateEventData(Event).then(() => {
+    alert("儲存成功");
+  });
+
   // console.log(allChildPara);
   // factoryFn(allChildPara.basicInfo.preview);
 }
@@ -99,7 +132,10 @@ function save() {
 // }
 
 // 取得子元件emit
-function getPara({ event }) {
+function getPara({ event, file }) {
   allChildPara.basicInfo = event;
+  allChildPara.eventAppendixList = file;
 }
+
+/********************methods end********************/
 </script>

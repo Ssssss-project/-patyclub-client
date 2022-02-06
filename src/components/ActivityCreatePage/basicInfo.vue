@@ -135,9 +135,12 @@ const allChildPara = defineProps(["allChildPara"]);
 /********************const variable end********************/
 
 
+
+
 let savePara = allChildPara.allChildPara.basicInfo
   ? allChildPara.allChildPara.basicInfo
   : {};
+let saveParaFile = {};
 
 // set now date
 let newDate = new Date();
@@ -149,9 +152,8 @@ let month =
 let date = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
 eventStDate.value = year + "/" + month + "/" + date;
 
+getPara("eventStDate", eventStDate.value); // 進入頁面後處理各項參數
 
-
-getPara("eventStDate", eventStDate.value);  // 進入頁面後處理各項參數
 
 
 
@@ -159,6 +161,7 @@ getPara("eventStDate", eventStDate.value);  // 進入頁面後處理各項參數
 
 // 參數處理
 function getPara(key, event) {
+  let tempArray = [];
   switch (key) {
     case "eventTitle":
       savePara.eventTitle = event;
@@ -177,7 +180,10 @@ function getPara(key, event) {
       break;
 
     case "preview":
-      savePara.preview = event;
+      event.forEach(function (value, index) {
+        tempArray[index] = "/Data/" + value.name;
+      });
+      saveParaFile.appendixPath = tempArray;
       break;
 
     default:
@@ -187,20 +193,22 @@ function getPara(key, event) {
   // 與父元件參數做連結
   emit("get-para", {
     event: savePara,
+    file: saveParaFile,
   });
 }
 
 function factoryFn(file) {
   // preview.value = file[0].__img.currentSrc;
   preview.value = file;
-  getPara("preview", preview.value);
+  getPara("preview", file);
 
-  // return new Promise((resolve, reject) => {
-  //   resolve({
-  //     url: "https://localhost:5001/api/Event/dataUpload",
-  //     method: "POST",
-  //   });
-  // });
+  return new Promise((resolve, reject) => {
+    resolve({
+      url: "https://localhost:5001/api/Event/dataUpload",
+      method: "POST",
+    });
+    console.log(reject);
+  });
 }
 
 /********************methods end********************/
