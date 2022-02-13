@@ -26,7 +26,6 @@ export default {
         label: NodeItem.cateName,
         children: [],
       };
-
       console.log(tempNode);
       if (
         NodeItem.childNode?.length !== 0 &&

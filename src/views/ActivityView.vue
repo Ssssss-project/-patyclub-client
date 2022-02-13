@@ -60,18 +60,16 @@ export default {
     const categoryList: Ref<categoryNode[]> = ref([]);
 
     const getEventWithCondition = () => {
-      console.log("11111");
       apiGetEventWithCondition({ tag: "", eventStDate: "" }).then(
         (response: any) => {
           allEvent.value = response.data;
-          console.log("event", response.data);
         }
       );
     };
 
     const getEventTree = () => {
       apiGetEventCategory().then((response: any) => {
-        console.log("sql", response.data);
+        console.log("EventTreeFromAPI", response.data);
         categoryList.value = response.data;
       });
     };
