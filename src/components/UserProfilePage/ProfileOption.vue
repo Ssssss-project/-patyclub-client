@@ -10,27 +10,57 @@
   </div>
 </template>
 
-<script>
-import { ref, watch } from "vue";
+<script lang="ts">
+import { useRouter, Router } from "vue-router";
+import { ref, watch, Ref } from "vue";
+
 export default {
   props: ["option"],
 
-  setup(props) {
-    const selected = ref("");
+  setup(props: any) {
+    const selected: Ref<string> = ref("");
+    const router: Router = useRouter();
+    let itemMap: Map<any, any> = new Map([
+      ["personalInfo", "個人檔案"],
+      ["personalPhoto", "大頭貼"],
+      ["accountManager", "帳號管理"],
+      ["accountNotify", "通知"],
+      ["activities", "我的活動"],
+      ["achievement", "成就系統"],
+    ]);
 
-    function setItem(option) {
-      if (option == "activities") {
-        return "我的活動";
-      } else if (option == "achievement") {
-        return "成就系統";
+    function getMapValue(option: string) {
+      if (itemMap.has(option)) {
+        return itemMap.get(option);
       } else {
         return "個人檔案";
       }
     }
 
-    watch(() => props.option,() => {
-        selected.value = setItem(props.option);
-    },{ immediate: true }
+    function getMapKey(mapValue: string) {
+      for (let [key, value] of itemMap) {
+        if (value == mapValue) {
+          return key;
+        }
+      }
+      return "personalInfo";
+    }
+
+    watch(
+      () => props.option,
+      () => {
+        selected.value = getMapValue(props.option);
+      },
+      { immediate: true }
+    );
+
+    watch(
+      () => selected.value,
+      () => {
+        let selectedItem: string = selected.value;
+        router.push({ path: "/UserProfile/" + getMapKey(selectedItem) });
+      },
+      { immediate: true }
     );
 
     return {

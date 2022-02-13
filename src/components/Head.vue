@@ -1,18 +1,31 @@
 <template>
   <header id="Head">
     <router-link :to="`/`">
-      <img class="homelogo" src="../assets/PatyIcon.png" />
+      <img
+        class="homelogo"
+        src="../assets/PatyIcon.png"
+      />
     </router-link>
     <div>
-      <button class="btns" @click="testToken()">測試token</button>
-      <button class="btns" @click="bShowChat = true">測試聊天室</button>
+      <button
+        class="btns"
+        @click="testToken()"
+      >測試token</button>
+      <button
+        class="btns"
+        @click="bShowChat = true"
+      >測試聊天室</button>
       <router-link :to="`/activityView`">
         <button class="btns">所有活動</button>
       </router-link>
       <router-link :to="`/activityCreate`">
         <button class="btns">創建活動</button>
       </router-link>
-      <button v-if="!personalInfo" class="btns" @click="openLoginDialog">
+      <button
+        v-if="!personalInfo"
+        class="btns"
+        @click="openLoginDialog"
+      >
         登入
       </button>
       <q-btn
@@ -29,8 +42,11 @@
           style="backgroundColor:#deb06b"
         >
           <q-list>
-            <router-link :to="`/UserProfile/setting`">
-              <q-item clickable v-close-popup>
+            <router-link :to="`/UserProfile/personalInfo`">
+              <q-item
+                clickable
+                v-close-popup
+              >
                 <q-item-section avatar>
                   <q-icon :name="getImg('set')" />
                 </q-item-section>
@@ -40,7 +56,10 @@
               </q-item>
             </router-link>
             <router-link :to="`/UserProfile/activities`">
-              <q-item clickable v-close-popup>
+              <q-item
+                clickable
+                v-close-popup
+              >
                 <q-item-section avatar>
                   <q-icon :name="getImg('activities')" />
                 </q-item-section>
@@ -50,7 +69,10 @@
               </q-item>
             </router-link>
             <router-link :to="`/UserProfile/achievement`">
-              <q-item clickable v-close-popup>
+              <q-item
+                clickable
+                v-close-popup
+              >
                 <q-item-section avatar>
                   <q-icon :name="getImg('achievement')" />
                 </q-item-section>
@@ -60,7 +82,11 @@
               </q-item>
             </router-link>
             <router-link :to="`/`">
-              <q-item clickable v-close-popup @click="logOut()">
+              <q-item
+                clickable
+                v-close-popup
+                @click="logOut()"
+              >
                 <q-item-section avatar>
                   <q-icon :name="getImg('logOut')" />
                 </q-item-section>
@@ -74,7 +100,10 @@
       </q-btn>
     </div>
   </header>
-  <q-dialog v-model="bShowChat" :position="position">
+  <q-dialog
+    v-model="bShowChat"
+    :position="position"
+  >
     <q-card style="width: 350 px">
       <q-card-section class="column items-center no-wrap">
         <div style="width: 100%">
@@ -88,9 +117,19 @@
           <!-- <li>{{item.sendFrom}}  說  {{item.msg}}</li> -->
         </div>
 
-        <q-input v-model="sendFrom" label="姓名" />
-        <q-input v-model="text" label="訊息" />
-        <q-btn flat round @click="clickSubmit()">發送</q-btn>
+        <q-input
+          v-model="sendFrom"
+          label="姓名"
+        />
+        <q-input
+          v-model="text"
+          label="訊息"
+        />
+        <q-btn
+          flat
+          round
+          @click="clickSubmit()"
+        >發送</q-btn>
       </q-card-section>
     </q-card>
   </q-dialog>

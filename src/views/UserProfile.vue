@@ -6,7 +6,7 @@
           <ProfileOption v-model:option="selectItem" />
         </div>
         <div class="profile-view">
-          <ProfileView />
+          <ProfileView v-model:option="selectItem" />
         </div>
       </div>
     </div>
@@ -24,9 +24,12 @@ export default {
     const route = useRoute();
     const selectItem = ref();
 
-    watch(() => route.params.item,() => {
+    watch(
+      () => route.params.item,
+      () => {
         selectItem.value = route.params.item;
-    },{ immediate: true }
+      },
+      { immediate: true }
     );
 
     return {
