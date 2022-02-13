@@ -8,10 +8,16 @@
         </div>
         <div class="activity-information">
           <div class="event-category scrollbarCol">
-            <event-category />
+            <event-category :categoryList="categoryList" />
           </div>
           <div class="card-set">
-            <div class="card-list scrollbarCol">
+            <div v-if="allEvent.length===0">
+              尚無活動
+            </div>
+            <div
+              class="card-list scrollbarCol"
+              v-else
+            >
               <card-list :allEvent="allEvent" />
             </div>
             <q-pagination
@@ -33,7 +39,11 @@
 import CardList from "../components/ActivityViewPage/CardList.vue";
 import EventCategory from "../components/ActivityViewPage/EventCategory.vue";
 import ActivityFilter from "../components/ActivityViewPage/ActivityFilter.vue";
-import { apiGetEventWithCondition, EventType } from "../apis/api/userRequest";
+import {
+  apiGetEventWithCondition,
+  apiGetEventCategory,
+} from "../apis/api/userRequest";
+import { categoryNode, EventType } from "../apis/type";
 import { ref, onMounted, Ref } from "vue";
 
 export default {
@@ -47,16 +57,27 @@ export default {
     ];
     const page: Ref<number> = ref(1);
     const allEvent: Ref<EventType[]> = ref([]);
+    const categoryList: Ref<categoryNode[]> = ref([]);
 
     const getEventWithCondition = () => {
+      console.log("11111");
       apiGetEventWithCondition({ tag: "", eventStDate: "" }).then(
         (response: any) => {
-          console.log(response.data);
           allEvent.value = response.data;
+          console.log("event", response.data);
         }
       );
     };
+
+    const getEventTree = () => {
+      apiGetEventCategory().then((response: any) => {
+        console.log("sql", response.data);
+        categoryList.value = response.data;
+      });
+    };
+
     onMounted(() => {
+      getEventTree();
       getEventWithCondition();
     });
 
@@ -66,6 +87,7 @@ export default {
       minPages: 1,
       maxPages: 15,
       allEvent,
+      categoryList,
     };
   },
 

@@ -1,60 +1,53 @@
 <template>
-    <div class="q-pa-md q-gutter-sm">
-        <q-tree :nodes="simple" node-key="label" color="red" control-color="red" />
-    </div>
+  <div class="q-pa-md q-gutter-sm">
+    <q-tree
+      :nodes="CategoryNode"
+      node-key="label"
+      color="red"
+      control-color="red"
+      no-connectors
+    />
+  </div>
 </template>
 
-<script>
+<script lang="ts">
+import { toRef, ref, onMounted } from "vue";
+import { categoryNode, QuasartreeNode } from "../../apis/type";
 export default {
-    setup() {
-        return {
-            simple: [
-                {
-                    label: "APEX",
-                    avatar: "",
-                    children: [
-                        {
-                            label: "name1",
-                            icon: "",
-                            children: [{ label: "event1" }, { label: "event2" }],
-                        },
-                        {
-                            label: "name2",
-                            icon: "",
-                            disabled: false,
-                            children: [{ label: "event1" }, { label: "event2" }],
-                        },
-                        {
-                            label: "name3",
-                            icon: "",
-                            children: [{ label: "event1" }, { label: "event2" }],
-                        },
-                    ],
-                },
-                {
-                    label: "LOL",
-                    avatar: "",
-                    children: [
-                        {
-                            label: "name4",
-                            icon: "",
-                           children: [{ label: "event1" }, { label: "event2" }],
-                        },
-                        {
-                            label: "name5",
-                            icon: "",
-                            disabled: false,
-                            children: [{ label: "event1" }, { label: "event2" }],
-                        },
-                        {
-                            label: "name6",
-                            icon: "",
-                           children: [{ label: "event1" }, { label: "event2" }],
-                        },
-                    ],
-                },
-            ],
-        };
-    },
+  props: ["categoryList"],
+  setup(props: any) {
+    const categoryList = toRef(props, "categoryList");
+    const CategoryNode = ref<QuasartreeNode[]>([]);
+
+    const processCategoryNode = (NodeItem: categoryNode) => {
+      console.log("NodeItem", NodeItem);
+      let tempNode: QuasartreeNode = {
+        id: NodeItem.cateId,
+        label: NodeItem.cateName,
+        children: [],
+      };
+
+      console.log(tempNode);
+      if (
+        NodeItem.childNode?.length !== 0 &&
+        NodeItem.childNode !== undefined
+      ) {
+        NodeItem.childNode.forEach((item: categoryNode) => {
+          tempNode.children.push(processCategoryNode(item));
+        });
+      }
+      return tempNode;
+    };
+
+    onMounted(() => {
+      console.log("onmounted", categoryList);
+      console.log("onmounted-value", categoryList.value);
+      CategoryNode.value = processCategoryNode(categoryList).children;
+    });
+
+    return {
+      CategoryNode,
+    };
+  },
 };
 </script>
