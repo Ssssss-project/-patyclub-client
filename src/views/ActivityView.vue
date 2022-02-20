@@ -8,11 +8,17 @@
         </div>
         <div class="activity-information">
           <div class="event-category scrollbarCol">
-            <event-category />
+            <event-category :categoryList="categoryList" />
           </div>
           <div class="card-set">
-            <div class="card-list scrollbarCol">
-              <card-list />
+            <div v-if="allEvent.length===0">
+              尚無活動
+            </div>
+            <div
+              class="card-list scrollbarCol"
+              v-else
+            >
+              <card-list :allEvent="allEvent" />
             </div>
             <q-pagination
               v-model="page"
@@ -29,26 +35,60 @@
   </main>
 </template>
 
-<script>
+<script lang="ts">
 import CardList from "../components/ActivityViewPage/CardList.vue";
 import EventCategory from "../components/ActivityViewPage/EventCategory.vue";
 import ActivityFilter from "../components/ActivityViewPage/ActivityFilter.vue";
-
-import { ref } from "vue";
+import {
+  apiGetEventWithCondition,
+  apiGetEventCategory,
+} from "../apis/api/userRequest";
+import { categoryNode, EventType } from "../apis/type";
+import { ref, onMounted, Ref } from "vue";
 
 export default {
   setup() {
-    const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
-    const model = ref(options[0]);
-    const page = ref(1);
+    const options: string[] = [
+      "Google",
+      "Facebook",
+      "Twitter",
+      "Apple",
+      "Oracle",
+    ];
+    const page: Ref<number> = ref(1);
+    const allEvent: Ref<EventType[]> = ref([]);
+    const categoryList: Ref<categoryNode[]> = ref([]);
+
+    const getEventWithCondition = () => {
+      apiGetEventWithCondition({ tag: "", eventStDate: "" }).then(
+        (response: any) => {
+          allEvent.value = response.data;
+        }
+      );
+    };
+
+    const getEventTree = () => {
+      apiGetEventCategory().then((response: any) => {
+        console.log("EventTreeFromAPI", response.data);
+        categoryList.value = response.data;
+      });
+    };
+
+    onMounted(() => {
+      getEventTree();
+      getEventWithCondition();
+    });
+
     return {
       options,
-      model,
       page: page,
       minPages: 1,
       maxPages: 15,
+      allEvent,
+      categoryList,
     };
   },
+
   components: {
     CardList,
     EventCategory,

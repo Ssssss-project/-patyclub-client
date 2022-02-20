@@ -1,6 +1,9 @@
 <template>
   <main id="Home">
-    <div id="Home-container" class="container">
+    <div
+      id="Home-container"
+      class="container"
+    >
       <transition
         name="first-step"
         mode="out-in"
@@ -35,7 +38,7 @@
         >
           <div
             class="CardInfo-right CardInfo-right-bill"
- 
+            @mouseleave="showInfo"
           >
             <div class="tag-group tag-group-billboard">
               <div class="tag tag-billboard">公佈欄｜BillBoard</div>
@@ -119,7 +122,7 @@ export default {
     const isopacity = ref(true);
 
     const backgroundimg = ref({
-      backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+      backgroundImage: "url(" + require("../assets/backgroundPic.png") + ")",
       backgroundRepeat: "no-repeat",
       backgroundAttachment: "fixed",
       backgroundPosition: "bottom",
