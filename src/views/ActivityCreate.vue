@@ -37,7 +37,7 @@
           icon="visibility"
           :done="step > 4"
         >
-          <ActivityDetailsView :preview="allChildPara.basicInfo.preview" />
+          <ActivityDetailsView :allChildPara="allChildPara" @get-para="getPara" />
         </q-step>
 
         <template v-slot:navigation>
@@ -52,7 +52,7 @@
             ></q-btn>
             <q-btn
               class="btn-step"
-              @click="$refs.stepper.next()"
+              @click="$refs.stepper.next(); save()"
               :label="step === 8 ? 'Finish' : 'Continue'"
               flat
             ></q-btn>
@@ -92,6 +92,8 @@ function createdSave() {
   apiSaveEventData().then((response) => {
     eventId = response.data.id;
     console.log("created ok");
+    console.log(eventId);
+    allChildPara.id = eventId;
   });
 }
 
@@ -132,9 +134,13 @@ function save() {
 // }
 
 // 取得子元件emit
-function getPara({ event, file }) {
-  allChildPara.basicInfo = event;
-  allChildPara.eventAppendixList = file;
+function getPara({ event, file, fileTemp }) {
+  if (event || file) {
+    allChildPara.basicInfo = event;
+    allChildPara.eventAppendixList = file;
+    allChildPara.fileTemp = fileTemp;
+  }
+  allChildPara.id = eventId;
 }
 
 /********************methods end********************/
