@@ -8,9 +8,15 @@
         </div>
         <div class="activity-information">
           <div class="event-category scrollbarCol">
-            <event-category :categoryList="categoryList" />
+            <event-category
+              :categoryList="categoryList"
+              :key="categoryList"
+            />
           </div>
-          <div class="card-set">
+          <div
+            class="card-set"
+            :key="allEvent"
+          >
             <div v-if="allEvent.length===0">
               尚無活動
             </div>

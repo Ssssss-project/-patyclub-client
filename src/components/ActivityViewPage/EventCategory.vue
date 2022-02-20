@@ -18,6 +18,7 @@ export default {
   setup(props: any) {
     const categoryList = toRef(props, "categoryList");
     const CategoryNode = ref<QuasartreeNode[]>([]);
+    console.log("11");
 
     const processCategoryNode = (NodeItem: categoryNode) => {
       console.log("NodeItem", NodeItem);
@@ -39,9 +40,8 @@ export default {
     };
 
     onMounted(() => {
-      console.log("onmounted", categoryList);
-      console.log("onmounted-value", categoryList.value);
-      CategoryNode.value = processCategoryNode(categoryList).children;
+      if (categoryList.value.length !== 0)
+        CategoryNode.value = processCategoryNode(categoryList.value).children;
     });
 
     return {
