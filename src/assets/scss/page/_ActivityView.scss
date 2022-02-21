@@ -108,7 +108,7 @@
                 border: 1px solid $color-dark-900;
             }
             .activity-recommended {
-                background: $color-light-50;
+                background: $color-light-80;
                 color: $color-brown-900;
                 border: 1px solid $color-dark-900;
             }
@@ -212,5 +212,9 @@
                 margin-top: -1px;
             }
         }
+        
+    }
+    .q-tree__node-header{
+        background-color: $color-light-80;
     }
 }

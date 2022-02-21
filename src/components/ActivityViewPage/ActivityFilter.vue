@@ -52,8 +52,8 @@
       <label>檢視</label>
       <q-select
         class="select-category"
-        v-model="model"
-        :options="options"
+        v-model="viewConditionmodel"
+        :options="viewConditionFromProp"
         borderless
         dense
         options-dense
@@ -73,28 +73,33 @@
   </div>
 </template>
 
-<script>
-import { ref } from "vue";
+<script lang="ts">
+import { Ref, ref, toRef } from "vue";
 
 export default {
-  setup() {
+  props: ["viewCondition"],
+  setup(props:any) {
+    const viewConditionFromProp = toRef(props,"viewCondition");
+    const viewConditionmodel = viewConditionFromProp.value[0];
     const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
     const model = ref(options[0]);
-    const stringOptions = ref([]);
+    const stringOptions:Ref<string[]> = ref([]);
     const searchWords = ref(null);
 
-    const submit = (refKey) => {
+    const submit = (refKey:string) => {
       stringOptions.value.push(refKey);
       searchWords.value = null;
     };
 
-    const deleteValue = (index) => {
+    const deleteValue = (index:number) => {
       stringOptions.value.splice(index, 1);
     };
 
     return {
       options,
       model,
+      viewConditionFromProp,
+      viewConditionmodel,
       stringOptions,
       searchWords,
       deleteValue,

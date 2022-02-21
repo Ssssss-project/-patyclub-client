@@ -3,11 +3,11 @@
         <q-tree
             :nodes="CategoryNode"
             v-model:selected="selected"
-            node-key="label"
+            node-key="id"
             color="red"
-            control-color="red"
+            text-color="#402e32"
             no-connectors
-            :key="selected"
+            @update:selected="GetNodeID"
         />
     </div>
 </template>
@@ -17,12 +17,11 @@ import { toRef, ref, onMounted, watch } from "vue";
 import { categoryNode, QuasartreeNode } from "../../apis/type";
 export default {
     props: ["categoryList", "selectedCategory"],
-    emits: ["selectedCategory"],
     setup(props: any, { emit }) {
         const categoryList = toRef(props, "categoryList");
         const CategoryNode = ref<QuasartreeNode[]>([]);
         const selected = toRef(props, "selectedCategory");
-        emit("selectedCategory");
+
         const processCategoryNode = (NodeItem: categoryNode) => {
             let tempNode: QuasartreeNode = {
                 id: NodeItem.cateId,
@@ -36,6 +35,11 @@ export default {
             }
             return tempNode;
         };
+
+        const GetNodeID = (ID: any) => {
+            emit("setselectedcategory",ID);
+        };
+
         watch(selected, (newVal, oldVal) => {
             console.log("selected-watchsssssss", newVal, oldVal);
         });
@@ -47,6 +51,7 @@ export default {
         return {
             CategoryNode,
             selected,
+            GetNodeID,
         };
     },
 };
