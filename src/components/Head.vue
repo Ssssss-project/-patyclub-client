@@ -122,7 +122,7 @@
           label="姓名"
         />
         <q-input
-          v-model="text"
+          v-model="sendText"
           label="訊息"
         />
         <q-btn
@@ -189,7 +189,7 @@ export default {
         .withUrl("https://localhost:5001/hub/test")
         .build()
     );
-    const text = ref("");
+    const sendText = ref("");
     const sendFrom = ref("");
     const receiveMsg = ref([
       { sendFrom: "A", msg: ["T1"] },
@@ -210,9 +210,10 @@ export default {
 
     function clickSubmit() {
       hubConnection.value
-        .send("SendMessage", sendFrom.value, text.value)
+        .send("SendMessage", sendFrom.value, sendText.value)
         .then(() => {
           console.log("send msg");
+          console.log(sendFrom.value + " // " + sendText.value);
         })
         .catch((error) => {
           console.log("msg send error ", error);
@@ -276,6 +277,7 @@ export default {
     return {
       personalInfo,
       sendFrom,
+      sendText,
       receiveMsg,
       bShowChat,
       openLoginDialog,
