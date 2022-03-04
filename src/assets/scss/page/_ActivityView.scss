@@ -84,6 +84,10 @@
         color: $color-light-50;
         padding: 19px 0px;
         border-radius: 5px;
+        .card-title {
+            height: 40px;
+            overflow-y: auto;
+        }
     }
     .activity-information {
         display: flex;
@@ -212,9 +216,8 @@
                 margin-top: -1px;
             }
         }
-        
     }
-    .q-tree__node-header{
+    .q-tree__node-header {
         background-color: $color-light-80;
     }
 }

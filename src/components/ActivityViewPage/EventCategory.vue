@@ -17,7 +17,7 @@ import { toRef, ref, onMounted, watch } from "vue";
 import { categoryNode, QuasartreeNode } from "../../apis/type";
 export default {
     props: ["categoryList", "selectedCategory"],
-    setup(props: any, { emit }) {
+    setup(props: any, { emit }: any) {
         const categoryList = toRef(props, "categoryList");
         const CategoryNode = ref<QuasartreeNode[]>([]);
         const selected = toRef(props, "selectedCategory");
@@ -37,7 +37,7 @@ export default {
         };
 
         const GetNodeID = (ID: any) => {
-            emit("setselectedcategory",ID);
+            emit("setselectedcategory", ID);
         };
 
         watch(selected, (newVal, oldVal) => {
