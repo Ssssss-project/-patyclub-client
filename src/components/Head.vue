@@ -4,18 +4,28 @@
       <img
         class="homelogo"
         src="../assets/PatyIcon.png"
-      >
+      />
     </router-link>
     <div>
-      <button class="btns" @click="testToken()">測試token</button>
-      <button class="btns" @click="bShowChat = true">測試聊天室</button>
+      <button
+        class="btns"
+        @click="testToken()"
+      >測試token</button>
+      <button
+        class="btns"
+        @click="bShowChat = true"
+      >測試聊天室</button>
       <router-link :to="`/activityView`">
         <button class="btns">所有活動</button>
       </router-link>
       <router-link :to="`/activityCreate`">
         <button class="btns">創建活動</button>
       </router-link>
-      <button v-if="!personalInfo" class="btns" @click="openLoginDialog">
+      <button
+        v-if="!personalInfo"
+        class="btns"
+        @click="openLoginDialog"
+      >
         登入
       </button>
       <q-btn
@@ -32,42 +42,63 @@
           style="backgroundColor:#deb06b"
         >
           <q-list>
-            <q-item clickable v-close-popup>
-              <q-item-section avatar>
-                <q-icon name="settings" />
-              </q-item-section>
-              <q-item-section caption>
-                <q-item-label>設定</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section avatar>
-                <q-icon name="list_alt" />
-              </q-item-section>
-              <q-item-section caption>
-                <q-item-label>我的活動</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup>
-              <q-item-section avatar>
-                <q-icon name="military_tech" />
-              </q-item-section>
-              <q-item-section caption>
-                <q-item-label>成就系統</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-item clickable v-close-popup @click="logOut()">
-              <q-item-section avatar>
-                <q-icon name="exit_to_app" />
-              </q-item-section>
-              <q-item-section caption>
-                <q-item-label>登出</q-item-label>
-              </q-item-section>
-            </q-item>
+            <router-link :to="`/UserProfile/personalInfo`">
+              <q-item
+                clickable
+                v-close-popup
+              >
+                <q-item-section avatar>
+                  <q-icon :name="getImg('set')" />
+                </q-item-section>
+                <q-item-section caption>
+                  <q-item-label>設定</q-item-label>
+                </q-item-section>
+              </q-item>
+            </router-link>
+            <router-link :to="`/UserProfile/activities`">
+              <q-item
+                clickable
+                v-close-popup
+              >
+                <q-item-section avatar>
+                  <q-icon :name="getImg('activities')" />
+                </q-item-section>
+                <q-item-section caption>
+                  <q-item-label>我的活動</q-item-label>
+                </q-item-section>
+              </q-item>
+            </router-link>
+            <router-link :to="`/UserProfile/achievement`">
+              <q-item
+                clickable
+                v-close-popup
+              >
+                <q-item-section avatar>
+                  <q-icon :name="getImg('achievement')" />
+                </q-item-section>
+                <q-item-section caption>
+                  <q-item-label>成就系統</q-item-label>
+                </q-item-section>
+              </q-item>
+            </router-link>
+            <router-link :to="`/`">
+              <q-item
+                clickable
+                v-close-popup
+                @click="logOut()"
+              >
+                <q-item-section avatar>
+                  <q-icon :name="getImg('logOut')" />
+                </q-item-section>
+                <q-item-section caption>
+                  <q-item-label>登出</q-item-label>
+                </q-item-section>
+              </q-item>
+            </router-link>
           </q-list>
         </q-menu>
       </q-btn>
-      </div>
+    </div>
   </header>
   <q-dialog
     v-model="bShowChat"
@@ -91,7 +122,7 @@
           label="姓名"
         />
         <q-input
-          v-model="text"
+          v-model="sendText"
           label="訊息"
         />
         <q-btn
@@ -106,7 +137,7 @@
 <script>
 import LoginDialog from "./LoginDialog.vue";
 import { useQuasar } from "quasar";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import * as signalR from "@aspnet/signalr";
 import jwt_decode from "jwt-decode";
 import { apiGetUserProfile } from "@/apis/api/userRequest.ts";
@@ -116,6 +147,10 @@ export default {
     const $q = useQuasar();
     const personalInfo = ref(null);
     const store = useStore();
+
+    onMounted(() => {
+      checkIsLogin();
+    });
 
     function openLoginDialog() {
       $q.dialog({
@@ -130,15 +165,22 @@ export default {
           bIsLogin: true,
         });
         // 取得使用者資訊
-        apiGetUserProfile({userAccount:decoded.account}).then((profileResponse) => {
-          console.log("profile:" + JSON.stringify(profileResponse.data, null, 2));
-          personalInfo.value = profileResponse.data;
-          if (personalInfo.value.headStickerPath == "") {
-            personalInfo.value.headStickerPath = "account_circle";
-          } else {
-            personalInfo.value.headStickerPath = "img:https://localhost:5001" + personalInfo.value.headStickerPath;
+        apiGetUserProfile({ userAccount: decoded.account }).then(
+          (profileResponse) => {
+            console.log(
+              "profile:" + JSON.stringify(profileResponse.data, null, 2)
+            );
+            personalInfo.value = profileResponse.data;
+            if (personalInfo.value.headStickerPath == "") {
+              personalInfo.value.headStickerPath =
+                "img:" + require(`@/assets/icon/numberOfPeople.svg`);
+            } else {
+              personalInfo.value.headStickerPath =
+                "img:https://localhost:5001" +
+                personalInfo.value.headStickerPath;
+            }
           }
-        });
+        );
       });
     }
     const bShowChat = ref(false);
@@ -147,7 +189,7 @@ export default {
         .withUrl("https://localhost:5001/hub/test")
         .build()
     );
-    const text = ref("");
+    const sendText = ref("");
     const sendFrom = ref("");
     const receiveMsg = ref([
       { sendFrom: "A", msg: ["T1"] },
@@ -168,9 +210,10 @@ export default {
 
     function clickSubmit() {
       hubConnection.value
-        .send("SendMessage", sendFrom.value, text.value)
+        .send("SendMessage", sendFrom.value, sendText.value)
         .then(() => {
           console.log("send msg");
+          console.log(sendFrom.value + " // " + sendText.value);
         })
         .catch((error) => {
           console.log("msg send error ", error);
@@ -193,12 +236,16 @@ export default {
       let userStore = store.getters.getUserStore;
       if (userStore.bIsLogin) {
         // 取得使用者資訊
-        apiGetUserProfile({userAccount:store.getters.getUserInfo.account}).then((profileResponse) => {
+        apiGetUserProfile({
+          userAccount: store.getters.getUserInfo.account,
+        }).then((profileResponse) => {
           personalInfo.value = profileResponse.data;
           if (personalInfo.value.headStickerPath == "") {
-            personalInfo.value.headStickerPath = "account_circle";
+            personalInfo.value.headStickerPath =
+              "img:" + require(`@/assets/icon/numberOfPeople.svg`);
           } else {
-            personalInfo.value.headStickerPath = "img:https://localhost:5001" + personalInfo.value.headStickerPath;
+            personalInfo.value.headStickerPath =
+              "img:https://localhost:5001" + personalInfo.value.headStickerPath;
           }
         });
       } else {
@@ -219,13 +266,18 @@ export default {
     function testToken() {
       store.dispatch("refreshAndSetAuth");
     }
+
+    function getImg(name) {
+      return "img:" + require(`@/assets/icon/${name}.svg`);
+    }
+
     connectHub();
     listenHub();
-    checkIsLogin();
 
     return {
       personalInfo,
       sendFrom,
+      sendText,
       receiveMsg,
       bShowChat,
       openLoginDialog,
@@ -235,6 +287,7 @@ export default {
       checkIsLogin,
       logOut,
       testToken,
+      getImg,
     };
   },
   components: {},

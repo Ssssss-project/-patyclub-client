@@ -21,6 +21,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/user/resetPassword/:token',
     name: 'resetPassword',
     component: () => import('../views/ResetPassword.vue')
+  },
+  {
+    path: '/UserProfile/:item',
+    name: 'UserProfile',
+    component: () => import('../views/UserProfile.vue')
   }
 ];
 
