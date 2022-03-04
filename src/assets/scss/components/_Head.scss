@@ -7,6 +7,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    .normalbg {
+        background-color: $color-light-200;
+    }
+    .home_bg {
+        background-color: $color-light-200;
+    }
     .homelogo {
         margin-left: 10px;
     }
