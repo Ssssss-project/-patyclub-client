@@ -78,20 +78,20 @@ import { Ref, ref, toRef } from "vue";
 
 export default {
   props: ["viewCondition"],
-  setup(props:any) {
-    const viewConditionFromProp = toRef(props,"viewCondition");
+  setup(props: any) {
+    const viewConditionFromProp = toRef(props, "viewCondition");
     const viewConditionmodel = viewConditionFromProp.value[0];
     const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
     const model = ref(options[0]);
-    const stringOptions:Ref<string[]> = ref([]);
+    const stringOptions: Ref<string[]> = ref([]);
     const searchWords = ref(null);
 
-    const submit = (refKey:string) => {
+    const submit = (refKey: string) => {
       stringOptions.value.push(refKey);
       searchWords.value = null;
     };
 
-    const deleteValue = (index:number) => {
+    const deleteValue = (index: number) => {
       stringOptions.value.splice(index, 1);
     };
 

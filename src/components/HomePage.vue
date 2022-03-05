@@ -13,8 +13,14 @@
           @click="showInfo"
           v-if="showInfoButton.showFirstStep"
         >
-          <img src="../assets/PatyLogo.png" class="first-img"/>
-          <img src="../assets/PatyLogo-white.png" class="second-img"/>
+          <img
+            src="../assets/PatyLogo.png"
+            class="first-img"
+          />
+          <img
+            src="../assets/PatyLogo-white.png"
+            class="second-img"
+          />
         </div>
         <div
           class="second-step"
@@ -60,12 +66,18 @@
               <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
               <div class="information-bg">
                 <div class="information-list scrollbarCol">
-                  <ul v-if="allActivity.length===0" class="timeline">
+                  <ul
+                    v-if="allActivity.length===0"
+                    class="timeline"
+                  >
                     <li class="event">
                       <p>無精選活動</p>
                     </li>
                   </ul>
-                  <ul v-else class="timeline" >
+                  <ul
+                    v-else
+                    class="timeline"
+                  >
                     <li
                       @mouseover="ActivityInformation = i.eventTitle"
                       class="event"
@@ -88,7 +100,7 @@
       </transition>
     </div>
     <div
-      class="bg-image opacity-set"
+      class="bg-image"
       :style="backgroundimg"
     ></div>
     <div
@@ -122,7 +134,7 @@ export default {
     }
     const allActivity = ref([]);
     const ActivityInformation = ref("");
-    const showbg = ref(true)
+    const showbg = ref(true);
 
     const showInfoButton = ref({
       showFirstStep: true,

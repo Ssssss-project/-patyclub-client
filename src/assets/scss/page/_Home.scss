@@ -143,7 +143,7 @@
                             border-radius: 50%;
                             height: 11px;
                             width: 11px;
-                            content: "";
+                            content: '';
                             top: 5px;
                         }
                     }
@@ -247,11 +247,6 @@
         left: 0;
         background-color: rgba(0, 0, 0, 0.699);
     }
-
-    .opacity-set {
-        opacity: 0.6;
-    }
-
     .first-step-leave-active {
         width: 10%;
         opacity: 0;
