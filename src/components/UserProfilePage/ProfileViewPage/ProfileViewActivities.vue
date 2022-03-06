@@ -3,38 +3,27 @@
     <div class="row q-gutter-sm items-center">
       <label>我</label>
       <q-tabs
-        class="bg-grey-1"
+        v-model="tabMode"
         dense
         align="justify"
+        active-class="tab-active-color"
       >
         <q-tab
-          class="text-orange"
-          name="mails"
-          label="Mails"
+          class="tab-color"
+          label="發佈"
+          name="OWNER"
         />
         <q-tab
-          class="text-cyan"
-          name="alarms"
-          label="Alarms"
+          class="tab-color"
+          label="參加"
+          name="MEMBER"
         />
         <q-tab
-          class="text-red"
-          name="movies"
-          label="Movies"
+          class="tab-color"
+          label="收藏"
+          name="WATCHER"
         />
       </q-tabs>
-      <q-btn
-        label="發佈"
-        @click="postEventWithCondition('OWNER');statusName = '審核狀態'"
-      />
-      <q-btn
-        label="參加"
-        @click="postEventWithCondition('MEMBER');statusName = '活動狀態'"
-      />
-      <q-btn
-        label="收藏"
-        @click="postEventWithCondition('WATCHER');statusName = '活動狀態'"
-      />
       <label>的活動</label>
     </div>
     <div class="right-filter">
@@ -92,13 +81,14 @@
 </template>
 
 <script lang="ts">
-import { ref, Ref, onMounted, reactive } from "vue";
+import { ref, Ref, onMounted, reactive, watch } from "vue";
 import { apiGetEventWithCondition } from "@/apis/api/userRequest";
 import { EventList } from "@/apis/type";
 export default {
   setup() {
     const statusName: Ref<string> = ref("審核狀態");
     const loading: Ref<boolean> = ref(false);
+    const tabMode: Ref<string> = ref("OWNER");
 
     const activityFilter: string[] = ["活動已結束", "活動報名中"];
     const filter: Ref<string> = ref(activityFilter[0]);
@@ -196,7 +186,13 @@ export default {
       }
     }
 
+    watch(tabMode, (val: string) => {
+      statusName.value = val == "OWNER" ? "審核狀態" : "活動狀態";
+      postEventWithCondition(val);
+    });
+
     return {
+      tabMode,
       loading,
       statusName,
       activityFilter,
