@@ -136,12 +136,13 @@ const dataUploader = ref();
 
 /********************const variable end********************/
 
-let fileTemp = allChildPara.allChildPara.fileTemp ? allChildPara.allChildPara.fileTemp :{};
+let fileTemp = allChildPara.allChildPara.fileTemp ? allChildPara.allChildPara.fileTemp :[];
 
 let savePara = allChildPara.allChildPara.basicInfo
   ? allChildPara.allChildPara.basicInfo
   : {};
 let saveParaFile = {};
+let savePathArray = [];
 
 eventTitle.value = savePara.eventTitle ? savePara.eventTitle : "";
 eventStDate.value = savePara.eventStDate ? savePara.eventStDate : "";
@@ -176,7 +177,6 @@ getPara("eventStDate", eventStDate.value); // 進入頁面後處理各項參數
 
 // 參數處理
 function getPara(key, event) {
-  let tempArray = [];
   switch (key) {
     case "eventTitle":
       savePara.eventTitle = event;
@@ -203,11 +203,11 @@ function getPara(key, event) {
       break;
 
     case "preview":
-      event.forEach(function (value, index) {
-        tempArray[index] = "/Data/" + value.name;
+      event.forEach(function (value) {
+        savePathArray.push("/Data/" + value.name);
+        fileTemp.push(value);
       });
-      saveParaFile.appendixPath = tempArray;
-      fileTemp = event;
+      saveParaFile.appendixPath = savePathArray;
       break;
 
     default:
@@ -225,7 +225,7 @@ function getPara(key, event) {
 function factoryFn(file) {
   // preview.value = file[0].__img.currentSrc;
   preview.value = file;
-  fileTemp.value = file;
+  // fileTemp.push(file);
   getPara("preview", file);
   console.log(dataUploader.value);
 

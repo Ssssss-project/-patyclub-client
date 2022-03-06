@@ -102,13 +102,13 @@ function save() {
   allChildPara.basicInfo.id = eventId;  // EventMst id
 
   // 處理後端接收用的eventAppendixList資料
-  let eventAppendixTemp = {};
   let eventAppendixArray = [];
-  allChildPara.eventAppendixList.appendixPath.forEach(function (value, index) {
+  allChildPara.eventAppendixList.appendixPath.forEach(function (value) {
     // 根據appendixPath的數量建立同等數量的array, 並在每筆array加入eventMstId
+    let eventAppendixTemp = {};
     eventAppendixTemp.eventMstId = eventId;
     eventAppendixTemp.appendixPath = value;
-    eventAppendixArray[index] = eventAppendixTemp;
+    eventAppendixArray.push(eventAppendixTemp);
   });
 
   let Event = {};
