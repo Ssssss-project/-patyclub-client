@@ -1,21 +1,41 @@
 <template>
   <div class="viewActivities-filter">
-    <div class="q-gutter-sm">
+    <div class="row q-gutter-sm items-center">
+      <label>我</label>
+      <q-tabs
+        class="bg-grey-1"
+        dense
+        align="justify"
+      >
+        <q-tab
+          class="text-orange"
+          name="mails"
+          label="Mails"
+        />
+        <q-tab
+          class="text-cyan"
+          name="alarms"
+          label="Alarms"
+        />
+        <q-tab
+          class="text-red"
+          name="movies"
+          label="Movies"
+        />
+      </q-tabs>
       <q-btn
-        flat
-        label="我發佈的活動"
+        label="發佈"
         @click="postEventWithCondition('OWNER');statusName = '審核狀態'"
       />
       <q-btn
-        flat
-        label="我參加的活動"
+        label="參加"
         @click="postEventWithCondition('MEMBER');statusName = '活動狀態'"
       />
       <q-btn
-        flat
-        label="我收藏的活動"
+        label="收藏"
         @click="postEventWithCondition('WATCHER');statusName = '活動狀態'"
       />
+      <label>的活動</label>
     </div>
     <div class="right-filter">
 
@@ -58,11 +78,11 @@
               size="2em"
             />
             <q-tooltip
-              class="bg-amber-14 text-black shadow-4 text-bold"
+              class="bg-amber-14 text-black shadow-4 text-bold text-body2"
               transition-show="rotate"
               transition-hide="rotate"
             >
-              活動結束囉
+              {{getToolTips(colValue.col.name, colValue.value)}}
             </q-tooltip>
           </div>
         </q-td>
@@ -165,6 +185,17 @@ export default {
       return "img:" + require(`@/assets/info/${imgName}.svg`);
     }
 
+    function getToolTips(column: string, value: string) {
+      switch (value) {
+        case "comingSoon":
+          return "活動即將開始";
+        case "inProgress":
+          return "活動報名中";
+        case "expired":
+          return "活動已截止";
+      }
+    }
+
     return {
       loading,
       statusName,
@@ -176,6 +207,7 @@ export default {
       rows,
       postEventWithCondition,
       getImg,
+      getToolTips,
     };
   },
 };
