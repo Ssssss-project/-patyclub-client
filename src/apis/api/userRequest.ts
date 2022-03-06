@@ -28,7 +28,13 @@ export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
 export const apiGetEventCategory = ()=>request("get","/GetEntityList/getEventCategory")
 
 //依條件篩選活動
-export const apiGetEventWithCondition = (params: { category?: number; tag?: string; eventStDate: string })=>
+export const apiGetEventWithCondition = 
+    (params: { category?: number; 
+               tag?: string; 
+               queryList?: Array<string>;
+               nonCompleteEvent?:string;
+               sortBy?:string,
+               eventPersonnel?:string })=>
     request("post", "/Event/getEventWithConditions", params);
 
 //新建活動
