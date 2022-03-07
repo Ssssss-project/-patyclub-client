@@ -8,6 +8,8 @@
                         :sortCondition="sortCondition"
                         :sortConditionModel="sortConditionModel"
                         @setSortCondition="setSortCondition"
+                        @setDefaultAllCondition="setDefaultAllCondition"
+                        @setArticles="setArticles"
                     />
                 </div>
                 <div class="activity-information">
@@ -27,6 +29,7 @@
                             <card-list :allEvent="allEvent" />
                         </div>
                         <q-pagination
+                            class="pagination"
                             v-model="page"
                             color="orange-12"
                             :min="1"
@@ -57,23 +60,24 @@ export default {
             "依參與人數升序",
             "依參與人數降序",
         ];
-        const allCondition: Ref<GetEventWithCondition> = ref({
+        const defaultCondition: GetEventWithCondition = {
             category: 0,
             tag: "",
             queryList: [],
             nonCompleteEvent: "No",
             sortBy: "non_sort",
             eventPersonnel: "",
-        });
+        };
+        const allCondition: Ref<GetEventWithCondition> = ref(JSON.parse(JSON.stringify(defaultCondition)));
+
         const sortConditionModel = ref(sortCondition[0]);
         const options: string[] = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
         const page: Ref<number> = ref(1);
         const allEvent: Ref<EventType[]> = ref([]);
         const categoryList: Ref<categoryNode[]> = ref([]);
         const selectedCategory: Ref<number> = ref(-1);
-        const getEventWithCondition = () => {
-            console.log("allCondition", allCondition);
 
+        const getEventWithCondition = () => {
             apiGetEventWithCondition({
                 category: allCondition.value.category,
                 tag: allCondition.value.tag,
@@ -84,6 +88,13 @@ export default {
             });
         };
 
+        const setDefaultAllCondition = () => {
+            allCondition.value.category = 0;
+            allCondition.value.tag = "";
+            selectedCategory.value = 0;
+            getEventWithCondition();
+        };
+
         const getEventTree = () => {
             apiGetEventCategory().then((response: any) => {
                 categoryList.value = response.data;
@@ -91,8 +102,14 @@ export default {
         };
 
         const setselectedCategory = (newID: number) => {
+            console.log("---click All----");
             allCondition.value.category = newID;
             selectedCategory.value = newID;
+            getEventWithCondition();
+        };
+
+        const setArticles = () => {
+            allCondition.value.tag = "S";
             getEventWithCondition();
         };
 
@@ -133,6 +150,7 @@ export default {
 
         onMounted(() => {
             getEventTree();
+            allCondition.value.sortBy = "eventStDate_asc";
             getEventWithCondition();
         });
 
@@ -148,6 +166,8 @@ export default {
             sortConditionModel,
             setselectedCategory,
             setSortCondition,
+            setDefaultAllCondition,
+            setArticles,
         };
     },
 

@@ -58,4 +58,5 @@ export interface GetEventWithCondition {
     nonCompleteEvent?: string;
     sortBy?: string;
     eventPersonnel?: string;
+    [x: string]: any;
 }

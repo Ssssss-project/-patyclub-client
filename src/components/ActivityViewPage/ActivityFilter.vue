@@ -1,8 +1,8 @@
 <template>
     <div class="left-search">
         <div class="right-btn">
-            <q-btn class="activity-all" label="全部" size="md" />
-            <q-btn class="activity-recommended" label="精選" size="md" />
+            <q-btn class="activity-all" label="全部" size="md" @click="clickAll()" />
+            <q-btn class="activity-recommended" label="精選" size="md" @click="clickArticles()" />
         </div>
         <div class="search-input">
             <q-input class="search-textfield" v-model="searchWords" @keydown.enter="submit(searchWords)" borderless>
@@ -45,7 +45,7 @@ import { Ref, ref, toRef } from "vue";
 
 export default {
     props: ["sortCondition", "sortConditionModel"],
-    emits: ["setSortCondition"],
+    emits: ["setSortCondition", "setDefaultAllCondition", "setArticles"],
     setup(props: any, { emit }: any) {
         const sortConditionFromProp = toRef(props, "sortCondition");
         const sortConditionSelect = toRef(props, "sortConditionModel");
@@ -67,6 +67,14 @@ export default {
             emit("setSortCondition", val);
         };
 
+        const clickAll = () => {
+            emit("setDefaultAllCondition");
+        };
+
+        const clickArticles = () => {
+            emit("setArticles");
+        };
+
         return {
             options,
             model,
@@ -77,6 +85,8 @@ export default {
             deleteValue,
             submit,
             changeSortCondition,
+            clickAll,
+            clickArticles,
         };
     },
     components: {},
