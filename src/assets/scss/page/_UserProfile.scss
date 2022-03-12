@@ -65,6 +65,16 @@
                         margin-left: 10px;
                     }
                 }
+                .tab-color {
+                    color: $color-primary-500;
+                }
+                .tab-active-color {
+                    color: $color-orange-500;
+                }
+                .q-tab__label {
+                    font-size: large;
+                    font-weight: bold;
+                }
             }
             .table-column-font {
                 color: $color-primary-500;

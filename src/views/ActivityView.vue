@@ -1,58 +1,180 @@
 <template>
-  <main id="ActivityView">
-    <div class="container">
-      <div class="activity-main">
-        <div class="head-block"></div>
-        <div class="activity-filter">
-          <activity-filter />
-        </div>
-        <div class="activity-information">
-          <div class="event-category scrollbarCol">
-            <event-category />
-          </div>
-          <div class="card-set">
-            <div class="card-list scrollbarCol">
-              <card-list />
+    <main id="ActivityView">
+        <div class="container">
+            <div class="activity-main">
+                <div class="head-block"></div>
+                <div class="activity-filter">
+                    <activity-filter
+                        :sortCondition="sortCondition"
+                        :sortConditionModel="sortConditionModel"
+                        @setSortCondition="setSortCondition"
+                        @setDefaultAllCondition="setDefaultAllCondition"
+                        @setArticles="setArticles"
+                    />
+                </div>
+                <div class="activity-information">
+                    <div class="event-category scrollbarCol">
+                        <event-category
+                            :categoryList="categoryList"
+                            :key="categoryList"
+                            :selectedCategory="selectedCategory"
+                            @setselectedcategory="setselectedCategory"
+                        />
+                    </div>
+                    <div class="card-set" :key="allEvent">
+                        <div v-if="allEvent.length === 0">
+                            尚無活動
+                        </div>
+                        <div class="card-list scrollbarCol" v-else>
+                            <card-list :allEvent="allEvent" />
+                        </div>
+                        <q-pagination
+                            class="pagination"
+                            v-model="page"
+                            color="orange-12"
+                            :min="1"
+                            :max="15"
+                            :max-pages="6"
+                            :input="true"
+                        />
+                    </div>
+                </div>
             </div>
-            <q-pagination
-              v-model="page"
-              color="orange-12"
-              :min="1"
-              :max="15"
-              :max-pages="6"
-              :input="true"
-            />
-          </div>
         </div>
-      </div>
-    </div>
-  </main>
+    </main>
 </template>
 
-<script>
+<script lang="ts">
 import CardList from "../components/ActivityViewPage/CardList.vue";
 import EventCategory from "../components/ActivityViewPage/EventCategory.vue";
 import ActivityFilter from "../components/ActivityViewPage/ActivityFilter.vue";
-
-import { ref } from "vue";
+import { apiGetEventWithCondition, apiGetEventCategory } from "../apis/api/userRequest";
+import { categoryNode, EventType, GetEventWithCondition } from "../apis/type";
+import { ref, onMounted, Ref, watch } from "vue";
 
 export default {
-  setup() {
-    const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
-    const model = ref(options[0]);
-    const page = ref(1);
-    return {
-      options,
-      model,
-      page: page,
-      minPages: 1,
-      maxPages: 15,
-    };
-  },
-  components: {
-    CardList,
-    EventCategory,
-    ActivityFilter,
-  },
+    setup() {
+        const sortCondition: string[] = [
+            "依活動開始時間升序",
+            "依活動開始時間降序",
+            "依參與人數升序",
+            "依參與人數降序",
+        ];
+        const defaultCondition: GetEventWithCondition = {
+            category: 0,
+            tag: "",
+            queryList: [],
+            nonCompleteEvent: "No",
+            sortBy: "non_sort",
+            eventPersonnel: "",
+        };
+        const allCondition: Ref<GetEventWithCondition> = ref(JSON.parse(JSON.stringify(defaultCondition)));
+
+        const sortConditionModel = ref(sortCondition[0]);
+        const options: string[] = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
+        const page: Ref<number> = ref(1);
+        const allEvent: Ref<EventType[]> = ref([]);
+        const categoryList: Ref<categoryNode[]> = ref([]);
+        const selectedCategory: Ref<number> = ref(-1);
+
+        const getEventWithCondition = () => {
+            apiGetEventWithCondition({
+                category: allCondition.value.category,
+                tag: allCondition.value.tag,
+                queryList: allCondition.value.queryList,
+                sortBy: allCondition.value.sortBy,
+            }).then((response: any) => {
+                allEvent.value = response.data;
+            });
+        };
+
+        const setDefaultAllCondition = () => {
+            allCondition.value.category = 0;
+            allCondition.value.tag = "";
+            selectedCategory.value = 0;
+            getEventWithCondition();
+        };
+
+        const getEventTree = () => {
+            apiGetEventCategory().then((response: any) => {
+                categoryList.value = response.data;
+            });
+        };
+
+        const setselectedCategory = (newID: number) => {
+            console.log("---click All----");
+            allCondition.value.category = newID;
+            selectedCategory.value = newID;
+            getEventWithCondition();
+        };
+
+        const setArticles = () => {
+            allCondition.value.tag = "S";
+            getEventWithCondition();
+        };
+
+        const setSortCondition = (sortString: string) => {
+            let tempSortString = "";
+            switch (sortString) {
+                case "依活動開始時間升序":
+                    tempSortString = "eventStDate_asc";
+                    break;
+                case "依活動開始時間降序":
+                    tempSortString = "eventStDate_desc";
+                    break;
+                case "依參與人數升序":
+                    tempSortString = "hot_asc";
+                    break;
+                case "依參與人數降序":
+                    tempSortString = "hot_desc";
+                    break;
+                default:
+                    tempSortString = "";
+                    break;
+            }
+            allCondition.value.sortBy = tempSortString;
+            sortConditionModel.value = sortString;
+            getEventWithCondition();
+        };
+
+        watch(selectedCategory, (newVal, oldVal) => {
+            console.log("selected-watchsssssss", newVal, oldVal);
+        });
+
+        watch(sortConditionModel, (newVal) => {
+            console.log("sortConditionModel-watchsssssss", newVal);
+        });
+        watch(allCondition, (newVal) => {
+            console.log("allCondition-watchsssssss", newVal);
+        });
+
+        onMounted(() => {
+            getEventTree();
+            allCondition.value.sortBy = "eventStDate_asc";
+            getEventWithCondition();
+        });
+
+        return {
+            options,
+            page: page,
+            minPages: 1,
+            maxPages: 15,
+            allEvent,
+            categoryList,
+            selectedCategory,
+            sortCondition,
+            sortConditionModel,
+            setselectedCategory,
+            setSortCondition,
+            setDefaultAllCondition,
+            setArticles,
+        };
+    },
+
+    components: {
+        CardList,
+        EventCategory,
+        ActivityFilter,
+    },
 };
 </script>

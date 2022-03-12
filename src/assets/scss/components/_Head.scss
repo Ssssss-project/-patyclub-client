@@ -1,12 +1,12 @@
 #Head {
     position: inherit;
     width: 100%;
-    background-color: $color-light-200;
     height: 50px;
     text-align: right;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .homelogo {
         margin-left: 10px;
     }
@@ -20,8 +20,26 @@
     .btns:hover {
         background-color: $color-primary-300;
     }
+    .btns-home {
+        height: 50px;
+        width: 100px;
+        background-color: $color-dark-900;
+        border-color: $color-dark-900;
+        border-style: none;
+        color: $color-light-80;
+    }
+    .btns-home:hover {
+        background-color: $color-light-600;
+        color: $color-dark-900;
+    }
 
     .afterLoginBtn {
         background-color: $color-light-350;
     }
+}
+.normalbg {
+    background-color: $color-light-200;
+}
+.home_bg {
+    background-color: $color-dark-900;
 }

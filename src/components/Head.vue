@@ -1,29 +1,39 @@
 <template>
-  <header id="Head">
+  <header
+    id="Head"
+    :class="isHomepage?'home_bg':'normalbg'"
+  >
     <router-link :to="`/`">
       <img
         class="homelogo"
         src="../assets/PatyIcon.png"
+        v-if="isHomepage===false"
+      />
+      <img
+        class="homelogo"
+        style="width:55px"
+        src="../assets/PatyIcon-white.png"
+        v-if="isHomepage"
       />
     </router-link>
     <div>
       <button
-        class="btns"
+        :class="isHomepage?'btns-home':'btns'"
         @click="testToken()"
       >測試token</button>
       <button
-        class="btns"
+        :class="isHomepage?'btns-home':'btns'"
         @click="bShowChat = true"
       >測試聊天室</button>
       <router-link :to="`/activityView`">
-        <button class="btns">所有活動</button>
+        <button :class="isHomepage?'btns-home':'btns'">所有活動</button>
       </router-link>
       <router-link :to="`/activityCreate`">
-        <button class="btns">創建活動</button>
+        <button :class="isHomepage?'btns-home':'btns'">創建活動</button>
       </router-link>
       <button
         v-if="!personalInfo"
-        class="btns"
+        :class="isHomepage?'btns-home':'btns'"
         @click="openLoginDialog"
       >
         登入
@@ -137,19 +147,27 @@
 <script>
 import LoginDialog from "./LoginDialog.vue";
 import { useQuasar } from "quasar";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import * as signalR from "@aspnet/signalr";
 import jwt_decode from "jwt-decode";
 import { apiGetUserProfile } from "@/apis/api/userRequest.ts";
 import { useStore } from "vuex";
+import { useRoute } from "vue-router";
+
 export default {
   setup() {
     const $q = useQuasar();
     const personalInfo = ref(null);
     const store = useStore();
+    const route = useRoute();
+    const isHomepage = ref(true);
 
     onMounted(() => {
       checkIsLogin();
+    });
+
+    watch(route, (curVal) => {
+      isHomepage.value = curVal.path === "/";
     });
 
     function openLoginDialog() {
@@ -288,6 +306,7 @@ export default {
       logOut,
       testToken,
       getImg,
+      isHomepage,
     };
   },
   components: {},

@@ -1,6 +1,9 @@
 <template>
   <main id="Home">
-    <div id="Home-container" class="container">
+    <div
+      id="Home-container"
+      class="container"
+    >
       <transition
         name="first-step"
         mode="out-in"
@@ -10,7 +13,14 @@
           @click="showInfo"
           v-if="showInfoButton.showFirstStep"
         >
-          <img src="../assets/PatyLogo.png" />
+          <img
+            src="../assets/PatyLogo.png"
+            class="first-img"
+          />
+          <img
+            src="../assets/PatyLogo-white.png"
+            class="second-img"
+          />
         </div>
         <div
           class="second-step"
@@ -35,7 +45,7 @@
         >
           <div
             class="CardInfo-right CardInfo-right-bill"
- 
+            @mouseleave="showInfo"
           >
             <div class="tag-group tag-group-billboard">
               <div class="tag tag-billboard">公佈欄｜BillBoard</div>
@@ -56,7 +66,18 @@
               <div class="tag tag-hotActivity">活動精選｜Hot Activities</div>
               <div class="information-bg">
                 <div class="information-list scrollbarCol">
-                  <ul class="timeline">
+                  <ul
+                    v-if="allActivity.length===0"
+                    class="timeline"
+                  >
+                    <li class="event">
+                      <p>無精選活動</p>
+                    </li>
+                  </ul>
+                  <ul
+                    v-else
+                    class="timeline"
+                  >
                     <li
                       @mouseover="ActivityInformation = i.eventTitle"
                       class="event"
@@ -79,8 +100,12 @@
       </transition>
     </div>
     <div
-      class="bg-image opacity-set"
+      class="bg-image"
       :style="backgroundimg"
+    ></div>
+    <div
+      class="bg-image"
+      v-if="showbg===true"
     ></div>
 
   </main>
@@ -109,6 +134,7 @@ export default {
     }
     const allActivity = ref([]);
     const ActivityInformation = ref("");
+    const showbg = ref(true);
 
     const showInfoButton = ref({
       showFirstStep: true,
@@ -119,7 +145,7 @@ export default {
     const isopacity = ref(true);
 
     const backgroundimg = ref({
-      backgroundImage: "url(" + require("../assets/backgroundImage.png") + ")",
+      backgroundImage: "url(" + require("../assets/backgroundPic.png") + ")",
       backgroundRepeat: "no-repeat",
       backgroundAttachment: "fixed",
       backgroundPosition: "bottom",
@@ -130,16 +156,19 @@ export default {
       showInfoButton.value.showSecondStep = true;
       showInfoButton.value.showBillBoardInfo = false;
       showInfoButton.value.showActivitiesInfo = false;
+      showbg.value = true;
     }
     function showBillBoard() {
       showInfoButton.value.showSecondStep = false;
       showInfoButton.value.showBillBoardInfo = true;
       showInfoButton.value.showActivitiesInfo = false;
+      showbg.value = false;
     }
     function showActivities() {
       showInfoButton.value.showSecondStep = false;
       showInfoButton.value.showBillBoardInfo = false;
       showInfoButton.value.showActivitiesInfo = true;
+      showbg.value = false;
       apiGetActivity().then((response) => {
         allActivity.value = response.data;
         ActivityInformation.value = response.data[0].eventTitle;
@@ -152,6 +181,7 @@ export default {
       isopacity,
       allActivity,
       ActivityInformation,
+      showbg,
       openLoginDialog,
       showInfo,
       showBillBoard,

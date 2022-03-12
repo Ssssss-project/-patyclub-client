@@ -1,18 +1,18 @@
 <template>
+
   <Head />
-    <router-view />
+  <router-view />
 </template>
 
-<script>
+<script lang="ts">
 import Head from "./components/Head.vue";
 
 export default {
-    components: {
-        Head,
-    },
+  components: {
+    Head,
+  },
 };
 </script>
-
 
 <style lang="scss">
 #app {
@@ -22,8 +22,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
-
 
 #nav {
   padding: 10px;
