@@ -1,5 +1,4 @@
 import Quasar from "quasar";
-
 //interface definition
 export interface response {
     message: string;
@@ -59,4 +58,16 @@ export interface GetEventWithCondition {
     sortBy?: string;
     eventPersonnel?: string;
     [x: string]: any;
+}
+
+export interface sysCodeMst {
+    id?: number;
+    name?: string;
+    remark?: string;
+}
+export interface sysCodeDtl {
+    id?: number;
+    sysCodeMstId?: number;
+    codeName?: string;
+    codeDesc?: string;
 }

@@ -59,6 +59,9 @@
       no-data-label="查無活動"
       :loading="loading"
       :visible-columns="visibleColumns"
+      v-model:pagination="pagination"
+      hide-pagination
+      @row-dblclick="tableDoubleClickHandler"
     >
       <!--活動時間-->
       <template v-slot:body-cell-timeStatus="colValue">
@@ -134,13 +137,24 @@
         </q-td>
       </template>
     </q-table>
+    <div class="row justify-center q-mt-md">
+      <q-pagination
+        class="pagination"
+        v-model="pagination.page"
+        color="orange-12"
+        :min="1"
+        :max="pagesNumber"
+        :input="true"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, Ref, onMounted, reactive, watch } from "vue";
+import { ref, Ref, onMounted, reactive, watch, computed } from "vue";
 import { apiGetEventWithCondition } from "@/apis/api/userRequest";
-import { EventList, GetEventWithCondition } from "@/apis/type";
+import { EventList, GetEventWithCondition, sysCodeDtl } from "@/apis/type";
+import { getCodeByMstName } from "@/utils/utils";
 export default {
   setup() {
     const loading: Ref<boolean> = ref(false);
@@ -157,8 +171,8 @@ export default {
     const activitySort: string[] = ["近期截止優先", "近期發佈優先"];
     const sort: Ref<string> = ref(activitySort[0]);
 
-    const originalRows: Ref<EventList[]> = ref([]);
     const rows: Ref<EventList[]> = ref([]);
+    const codeDtl: Ref<sysCodeDtl[]> = ref([]);
 
     let conditionMap: Map<any, any> = new Map([
       ["近期發佈優先", "eventStDate_asc"],
@@ -178,29 +192,12 @@ export default {
       sortBy: conditionMap.get(sort.value),
     });
 
-    const postEventWithCondition = () => {
-      loading.value = true;
-      apiGetEventWithCondition(searchCondition).then((response: any) => {
-        loading.value = false;
-        originalRows.value = response.data;
-
-        if (filter.value == "活動報名中") {
-          rows.value = originalRows.value.filter((row) =>
-            row.timeStatus.includes("inProgress")
-          );
-        } else if (filter.value == "活動已截止") {
-          rows.value = originalRows.value.filter((row) =>
-            row.timeStatus.includes("expired")
-          );
-        } else if (filter.value == "活動即將開始") {
-          rows.value = originalRows.value.filter((row) =>
-            row.timeStatus.includes("comingSoon")
-          );
-        } else {
-          rows.value = response.data;
-        }
-      });
-    };
+    const pagination = ref({
+      sortBy: "desc",
+      descending: false,
+      page: 2,
+      rowsPerPage: 10,
+    });
 
     const columns = reactive([
       {
@@ -253,8 +250,40 @@ export default {
       },
     ]);
 
+    const postEventWithCondition = () => {
+      loading.value = true;
+      apiGetEventWithCondition(searchCondition)
+        .then((response: any) => {
+          loading.value = false;
+          let originalRows: EventList[] = response.data;
+
+          if (filter.value == "活動報名中") {
+            rows.value = originalRows.filter((row) =>
+              row.timeStatus.includes("inProgress")
+            );
+          } else if (filter.value == "活動已截止") {
+            rows.value = originalRows.filter((row) =>
+              row.timeStatus.includes("expired")
+            );
+          } else if (filter.value == "活動即將開始") {
+            rows.value = originalRows.filter((row) =>
+              row.timeStatus.includes("comingSoon")
+            );
+          } else {
+            rows.value = response.data;
+          }
+        })
+        .catch(() => {
+          loading.value = false;
+          rows.value = [];
+        });
+    };
+
     onMounted(() => {
       postEventWithCondition();
+      getCodeByMstName("eventStatus").then((response: sysCodeDtl[]) => {
+        codeDtl.value = response;
+      });
     });
 
     function getImg(column: string, value: any) {
@@ -271,6 +300,18 @@ export default {
           break;
         case "暫存中":
           imgName = "checkSaved";
+          break;
+        case "已完成未送審":
+          imgName = "checkUnSaved";
+          break;
+        case "已刪除":
+          imgName = "checkFail";
+          break;
+        case "審核通過":
+          imgName = "checkPass";
+          break;
+        case "送審中":
+          imgName = "checkSend";
           break;
         case 1:
           imgName = "pplStage0";
@@ -304,6 +345,11 @@ export default {
       }
     }
 
+    function tableDoubleClickHandler(evt: Event, row: object, index?: number) {
+      console.log(`我是第${index}行`);
+      console.log(row);
+    }
+
     watch(tabMode, (val: string) => {
       visibleColumns.value.pop();
       visibleColumns.value.push(
@@ -326,15 +372,19 @@ export default {
       activitySort,
       sort,
       columns,
+      pagination,
+      pagesNumber: computed(() =>
+        Math.ceil(rows.value.length / pagination.value.rowsPerPage)
+      ),
       visibleColumns,
       rows,
-      originalRows,
       searchCondition,
       conditionMap,
       postEventWithCondition,
       getImg,
       getToolTips,
       getActivityImg,
+      tableDoubleClickHandler,
     };
   },
 };
