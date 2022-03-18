@@ -7,9 +7,12 @@
                     <activity-filter
                         :sortCondition="sortCondition"
                         :sortConditionModel="sortConditionModel"
+                        :stringOptions="stringOptions"
                         @setSortCondition="setSortCondition"
                         @setDefaultAllCondition="setDefaultAllCondition"
                         @setArticles="setArticles"
+                        @handleSearchWord="handleSearchWord"
+                        @deleteSearchWord="deleteSearchWord"
                     />
                 </div>
                 <div class="activity-information">
@@ -76,6 +79,21 @@ export default {
         const allEvent: Ref<EventType[]> = ref([]);
         const categoryList: Ref<categoryNode[]> = ref([]);
         const selectedCategory: Ref<number> = ref(-1);
+
+        const stringOptions: Ref<string[]> = ref([]);
+
+        const handleSearchWord = (refKey: string) => {
+            console.log(refKey);
+            stringOptions.value.push(refKey);
+            allCondition.value.queryList = stringOptions.value;
+            getEventWithCondition();
+        };
+
+        const deleteSearchWord = (index: number) => {
+            stringOptions.value.splice(index, 1);
+            allCondition.value.queryList = stringOptions.value;
+            getEventWithCondition();
+        };
 
         const getEventWithCondition = () => {
             apiGetEventWithCondition({
@@ -164,10 +182,13 @@ export default {
             selectedCategory,
             sortCondition,
             sortConditionModel,
+            stringOptions,
             setselectedCategory,
             setSortCondition,
             setDefaultAllCondition,
             setArticles,
+            handleSearchWord,
+            deleteSearchWord,
         };
     },
 
