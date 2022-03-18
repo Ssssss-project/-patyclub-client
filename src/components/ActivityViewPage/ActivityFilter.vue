@@ -11,7 +11,7 @@
                 </template>
             </q-input>
             <div class="search-words">
-                <span v-for="(val, index) in stringOptions" :key="val">
+                <span v-for="(val, index) in stringOption" :key="val">
                     <q-chip dense size="md" color="#eeb888"
                         >{{ val }}
                         <q-icon name="close" @click="deleteValue(index)" class="cursor-pointer" />
@@ -21,10 +21,6 @@
         </div>
     </div>
     <div class="right-search">
-        <div>
-            <label>檢視</label>
-            <q-select class="select-category" v-model="model" :options="options" borderless dense options-dense />
-        </div>
         <div>
             <label>排序</label>
             <q-select
@@ -41,26 +37,27 @@
 </template>
 
 <script lang="ts">
-import { Ref, ref, toRef } from "vue";
+import { ref, toRef } from "vue";
 
 export default {
-    props: ["sortCondition", "sortConditionModel"],
-    emits: ["setSortCondition", "setDefaultAllCondition", "setArticles"],
+    props: ["sortCondition", "sortConditionModel", "stringOptions"],
+    emits: ["setSortCondition", "setDefaultAllCondition", "setArticles", "handleSearchWord", "deleteSearchWord"],
     setup(props: any, { emit }: any) {
         const sortConditionFromProp = toRef(props, "sortCondition");
         const sortConditionSelect = toRef(props, "sortConditionModel");
         const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
         const model = ref(options[0]);
-        const stringOptions: Ref<string[]> = ref([]);
+        const stringOption = toRef(props, "stringOptions");
         const searchWords = ref(null);
 
         const submit = (refKey: string) => {
-            stringOptions.value.push(refKey);
+            console.log(refKey);
+            emit("handleSearchWord", refKey);
             searchWords.value = null;
         };
 
         const deleteValue = (index: number) => {
-            stringOptions.value.splice(index, 1);
+            emit("deleteSearchWord", index);
         };
 
         const changeSortCondition = (val: string) => {
@@ -80,7 +77,7 @@ export default {
             model,
             sortConditionFromProp,
             sortConditionSelect,
-            stringOptions,
+            stringOption,
             searchWords,
             deleteValue,
             submit,
