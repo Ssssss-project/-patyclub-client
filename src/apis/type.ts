@@ -51,6 +51,8 @@ export interface EventType {
 }
 
 export interface GetEventWithCondition {
+    rownumPerPage?: number;
+    requestPageNum?: number;
     category?: number;
     tag?: string;
     queryList?: Array<string>;
