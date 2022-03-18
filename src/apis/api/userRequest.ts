@@ -46,3 +46,9 @@ export const apiGetEvent = (params: any) => request("get", "/Event/getEvent/" + 
 
 // 取得活動附件
 export const apiGetEventAppendix = (params: any) => request("get", "/Event/getEventAppendix/" + params);
+
+// 取得群組清單
+export const apiGetCodeMstList = () => request("get", "/Code/getCodeMstList/");
+
+// 取得代碼明細
+export const apiGetCodeDtl = (params: any) => request("get", "/Code/getCodeDtl/", params);
