@@ -50,6 +50,15 @@
             object-fit: cover;
             flex: 1;
         }
+        .favorite {
+            color: grey;
+            position: absolute;
+            right: 5px;
+            top: 1px;
+            font-size: 25px;
+            cursor: pointer;
+            z-index: 3;
+        }
         @include laptop {
             width: 250px;
             height: 330px;
