@@ -63,13 +63,14 @@ export interface GetEventWithCondition {
 }
 
 export interface sysCodeMst {
-    id?: number;
+    keyword?: string;
     name?: string;
     remark?: string;
 }
 export interface sysCodeDtl {
     id?: number;
-    sysCodeMstId?: number;
+    sysCodeMstKeyword?: string;
     codeName?: string;
     codeDesc?: string;
+    orderSeq?: number;
 }

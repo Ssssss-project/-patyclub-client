@@ -69,7 +69,7 @@
                     color: $color-primary-500;
                 }
                 .tab-active-color {
-                    color: $color-orange-500;
+                    color: $color-brown-900;
                 }
                 .q-tab__label {
                     font-size: large;
@@ -80,6 +80,7 @@
                 color: $color-primary-500;
                 font-size: large;
                 font-weight: bold;
+                vertical-align: middle;
             }
         }
     }

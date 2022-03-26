@@ -57,7 +57,8 @@ instance.interceptors.response.use(
     (error) => {
         const { response } = error;
         if (response) {
-            errorHandler(response.data.status, response.data.title);
+            console.log(response);
+            errorHandler(response.status, response.data.title);
             return Promise.reject(error);
         } else {
             if (!window.navigator.onLine) {

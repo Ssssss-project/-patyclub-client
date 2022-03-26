@@ -1,32 +1,13 @@
-import { apiGetCodeMstList, apiGetCodeDtl } from "@/apis/api/userRequest";
-import { sysCodeMst, sysCodeDtl } from "@/apis/type";
+import { apiGetCodeDtl } from "@/apis/api/userRequest";
+import { sysCodeDtl } from "@/apis/type";
 
-export async function getCodeByMstName(mstName: string) {
-    const codeMstArray: sysCodeMst[] = await getCodeMst(mstName);
-    if (codeMstArray.length > 0) {
-        return await getCodeDtl(codeMstArray[0].id as number);
-    } else {
-        return [];
-    }
+export async function getCodeByKeyword(mstName: string) {
+    return await getCodeDtl(mstName);
 }
 
-function getCodeMst(mstName: string) {
-    return new Promise<sysCodeMst[]>((resolve, reject) => {
-        apiGetCodeMstList()
-            .then((response: any) => {
-                const allMstArray: sysCodeMst[] = response.data;
-                const selectedMst: sysCodeMst[] = allMstArray.filter((row) => row.name == mstName);
-                resolve(selectedMst);
-            })
-            .catch(() => {
-                reject([]);
-            });
-    });
-}
-
-function getCodeDtl(mstId: number) {
+function getCodeDtl(sysCodeMstKeyword: string) {
     return new Promise<sysCodeDtl[]>((resolve, reject) => {
-        apiGetCodeDtl({ mstId: mstId })
+        apiGetCodeDtl({ mstKeyword: sysCodeMstKeyword })
             .then((response: any) => {
                 resolve(response.data);
             })
