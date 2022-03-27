@@ -18,13 +18,24 @@
         justify-content: center;
         align-items: center;
         border-radius: 5px;
+        position: relative;
+    }
+    .first-img {
+        position: absolute;
+    }
+    .second-img {
+        width: 290px;
+        position: absolute;
+        width: 290px;
+        z-index: 2;
+        left: -92px;
     }
     .second-step {
         z-index: 2;
         & > div {
             height: 50px;
             width: 200px;
-            background-color: $color-brown-900;
+            background-color: $color-light-700;
             color: $color-light-50;
             display: flex;
             align-items: center;
@@ -54,7 +65,7 @@
         width: 100%;
         .CardInfo-right {
             width: 70%;
-            background-color: $color-light-200;
+            background-color: $color-light-200-opacity;
             display: flex;
             align-items: center;
 
@@ -73,7 +84,7 @@
             }
             .tag {
                 color: $color-light-50;
-                background-color: $color-brown-900;
+                background-color: $color-light-700;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -132,7 +143,7 @@
                             border-radius: 50%;
                             height: 11px;
                             width: 11px;
-                            content: "";
+                            content: '';
                             top: 5px;
                         }
                     }
@@ -234,12 +245,8 @@
         position: absolute;
         top: 50px;
         left: 0;
+        background-color: rgba(0, 0, 0, 0.699);
     }
-
-    .opacity-set {
-        opacity: 0.6;
-    }
-
     .first-step-leave-active {
         width: 10%;
         opacity: 0;

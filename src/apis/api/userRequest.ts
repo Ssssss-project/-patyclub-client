@@ -1,5 +1,6 @@
 import axios from "axios";
 import request from "../https";
+import { GetEventWithCondition } from "../type";
 // 註冊帳號
 export const apiPostRegister = (params: any) => request("post", "/User/Register", params);
 
@@ -25,10 +26,10 @@ export const apiGetActiveUser = () => request("get", "/User/getActiveUser");
 export const apiGetActivity = () => request("get", "/Event/getSpecialEvent");
 
 //取得活動分類樹
-export const apiGetEventCategory = ()=>request("get","/GetEntityList/getEventCategory")
+export const apiGetEventCategory = () => request("get", "/GetEntityList/getEventCategory");
 
 //依條件篩選活動
-export const apiGetEventWithCondition = (params: { category?: number; tag?: string; eventStDate: string }) =>
+export const apiGetEventWithCondition = (params: GetEventWithCondition) =>
     request("post", "/Event/getEventWithConditions", params);
 
 //新建活動
@@ -51,3 +52,8 @@ export const apiUpdateEventData = (params: any) => request("post", "/Event/updat
 
 // 檔案上傳
 export const apiFileUpload = (params: any) => request("post", "/Event/dataUpload", params);
+// 取得群組清單
+export const apiGetCodeMstList = () => request("get", "/Code/getCodeMstList/");
+
+// 取得代碼明細
+export const apiGetCodeDtl = (params: any) => request("get", "/Code/getCodeDtl/", params);

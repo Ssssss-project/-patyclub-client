@@ -20,7 +20,7 @@
       class="q-pt-none"
       v-if="data.showInfo"
     >
-      <div class="text-h6">{{ data.eventTitle }}</div>
+      <div class="text-h6 card-title scrollbarCol">{{ data.eventTitle }}</div>
       <div class="hover-content scrollbarCol">
         <span>{{ data.eventIntroduction }}</span>
         <div class="text-subtitle2">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
@@ -41,7 +41,6 @@ export default {
   props: ["allEvent"],
   setup(props: any) {
     const Activity = toRef(props, "allEvent");
-    console.log(Activity);
     //計算時間差距
     function timeDiffCalc(dateFuture: Date) {
       let dateNow = new Date();
