@@ -1,6 +1,6 @@
 <template>
   <div id="ActivityDetailsView">
-     <q-carousel ref="test"
+     <q-carousel
         animated
         v-model="slide"
         arrows
@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { ref} from "vue";
+import { ref } from "vue";
 import { defineProps } from "vue";
 import { defineEmits } from "vue";
 import { apiGetEvent } from "@/apis/api/userRequest.ts";
@@ -112,15 +112,15 @@ const eventAttantion = ref("")  // 注意事項
 const eventId = defineProps(["allChildPara"]);
 const emit = defineEmits(["get-para"]);
 const slide = ref(1);
-const test = ref();
 const images =  ref([]);
 
 /********************const variable end********************/
 
 let id = eventId.allChildPara.id ? eventId.allChildPara.id : 0;
-getEvent(); // 進入此頁面後先讀取活動資訊(創建活動時)
-
-
+// getEvent(); // 進入此頁面後先讀取活動資訊(創建活動時)
+setTimeout(function() {
+  getEvent();
+}, 1000);
 
 /********************methods********************/
 

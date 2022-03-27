@@ -67,18 +67,20 @@
   </main>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
-import { apiSaveEventData } from "@/apis/api/userRequest.ts";
-import { apiUpdateEventData } from "@/apis/api/userRequest.ts";
-import basicInfo from "@/components/ActivityCreatePage/basicInfo.vue";
+import { apiSaveEventData } from "@/apis/api/userRequest";
+import { apiUpdateEventData } from "@/apis/api/userRequest";
+import basicInfo from "../components/ActivityCreatePage/basicInfo.vue";
 // import formDesign from "@/components/ActivityCreatePage/formDesign.vue";
-import ActivityDetailsView from "@/components/ActivityDetailsView";
+import ActivityDetailsView from "../components/ActivityDetailsView.vue";
+import { EventMst, EventAppendix } from "../apis/type";
 
 const step = ref(1);
 
-let allChildPara = {};
-let eventId = 0;
+let allChildPara: any = {};
+let tempBasicInfo: EventMst;
+let eventId: number = 0;
 
 createdSave(); // 進入畫面後自動新建一筆活動
 
@@ -99,25 +101,25 @@ function createdSave() {
 
 // 儲存按鈕
 function save() {
-  allChildPara.basicInfo.id = eventId;  // EventMst id
+  // allChildPara.basicInfo.id = eventId;  // EventMst id
+  tempBasicInfo.id = eventId;
 
   // 處理後端接收用的eventAppendixList資料
-  let eventAppendixArray = [];
-  allChildPara.eventAppendixList.appendixPath.forEach(function (value) {
+  let eventAppendixArray: EventAppendix[] = new Array();
+  allChildPara.eventAppendixList.appendixPath.forEach(function (value: EventAppendix) {
     // 根據appendixPath的數量建立同等數量的array, 並在每筆array加入eventMstId
-    let eventAppendixTemp = {};
+    let eventAppendixTemp: any = {};
     eventAppendixTemp.eventMstId = eventId;
     eventAppendixTemp.appendixPath = value;
     eventAppendixArray.push(eventAppendixTemp);
   });
 
-  let Event = {};
+  let Event: any = {};
+  allChildPara.basicInfo = tempBasicInfo;
   Event.eventMst = allChildPara.basicInfo;
   Event.eventAppendixList = eventAppendixArray;
 
-  apiUpdateEventData(Event).then(() => {
-    alert("儲存成功");
-  });
+  apiUpdateEventData(Event);
 
   // console.log(allChildPara);
   // factoryFn(allChildPara.basicInfo.preview);
@@ -134,13 +136,14 @@ function save() {
 // }
 
 // 取得子元件emit
-function getPara({ event, file, fileTemp }) {
-  if (event || file) {
-    allChildPara.basicInfo = event;
-    allChildPara.eventAppendixList = file;
-    allChildPara.fileTemp = fileTemp;
+function getPara(event: any) {
+  if (event.event || event.file) {
+    // allChildPara.basicInfo = event;
+    tempBasicInfo = event.event;
+    allChildPara.eventAppendixList = event.file;
+    // allChildPara.fileTemp = fileTemp;
   }
-  allChildPara.id = eventId;
+  // allChildPara.id = eventId;
 }
 
 /********************methods end********************/
