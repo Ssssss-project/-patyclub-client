@@ -50,8 +50,17 @@
             object-fit: cover;
             flex: 1;
         }
-        .favorite {
+        .unfavorite {
             color: grey;
+            position: absolute;
+            right: 5px;
+            top: 1px;
+            font-size: 25px;
+            cursor: pointer;
+            z-index: 3;
+        }
+        .favorite {
+            color: red;
             position: absolute;
             right: 5px;
             top: 1px;

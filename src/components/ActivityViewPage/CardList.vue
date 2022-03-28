@@ -8,7 +8,7 @@
         @mouseleave="data.showInfo = false"
         @click="clickCard"
     >
-        <q-icon name="favorite" class="favorite" @click="(e) => clickFavorite(e)" />
+        <q-icon name="favorite" class="unfavorite" @click="(e) => clickFavorite(e, data.id)" />
         <img :src="data.image" />
         <q-card-section>
             <div class="text-h6">{{ data.eventTitle }}</div>
@@ -34,12 +34,18 @@
 
 <script lang="ts">
 import { toRef } from "vue";
+import { useStore } from "vuex";
+import { useQuasar } from "quasar";
+import { apiPutWatchEvent } from "@/apis/api/userRequest";
 
 export default {
     name: "CardList",
     props: ["allEvent"],
     setup(props: any) {
         const Activity = toRef(props, "allEvent");
+        const store = useStore();
+        const $q = useQuasar();
+
         //計算時間差距
         function timeDiffCalc(dateFuture: Date) {
             let dateNow = new Date();
@@ -66,9 +72,41 @@ export default {
             return "img:" + require(`@/assets/icon/heartSolid.svg`);
         };
 
-        const clickFavorite = (e: any) => {
-            console.log("----favorite----");
+        const loginCheck = (eventID: number) => {
+            let token = store.getters.getUserStore.sToken;
+            if (token === "") {
+                $q.notify({
+                    color: "red-5",
+                    textColor: "white",
+                    icon: "warning",
+                    message: "請先登入!",
+                });
+            } else {
+                apiPutWatchEvent({
+                    token: token,
+                    eventId: eventID,
+                })
+                    .then(() => {
+                        $q.notify({
+                            icon: "done",
+                            color: "positive",
+                            message: "加入成功",
+                        });
+                    })
+                    .catch(() => {
+                        $q.notify({
+                            color: "red-5",
+                            textColor: "white",
+                            icon: "warning",
+                            message: "新增失敗!",
+                        });
+                    });
+            }
+        };
+
+        const clickFavorite = (e: any, eventID: number) => {
             e.stopPropagation();
+            loginCheck(eventID);
         };
 
         const clickCard = () => {

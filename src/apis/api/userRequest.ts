@@ -1,6 +1,6 @@
 import axios from "axios";
 import request from "../https";
-import { GetEventWithCondition } from "../type";
+import { AddFavoriteEvent, GetEventWithCondition } from "../type";
 // 註冊帳號
 export const apiPostRegister = (params: any) => request("post", "/User/Register", params);
 
@@ -57,3 +57,6 @@ export const apiGetCodeMstList = () => request("get", "/Code/getCodeMstList/");
 
 // 取得代碼明細
 export const apiGetCodeDtl = (params: any) => request("get", "/Code/getCodeDtl/", params);
+
+// 加入我的最愛
+export const apiPutWatchEvent = (params: AddFavoriteEvent) => request("put", "/Event/watchEvent/", params);

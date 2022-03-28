@@ -51,30 +51,30 @@ export interface EventType {
 }
 
 export interface EventMst {
-    id: number;                     // 活動ID
-    categoryId: number;             // 類別ID
-    eventTitle: string;             // 活動標題
-    status: string;                 // 活動狀態
-    cost: string;                   // 活動費用
-    eventStDate: string;            // 活動開始日期
-    eventEdDate: string;            // 活動結束日期
-    eventCreateDate: string;        // 活動創建日期
-    examinationPassedDate: string;  // 審核通過日期
-    signUpStDate: string;           // 報名開始日期
-    signUpEdDate: string;           // 報名結束日期
-    eventIntroduction: string;      // 活動簡介
-    eventDetail: string;            // 活動細項
-    eventAttantion: string;         // 活動注意事項
-    tag: string;                    // 活動標籤
-    personLimit: string;            // 人數限制
-    ageLimit: string;               // 年齡限制
+    id: number; // 活動ID
+    categoryId: number; // 類別ID
+    eventTitle: string; // 活動標題
+    status: string; // 活動狀態
+    cost: string; // 活動費用
+    eventStDate: string; // 活動開始日期
+    eventEdDate: string; // 活動結束日期
+    eventCreateDate: string; // 活動創建日期
+    examinationPassedDate: string; // 審核通過日期
+    signUpStDate: string; // 報名開始日期
+    signUpEdDate: string; // 報名結束日期
+    eventIntroduction: string; // 活動簡介
+    eventDetail: string; // 活動細項
+    eventAttantion: string; // 活動注意事項
+    tag: string; // 活動標籤
+    personLimit: string; // 人數限制
+    ageLimit: string; // 年齡限制
 }
 
 export interface EventAppendix {
-    id: number;                     // 附件ID
-    eventMstId:number;              // 活動ID
-    category: string;               // 附件類別
-    appendixPath: string;           // 附件路徑
+    id: number; // 附件ID
+    eventMstId: number; // 活動ID
+    category: string; // 附件類別
+    appendixPath: string; // 附件路徑
 }
 
 export interface GetEventWithCondition {
@@ -100,4 +100,12 @@ export interface sysCodeDtl {
     codeName?: string;
     codeDesc?: string;
     orderSeq?: number;
+}
+
+export interface APItoken {
+    token: string;
+}
+
+export interface AddFavoriteEvent extends APItoken {
+    eventId: number;
 }

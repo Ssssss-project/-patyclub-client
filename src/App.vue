@@ -1,15 +1,17 @@
 <template>
-
   <Head />
   <router-view />
+  <FooterComponent />
 </template>
 
 <script lang="ts">
 import Head from "./components/Head.vue";
+import FooterComponent from "./components/FooterComponent.vue"
 
 export default {
   components: {
     Head,
+    FooterComponent,
   },
 };
 </script>
