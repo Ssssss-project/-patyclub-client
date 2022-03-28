@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="text-image">活動圖片</div>
-    <q-uploader class="uploader-image" :factory="factoryFn" multiple append />
+    <q-uploader  ref="dataUploader"  class="uploader-image" :factory="factoryFn" auto-upload multiple append />
     <div class="text-introduction">活動簡介</div>
     <q-input
       class="input-introduction"
@@ -88,7 +88,8 @@
       <q-select
         class="select-ageLimit"
         v-model="ageLimit"
-        :options="options"
+        :options="ageOptions"
+        @update:modelValue="(event) => getPara('ageLimit', event)"
         borderless
       />
     </div>
@@ -98,7 +99,7 @@
       <div class="text-cost">參與費用</div>
     </div>
     <div class="numberLimit_cost_input">
-      <q-input class="input-numberLimit" v-model="numberLimit" borderless />
+      <q-input class="input-numberLimit" v-model="personLimit" @update:modelValue="(event) => getPara('personLimit', event)" borderless />
       <q-input
         class="input-cost"
         v-model="cost"
@@ -112,32 +113,50 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref,  onMounted } from "vue";
 import { defineEmits } from "vue";
 import { defineProps } from "vue";
 
 /********************const variable********************/
 
 const eventTitle = ref("");
-const options = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
+const ageOptions = [">6", ">15", ">18"];
 const eventCategory = ref("");
 const eventStDate = ref("");
 const dataField = ref(null);
 const ageLimit = ref("");
-const numberLimit = ref("");
+const personLimit = ref("");
 const cost = ref("");
 const tag = ref("");
 const eventIntroduction = ref("");
 const preview = ref(null);
 const emit = defineEmits(["get-para"]);
 const allChildPara = defineProps(["allChildPara"]);
+const dataUploader = ref();
 
 /********************const variable end********************/
 
+let fileTemp = allChildPara.allChildPara.fileTemp ? allChildPara.allChildPara.fileTemp :[];
 
 let savePara = allChildPara.allChildPara.basicInfo
   ? allChildPara.allChildPara.basicInfo
   : {};
+let saveParaFile = {};
+let savePathArray = [];
+
+eventTitle.value = savePara.eventTitle ? savePara.eventTitle : "";
+eventStDate.value = savePara.eventStDate ? savePara.eventStDate : "";
+eventIntroduction.value = savePara.eventIntroduction ? savePara.eventIntroduction : "";
+eventCategory.value = savePara.eventCategory ? savePara.eventCategory : "";
+ageLimit.value = savePara.ageLimit ? savePara.ageLimit : "";
+personLimit.value = savePara.personLimit ? savePara.personLimit : "";
+cost.value = savePara.cost ? savePara.cost : "";
+
+
+onMounted(() => {
+  dataUploader.value.addFiles(fileTemp);
+})
+
 
 // set now date
 let newDate = new Date();
@@ -149,9 +168,8 @@ let month =
 let date = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
 eventStDate.value = year + "/" + month + "/" + date;
 
+getPara("eventStDate", eventStDate.value); // 進入頁面後處理各項參數
 
-
-getPara("eventStDate", eventStDate.value);  // 進入頁面後處理各項參數
 
 
 
@@ -176,8 +194,20 @@ function getPara(key, event) {
       savePara.cost = event;
       break;
 
+    case "ageLimit":
+      savePara.ageLimit = event;
+      break;
+
+    case "personLimit":
+      savePara.personLimit = parseFloat(event);
+      break;
+
     case "preview":
-      savePara.preview = event;
+      event.forEach(function (value) {
+        savePathArray.push("/Data/" + value.name);
+        fileTemp.push(value);
+      });
+      saveParaFile.appendixPath = savePathArray;
       break;
 
     default:
@@ -187,22 +217,28 @@ function getPara(key, event) {
   // 與父元件參數做連結
   emit("get-para", {
     event: savePara,
+    file: saveParaFile,
+    fileTemp: fileTemp
   });
 }
 
 function factoryFn(file) {
   // preview.value = file[0].__img.currentSrc;
   preview.value = file;
-  getPara("preview", preview.value);
+  // fileTemp.push(file);
+  getPara("preview", file);
+  console.log(dataUploader.value);
 
-  // return new Promise((resolve, reject) => {
-  //   resolve({
-  //     url: "https://localhost:5001/api/Event/dataUpload",
-  //     method: "POST",
-  //   });
-  // });
+  return new Promise((resolve, reject) => {
+    resolve({
+      url: "https://localhost:5001/api/Event/dataUpload",
+      method: "POST",
+    });
+    console.log(reject);
+  });
 }
-
+// 封面圖片
+// 活動圖片
 /********************methods end********************/
 </script>
 

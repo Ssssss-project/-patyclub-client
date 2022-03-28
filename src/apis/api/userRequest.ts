@@ -33,7 +33,7 @@ export const apiGetEventWithCondition = (params: GetEventWithCondition) =>
     request("post", "/Event/getEventWithConditions", params);
 
 //新建活動
-export const apiSaveEventData = (params: any) => request("post", "/Event/createEvent", params);
+export const apiSaveEventData = () => request("post", "/Event/createEvent");
 
 //檔案上傳
 export const apiDataUpload = () => request("post", "/Event/dataUpload");
@@ -47,6 +47,11 @@ export const apiGetEvent = (params: any) => request("get", "/Event/getEvent/" + 
 // 取得活動附件
 export const apiGetEventAppendix = (params: any) => request("get", "/Event/getEventAppendix/" + params);
 
+// 更新活動
+export const apiUpdateEventData = (params: any) => request("post", "/Event/updateEvent", params);
+
+// 檔案上傳
+export const apiFileUpload = (params: any) => request("post", "/Event/dataUpload", params);
 // 取得群組清單
 export const apiGetCodeMstList = () => request("get", "/Code/getCodeMstList/");
 

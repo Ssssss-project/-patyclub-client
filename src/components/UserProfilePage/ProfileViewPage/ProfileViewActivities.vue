@@ -1,7 +1,7 @@
 <template>
   <div class="viewActivities-filter">
     <div class="row q-gutter-sm items-center">
-      <label>我</label>
+      <label style="font-size: large;font-weight: bold;">我</label>
       <q-tabs
         v-model="tabMode"
         dense
@@ -24,7 +24,7 @@
           name="WATCHER"
         />
       </q-tabs>
-      <label>的活動</label>
+      <label style="font-size: large;font-weight: bold;">的活動</label>
     </div>
     <div class="right-filter">
 
@@ -63,32 +63,71 @@
       hide-pagination
       @row-dblclick="tableDoubleClickHandler"
     >
+      <template v-slot:header="">
+        <q-tr>
+          <q-th
+            colspan="1"
+            class="table-column-font"
+          >類別</q-th>
+          <q-th
+            colspan="1"
+            class="table-column-font"
+          >活動資訊</q-th>
+          <q-th
+            colspan="2"
+            class="table-column-font"
+          >活動時間</q-th>
+          <q-th
+            colspan="2"
+            class="table-column-font"
+          >參與人數</q-th>
+          <q-th
+            colspan="2"
+            class="table-column-font"
+          >{{tabMode == "OWNER" ? "審核狀態" : "活動狀態"}}</q-th>
+        </q-tr>
+      </template>
       <!--活動時間-->
       <template v-slot:body-cell-timeStatus="colValue">
-        <q-td align="left">
+        <q-td align="center">
+          <div>
+            <label>{{colValue.row.eventStDate + " ～ " + colValue.row.eventEdDate}}</label>
+          </div>
+        </q-td>
+      </template>
+      <!--活動時間圖例-->
+      <template v-slot:body-cell-timeStatusIcon="colValue">
+        <q-td align="center">
           <div>
             <q-icon
-              :name="getImg(colValue.col.name, colValue.value)"
-              size="2em"
+              style="margin-right:5px"
+              :name="getTimeImg(new Date(colValue.row.eventStDate), new Date(colValue.row.eventEdDate))"
+              size="3em"
             />
-            <label>{{colValue.row.eventStDate + " ～ " + colValue.row.eventEdDate}}</label>
             <q-tooltip
               class="bg-amber-14 text-black shadow-4 text-bold text-body2"
               transition-show="rotate"
               transition-hide="rotate"
-            >
-              {{getToolTips(colValue.col.name, colValue.value)}}
+            >{{getToolTips(colValue.col.name, colValue.value)}}
             </q-tooltip>
           </div>
         </q-td>
       </template>
       <!--參與者-->
       <template v-slot:body-cell-memberCount="colValue">
-        <q-td align="left">
+        <q-td align="center">
+          <div style="display:inline">
+            <label>{{colValue.row.memberCount + " / " + colValue.row.memberLimit}}</label>
+          </div>
+        </q-td>
+      </template>
+      <!--參與者圖例-->
+      <template v-slot:body-cell-memberCountIcon="colValue">
+        <q-td align="center">
           <div style="display:inline">
             <q-icon
-              :name="getImg(colValue.col.name, colValue.value)"
-              size="2em"
+              :name="getMemberImg(colValue.row.memberCount, colValue.row.memberLimit)"
+              size="3em"
             >
             </q-icon>
             <q-tooltip
@@ -102,11 +141,11 @@
       </template>
       <!--審核狀態-->
       <template v-slot:body-cell-statusDesc="colValue">
-        <q-td align="left">
+        <q-td align="center">
           <div style="display:inline">
             <q-icon
               :name="getImg(colValue.col.name, colValue.value)"
-              size="2em"
+              size="3em"
             >
             </q-icon>
             <q-tooltip
@@ -120,18 +159,18 @@
       </template>
       <!--活動狀態-->
       <template v-slot:body-cell-activityStatus="colValue">
-        <q-td align="left">
+        <q-td align="center">
           <div style="display:inline">
             <q-icon
               :name="getActivityImg(colValue.value)"
-              size="2em"
+              size="3em"
             >
             </q-icon>
             <q-tooltip
               class="bg-amber-14 text-black shadow-4 text-bold text-body2"
               transition-show="rotate"
               transition-hide="rotate"
-            >{{colValue.value == "expired" ? "已截止" : "即將開始或報名中"}}
+            >{{colValue.value == "expired" ? "已截止" : "即將開始或進行中"}}
             </q-tooltip>
           </div>
         </q-td>
@@ -154,7 +193,7 @@
 import { ref, Ref, onMounted, reactive, watch, computed } from "vue";
 import { apiGetEventWithCondition } from "@/apis/api/userRequest";
 import { EventList, GetEventWithCondition, sysCodeDtl } from "@/apis/type";
-import { getCodeByMstName } from "@/utils/utils";
+import { getCodeByKeyword } from "@/utils/utils";
 export default {
   setup() {
     const loading: Ref<boolean> = ref(false);
@@ -183,7 +222,9 @@ export default {
       "categoryName",
       "eventTitle",
       "timeStatus",
+      "timeStatusIcon",
       "memberCount",
+      "memberCountIcon",
       "statusDesc",
     ]);
 
@@ -196,7 +237,7 @@ export default {
       sortBy: "desc",
       descending: false,
       page: 2,
-      rowsPerPage: 10,
+      rowsPerPage: 8,
     });
 
     const columns = reactive([
@@ -206,7 +247,6 @@ export default {
         field: "categoryName",
         align: "left",
         headerStyle: "width: 500px",
-        headerClasses: "table-column-font",
       },
       {
         name: "eventTitle",
@@ -214,39 +254,48 @@ export default {
         field: "eventTitle",
         align: "left",
         headerStyle: "width: 500px",
-        headerClasses: "table-column-font",
       },
       {
         name: "timeStatus",
         label: "活動時間",
         field: "timeStatus",
-        align: "left",
+        align: "center",
         headerStyle: "width: 500px",
-        headerClasses: "table-column-font",
+      },
+      {
+        name: "timeStatusIcon",
+        label: "活動時間圖例",
+        field: "timeStatus",
+        align: "center",
+        headerStyle: "width: 500px",
       },
       {
         name: "memberCount",
         label: "參與者",
         field: "memberCount",
-        align: "left",
+        align: "center",
         headerStyle: "width: 500px",
-        headerClasses: "table-column-font",
+      },
+      {
+        name: "memberCountIcon",
+        label: "參與者圖例",
+        field: "memberCount",
+        align: "center",
+        headerStyle: "width: 500px",
       },
       {
         name: "activityStatus",
         label: "活動狀態",
         field: "timeStatus",
-        align: "left",
+        align: "center",
         headerStyle: "width: 500px",
-        headerClasses: "table-column-font",
       },
       {
         name: "statusDesc",
         label: "審核狀態",
         field: "statusDesc",
-        align: "left",
+        align: "center",
         headerStyle: "width: 500px",
-        headerClasses: "table-column-font",
       },
     ]);
 
@@ -281,7 +330,8 @@ export default {
 
     onMounted(() => {
       postEventWithCondition();
-      getCodeByMstName("eventStatus").then((response: sysCodeDtl[]) => {
+      getCodeByKeyword("eventStatus").then((response: sysCodeDtl[]) => {
+        console.log(response);
         codeDtl.value = response;
       });
     });
@@ -289,15 +339,6 @@ export default {
     function getImg(column: string, value: any) {
       let imgName: string = "";
       switch (value) {
-        case "comingSoon":
-          imgName = "timeOutStage1";
-          break;
-        case "inProgress":
-          imgName = "timeOutStage2";
-          break;
-        case "expired":
-          imgName = "timeOutStage3";
-          break;
         case "暫存中":
           imgName = "checkSaved";
           break;
@@ -313,16 +354,45 @@ export default {
         case "送審中":
           imgName = "checkSend";
           break;
-        case 1:
-          imgName = "pplStage0";
-          break;
-        case 2:
-          imgName = "pplStage3";
-          break;
-        default:
-          imgName = "timeOutStage3";
-          break;
       }
+      if (imgName == "") {
+        return "hide_image";
+      }
+      return "img:" + require(`@/assets/info/pixel/${imgName}.png`);
+    }
+
+    function getTimeImg(eventStDate: Date, eventEdDate: Date) {
+      let imgName: string = "";
+      let today: Date = new Date();
+
+      if (today.getTime() < eventStDate.getTime()) {
+        imgName = "timeOutStage1";
+      } else if (eventEdDate.getTime() < today.getTime()) {
+        imgName = "timeOutStageBroken";
+      } else {
+        imgName = "timeOutStage3";
+      }
+
+      return "img:" + require(`@/assets/info/pixel/${imgName}.png`);
+    }
+
+    function getMemberImg(memberCount: number, memberLimit: number) {
+      let imgName: string = "";
+      if (memberCount == 0 || memberLimit == 0) {
+        imgName = "pplStage0";
+      } else {
+        let percentage: number = Math.round((memberCount / memberLimit) * 100);
+        if (percentage <= 25) {
+          imgName = "pplStage0";
+        } else if (percentage <= 50) {
+          imgName = "pplStage1";
+        } else if (percentage <= 75) {
+          imgName = "pplStage2";
+        } else {
+          imgName = "pplStage3";
+        }
+      }
+
       return "img:" + require(`@/assets/info/pixel/${imgName}.png`);
     }
 
@@ -339,7 +409,7 @@ export default {
         case "comingSoon":
           return "活動即將開始";
         case "inProgress":
-          return "活動報名中";
+          return "活動進行中";
         case "expired":
           return "活動已截止";
       }
@@ -382,6 +452,8 @@ export default {
       conditionMap,
       postEventWithCondition,
       getImg,
+      getMemberImg,
+      getTimeImg,
       getToolTips,
       getActivityImg,
       tableDoubleClickHandler,

@@ -28,9 +28,9 @@
       <router-link :to="`/activityView`">
         <button :class="isHomepage?'btns-home':'btns'">所有活動</button>
       </router-link>
-      <router-link :to="`/activityCreate`">
-        <button :class="isHomepage?'btns-home':'btns'">創建活動</button>
-      </router-link>
+      <!-- <router-link :to="`/activityCreate`"> -->
+        <button class="btns" @click="loginChick">創建活動</button>
+      <!-- </router-link> -->
       <button
         v-if="!personalInfo"
         :class="isHomepage?'btns-home':'btns'"
@@ -152,13 +152,14 @@ import * as signalR from "@aspnet/signalr";
 import jwt_decode from "jwt-decode";
 import { apiGetUserProfile } from "@/apis/api/userRequest.ts";
 import { useStore } from "vuex";
+import { useRouter } from 'vue-router'
 import { useRoute } from "vue-router";
-
 export default {
   setup() {
     const $q = useQuasar();
     const personalInfo = ref(null);
     const store = useStore();
+    const router = useRouter()
     const route = useRoute();
     const isHomepage = ref(true);
 
@@ -201,6 +202,21 @@ export default {
         );
       });
     }
+
+    function loginChick() {
+      let token = store.getters.getUserStore.sToken; // 取得token
+      if (token != "") {
+        router.push({ path: '/activityCreate' });
+      } else {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "請先登入!",
+        });
+      }
+    }
+
     const bShowChat = ref(false);
     const hubConnection = ref(
       new signalR.HubConnectionBuilder()
@@ -306,6 +322,7 @@ export default {
       logOut,
       testToken,
       getImg,
+      loginChick,
       isHomepage,
     };
   },
