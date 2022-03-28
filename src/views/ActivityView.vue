@@ -31,15 +31,16 @@
                         <div class="card-list scrollbarCol" v-else>
                             <card-list :allEvent="allEvent" />
                         </div>
-                        <q-pagination
-                            class="pagination"
-                            v-model="page"
-                            color="orange-12"
-                            :min="1"
-                            :max="15"
-                            :max-pages="6"
-                            :input="true"
-                        />
+                        <div>
+                            <q-pagination
+                                class="pagination"
+                                v-model="page"
+                                color="orange-12"
+                                :min="1"
+                                :max="maxPages"
+                                :input="true"
+                            />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,6 +65,7 @@ export default {
             "依參與人數降序",
         ];
         const defaultCondition: GetEventWithCondition = {
+            requestPageNum: 1,
             category: 0,
             tag: "",
             queryList: [],
@@ -76,6 +78,8 @@ export default {
         const sortConditionModel = ref(sortCondition[0]);
         const options: string[] = ["Google", "Facebook", "Twitter", "Apple", "Oracle"];
         const page: Ref<number> = ref(1);
+        const maxPages: Ref<number> = ref(1);
+
         const allEvent: Ref<EventType[]> = ref([]);
         const categoryList: Ref<categoryNode[]> = ref([]);
         const selectedCategory: Ref<number> = ref(-1);
@@ -101,8 +105,12 @@ export default {
                 tag: allCondition.value.tag,
                 queryList: allCondition.value.queryList,
                 sortBy: allCondition.value.sortBy,
+                rownumPerPage: 8,
+                requestPageNum: page.value,
             }).then((response: any) => {
                 allEvent.value = response.data;
+                page.value = response.currentPageNum;
+                maxPages.value = response.maxPageNum;
             });
         };
 
@@ -166,6 +174,10 @@ export default {
             console.log("allCondition-watchsssssss", newVal);
         });
 
+        watch(page, () => {
+            getEventWithCondition();
+        });
+
         onMounted(() => {
             getEventTree();
             allCondition.value.sortBy = "eventStDate_asc";
@@ -175,8 +187,7 @@ export default {
         return {
             options,
             page: page,
-            minPages: 1,
-            maxPages: 15,
+            maxPages,
             allEvent,
             categoryList,
             selectedCategory,

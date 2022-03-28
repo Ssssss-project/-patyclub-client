@@ -1,11 +1,24 @@
 <template>
   <div id="ActivityDetailsView">
+     <q-carousel
+        animated
+        v-model="slide"
+        arrows
+        navigation
+        infinite
+      >
+        <q-carousel-slide v-for="x in images"
+          :key="x.id"
+          :name="x.id"
+          :img-src="x.img"
+        />
+      </q-carousel>
     <div class="main">
-      <q-img
+      <!-- <q-img
         :src="appendixPath"
         height="360px"
         width="900px"
-      />
+      /> -->
       <br />
       <div class="action_display">
         <div class="C1">
@@ -74,9 +87,10 @@
 
 <script setup>
 import { ref } from "vue";
-// import { defineProps } from "vue";
+import { defineProps } from "vue";
+import { defineEmits } from "vue";
 import { apiGetEvent } from "@/apis/api/userRequest.ts";
-import { apiGetEventAppendix } from "@/apis/api/userRequest.ts";
+// import { apiGetEventAppendix } from "@/apis/api/userRequest.ts";
 import store from "@/store";
 import jwt_decode from "jwt-decode";
 
@@ -94,23 +108,26 @@ const eventTitle = ref("");   // 活動標題
 const eventIntroduction = ref("");  // 活動簡介
 const eventDetail = ref("")   // 活動細項
 const eventAttantion = ref("")  // 注意事項
-const appendixPath = ref("");
+// const appendixPath = ref("");
+const eventId = defineProps(["allChildPara"]);
+const emit = defineEmits(["get-para"]);
+const slide = ref(1);
+const images =  ref([]);
 
 /********************const variable end********************/
 
-
-
-getEvent(); // 進入此頁面後先讀取活動資訊(創建活動時)
-
-
-
+let id = eventId.allChildPara.id ? eventId.allChildPara.id : 0;
+// getEvent(); // 進入此頁面後先讀取活動資訊(創建活動時)
+setTimeout(function() {
+  getEvent();
+}, 1000);
 
 /********************methods********************/
 
 // 讀取活動資訊
 function getEvent() {
-  apiGetEvent("1").then((response) => {
-    let eventObj = response.data[0];
+  apiGetEvent(id).then((response) => {
+    let eventObj = response.data.eventDtl;
     console.log(eventObj);
 
     // 報名截止倒數處理
@@ -126,11 +143,14 @@ function getEvent() {
     eventDetail.value = eventObj.eventDetail;
     eventAttantion.value = eventObj.eventAttantion;
     signUpEdDate.value = signUpEdDateStr;
+    // appendixPath.value = "https://localhost:5001" + response.data.eventAppendixList[0].appendixPath;
+    response.data.eventAppendixList.forEach(function (value, index) {
+      images.value.push({id:index + 1, img:"https://localhost:5001" + value.appendixPath});
+    });
   });
 
-  // 取得活動附件路徑
-  apiGetEventAppendix("1").then((response) => {
-    appendixPath.value = "https://localhost:5001" + response.data[0].appendixPath;
+  // 與父元件參數做連結
+  emit("get-para", {
   });
 }
 
