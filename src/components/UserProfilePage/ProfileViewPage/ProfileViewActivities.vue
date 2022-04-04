@@ -91,7 +91,7 @@
       <template v-slot:body-cell-timeStatus="colValue">
         <q-td align="center">
           <div>
-            <label>{{colValue.row.eventStDate + " ～ " + colValue.row.eventEdDate}}</label>
+            <label style="font-size:18px">{{colValue.row.eventStDate + " ～ " + colValue.row.eventEdDate}}</label>
           </div>
         </q-td>
       </template>
@@ -117,7 +117,7 @@
       <template v-slot:body-cell-memberCount="colValue">
         <q-td align="center">
           <div style="display:inline">
-            <label>{{colValue.row.memberCount + " / " + colValue.row.memberLimit}}</label>
+            <label style="font-size:18px">{{colValue.row.memberCount + " / " + colValue.row.memberLimit}}</label>
           </div>
         </q-td>
       </template>
@@ -228,16 +228,18 @@ export default {
       "statusDesc",
     ]);
 
+    const pagination = reactive({
+      sortBy: "desc",
+      descending: false,
+      page: 1,
+      rowsPerPage: 8,
+    });
+
     const searchCondition: GetEventWithCondition = reactive({
       eventPersonnel: "OWNER",
       sortBy: conditionMap.get(sort.value),
-    });
-
-    const pagination = ref({
-      sortBy: "desc",
-      descending: false,
-      page: 2,
-      rowsPerPage: 8,
+      requestPageNum: pagination.page,
+      rownumPerPage: pagination.rowsPerPage,
     });
 
     const columns = reactive([
@@ -246,56 +248,56 @@ export default {
         label: "類別",
         field: "categoryName",
         align: "left",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
       {
         name: "eventTitle",
         label: "活動資訊",
         field: "eventTitle",
         align: "left",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
       {
         name: "timeStatus",
         label: "活動時間",
         field: "timeStatus",
         align: "center",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
       {
         name: "timeStatusIcon",
         label: "活動時間圖例",
         field: "timeStatus",
         align: "center",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
       {
         name: "memberCount",
         label: "參與者",
         field: "memberCount",
         align: "center",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
       {
         name: "memberCountIcon",
         label: "參與者圖例",
         field: "memberCount",
         align: "center",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
       {
         name: "activityStatus",
         label: "活動狀態",
         field: "timeStatus",
         align: "center",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
       {
         name: "statusDesc",
         label: "審核狀態",
         field: "statusDesc",
         align: "center",
-        headerStyle: "width: 500px",
+        style: "font-size:18px",
       },
     ]);
 
@@ -444,7 +446,7 @@ export default {
       columns,
       pagination,
       pagesNumber: computed(() =>
-        Math.ceil(rows.value.length / pagination.value.rowsPerPage)
+        Math.ceil(rows.value.length / pagination.rowsPerPage)
       ),
       visibleColumns,
       rows,

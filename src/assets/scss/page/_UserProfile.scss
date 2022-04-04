@@ -59,8 +59,10 @@
                         position: relative;
                         border-radius: 5px;
                         border: 1px solid $color-primary-300;
+                        font-size: 14px;
                     }
                     .label {
+                        font-size: 14px;
                         margin-right: 10px;
                         margin-left: 10px;
                     }
@@ -72,13 +74,13 @@
                     color: $color-brown-900;
                 }
                 .q-tab__label {
-                    font-size: large;
+                    font-size: 26px;
                     font-weight: bold;
                 }
             }
             .table-column-font {
                 color: $color-primary-500;
-                font-size: large;
+                font-size: 16px;
                 font-weight: bold;
                 vertical-align: middle;
             }
