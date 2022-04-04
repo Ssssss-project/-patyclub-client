@@ -1,4 +1,7 @@
 module.exports = {
+
+  publicPath: "/patyclub-client/",
+
   css: {
     loaderOptions: {
       sass: {
