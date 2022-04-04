@@ -191,11 +191,13 @@
 
 <script lang="ts">
 import { ref, Ref, onMounted, reactive, watch, computed } from "vue";
+import { useRouter, Router } from "vue-router";
 import { apiGetEventWithCondition } from "@/apis/api/userRequest";
 import { EventList, GetEventWithCondition, sysCodeDtl } from "@/apis/type";
 import { getCodeByKeyword } from "@/utils/utils";
 export default {
   setup() {
+    const router: Router = useRouter();
     const loading: Ref<boolean> = ref(false);
     const tabMode: Ref<string> = ref("OWNER");
 
@@ -417,9 +419,9 @@ export default {
       }
     }
 
-    function tableDoubleClickHandler(evt: Event, row: object, index?: number) {
-      console.log(`我是第${index}行`);
-      console.log(row);
+    function tableDoubleClickHandler(evt: Event, row: any, index: number) {
+      console.log(`route to ActivityShowView id:${row.id},index:${index}`);
+      router.push({ path: "/ActivityShowView/" + row.id });
     }
 
     watch(tabMode, (val: string) => {
