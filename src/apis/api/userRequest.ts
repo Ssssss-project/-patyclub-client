@@ -60,3 +60,6 @@ export const apiGetCodeDtl = (params: any) => request("get", "/Code/getCodeDtl/"
 
 // 加入我的最愛
 export const apiPutWatchEvent = (params: AddFavoriteEvent) => request("put", "/Event/watchEvent/", params);
+
+// 紀錄log
+export const apiPostAllLog = (params: any) => request("post", "/Log/addLog/", params);

@@ -1,7 +1,7 @@
 <template>
   <div class="viewActivities-filter">
     <div class="row q-gutter-sm items-center">
-      <label style="font-size: large;font-weight: bold;">我</label>
+      <label style="font-size: 26px;font-weight: bold;">我</label>
       <q-tabs
         v-model="tabMode"
         dense
@@ -24,7 +24,7 @@
           name="WATCHER"
         />
       </q-tabs>
-      <label style="font-size: large;font-weight: bold;">的活動</label>
+      <label style="font-size: 26px;font-weight: bold;">的活動</label>
     </div>
     <div class="right-filter">
 
@@ -192,9 +192,13 @@
 <script lang="ts">
 import { ref, Ref, onMounted, reactive, watch, computed } from "vue";
 import { useRouter, Router } from "vue-router";
-import { apiGetEventWithCondition } from "@/apis/api/userRequest";
+import {
+  apiGetEventWithCondition,
+  apiPostAllLog,
+} from "@/apis/api/userRequest";
 import { EventList, GetEventWithCondition, sysCodeDtl } from "@/apis/type";
 import { getCodeByKeyword } from "@/utils/utils";
+import { logCategoryEnums } from "@/apis/enum";
 export default {
   setup() {
     const router: Router = useRouter();
@@ -421,7 +425,18 @@ export default {
 
     function tableDoubleClickHandler(evt: Event, row: any, index: number) {
       console.log(`route to ActivityShowView id:${row.id},index:${index}`);
-      router.push({ path: "/ActivityShowView/" + row.id });
+      apiPostAllLog({
+        logCate: logCategoryEnums.eventTouch,
+        targetSeq: row.id.toString(),
+      });
+      router.push({
+        name: "ActivityShowView",
+        params: {
+          id: row.id,
+          source: "profile",
+          categoryName: row.categoryName,
+        },
+      });
     }
 
     watch(tabMode, (val: string) => {
