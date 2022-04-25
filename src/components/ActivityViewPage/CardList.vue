@@ -6,14 +6,14 @@
         :key="idx"
         @mouseover="data.showInfo = true"
         @mouseleave="data.showInfo = false"
-        @click="clickCard"
+        @click="clickCard(data.id, data.eventTitle)"
     >
         <q-icon
             name="favorite"
             :class="data.isWatcher ? 'favorite' : 'unfavorite'"
             @click="(e) => clickFavorite(e, data.id, data.userPersonnel)"
         />
-        <img :src="data.image" />
+        <img :src="returnImg(data.coverPath)" />
         <q-card-section class="content">
             <div class="text-h6">{{ data.eventTitle }}</div>
             <div class="text-subtitle2 ">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
@@ -40,7 +40,9 @@
 import { toRef } from "vue";
 import { useStore } from "vuex";
 import { useQuasar } from "quasar";
-import { apiPutWatchEvent } from "@/apis/api/userRequest";
+import { apiPostAllLog, apiPutWatchEvent } from "@/apis/api/userRequest";
+import router from "@/router";
+import { logCategoryEnums } from "@/apis/enum";
 
 export default {
     name: "CardList",
@@ -110,13 +112,31 @@ export default {
             }
         };
 
+        const returnImg = (imgURL: string) => {
+            console.log(imgURL);
+            if (imgURL !== null) return "https://localhost:5001" + imgURL;
+            return ""; //要放一個default ?
+        };
+
         const clickFavorite = (e: any, eventID: number, userPersonnel: string) => {
             e.stopPropagation();
             loginCheck(eventID, userPersonnel);
         };
 
-        const clickCard = () => {
-            console.log("---clickCard---");
+        const clickCard = (id: number, categoryName: string) => {
+            console.log(`route to ActivityShowView id:${id}`);
+            apiPostAllLog({
+                logCate: logCategoryEnums.eventTouch,
+                targetSeq: id.toString(),
+            });
+            router.push({
+                name: "ActivityShowView",
+                params: {
+                    id: id,
+                    source: "profile",
+                    categoryName: categoryName,
+                },
+            });
         };
 
         return {
@@ -125,6 +145,7 @@ export default {
             returnSVG,
             clickFavorite,
             clickCard,
+            returnImg,
         };
     },
 };
