@@ -53,8 +53,8 @@
         .unfavorite {
             color: grey;
             position: absolute;
-            right: 5px;
-            top: 1px;
+            right: 8px;
+            top: 8px;
             font-size: 25px;
             cursor: pointer;
             z-index: 3;
@@ -62,8 +62,8 @@
         .favorite {
             color: red;
             position: absolute;
-            right: 5px;
-            top: 1px;
+            right: 8px;
+            top: 8px;
             font-size: 25px;
             cursor: pointer;
             z-index: 3;
@@ -72,6 +72,9 @@
             width: 250px;
             height: 330px;
         }
+    }
+    .content {
+        height: 36%;
     }
     .hover-content {
         height: 80%;
