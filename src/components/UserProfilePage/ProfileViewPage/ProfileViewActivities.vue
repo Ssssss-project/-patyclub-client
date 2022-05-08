@@ -434,6 +434,7 @@ export default {
         params: {
           id: row.id,
           source: "profile",
+          categoryId: row.categoryId,
           categoryName: row.categoryName,
         },
       });

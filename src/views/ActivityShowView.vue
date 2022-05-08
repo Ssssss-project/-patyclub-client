@@ -5,7 +5,7 @@
         <q-breadcrumbs
           gutter="sm"
           active-color="#2f4858"
-          style="font-size:15px"
+          style="font-size:15px;padding-bottom:5px"
         >
           <template v-slot:separator>
             <q-icon
