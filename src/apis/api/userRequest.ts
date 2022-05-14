@@ -52,6 +52,7 @@ export const apiUpdateEventData = (params: any) => request("post", "/Event/updat
 
 // 檔案上傳
 export const apiFileUpload = (params: any) => request("post", "/Event/dataUpload", params);
+
 // 取得群組清單
 export const apiGetCodeMstList = () => request("get", "/Code/getCodeMstList/");
 
@@ -63,3 +64,7 @@ export const apiPutWatchEvent = (params: AddFavoriteEvent) => request("put", "/E
 
 // 紀錄log
 export const apiPostAllLog = (params: any) => request("post", "/Log/addLog/", params);
+
+// 取得來源活動類別清單
+export const apiGetSourceEventCategoryList = (params: any) =>
+    request("get", "/GetEntityList/getSourceEventCategoryList", params);
