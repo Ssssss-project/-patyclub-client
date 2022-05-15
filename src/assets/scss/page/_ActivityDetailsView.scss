@@ -148,6 +148,14 @@
         width: 900px;
         height: 720px;
         color: #945B47;
+        .q-tabs__content--align-center {
+            justify-content: left;
+        }
+
+        .q-tab-panel {
+            padding: 16px;
+            text-align: left;
+        }
     }
 
     .tab_title {

@@ -89,24 +89,24 @@
 import { ref } from "vue";
 import { defineProps } from "vue";
 import { defineEmits } from "vue";
-import { apiGetEvent } from "@/apis/api/userRequest.ts";
+import { apiGetEvent, apiGetUserProfile } from "@/apis/api/userRequest.ts";
 // import { apiGetEventAppendix } from "@/apis/api/userRequest.ts";
-import store from "@/store";
-import jwt_decode from "jwt-decode";
+// import store from "@/store";
+// import jwt_decode from "jwt-decode";
 
 /********************const variable********************/
 
 // const temp = defineProps(["preview"]);
 // const preview = temp.preview ? temp.preview[0].__img.currentSrc : "";
 const tab = ref("one");
-const token = store.getters.getUserStore.sToken; // 取得token
-const decoded = jwt_decode(token); // 解析token
-const createUserName = decoded["userName"]; // 活動創建人姓名
+// const token = store.getters.getUserStore.sToken; // 取得token
+// const decoded = jwt_decode(token); // 解析token
+const createUserName = ref("");//decoded["userName"]; // 活動創建人姓名
 const cost = ref(""); // 參與費用
 const signUpEdDate = ref(""); // 報名截止倒數
 const eventTitle = ref("");   // 活動標題
 const eventIntroduction = ref("");  // 活動簡介
-const eventDetail = ref("")   // 活動細項
+const eventDetail = ref("");   // 活動細項
 const eventAttantion = ref("")  // 注意事項
 // const appendixPath = ref("");
 const eventId = defineProps(["allChildPara"]);
@@ -146,6 +146,13 @@ function getEvent() {
     // appendixPath.value = "https://localhost:5001" + response.data.eventAppendixList[0].appendixPath;
     response.data.eventAppendixList.forEach(function (value, index) {
       images.value.push({id:index + 1, img:"https://localhost:5001" + value.appendixPath});
+    });
+
+    // 取得使用者資訊
+    apiGetUserProfile({ userAccount: eventObj.owner }).then((profileResponse) => {
+      if (profileResponse.data) {
+        createUserName.value  = profileResponse.data.name;
+      }
     });
   });
 
