@@ -6,6 +6,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    & > div {
+        margin-right: 5px;
+    }
 
     .homelogo {
         margin-left: 10px;
