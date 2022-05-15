@@ -11,7 +11,7 @@
         margin-left: 10px;
     }
     .btns {
-        height: 50px;
+        height: 30px;
         width: 100px;
         background-color: $color-light-200;
         border-color: $color-light-200;
@@ -21,7 +21,7 @@
         background-color: $color-primary-300;
     }
     .btns-home {
-        height: 50px;
+        height: 30px;
         width: 100px;
         background-color: $color-dark-900;
         border-color: $color-dark-900;
@@ -30,7 +30,7 @@
     }
     .btns-home:hover {
         background-color: $color-light-600;
-        color: $color-dark-900;
+        color: white;
     }
 
     .afterLoginBtn {
