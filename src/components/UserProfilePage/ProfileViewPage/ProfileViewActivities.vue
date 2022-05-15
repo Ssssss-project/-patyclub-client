@@ -102,7 +102,7 @@
             <q-icon
               style="margin-right:5px"
               :name="getTimeImg(new Date(colValue.row.eventStDate), new Date(colValue.row.eventEdDate))"
-              size="3em"
+              size="2.5em"
             />
             <q-tooltip
               class="bg-amber-14 text-black shadow-4 text-bold text-body2"
@@ -127,7 +127,7 @@
           <div style="display:inline">
             <q-icon
               :name="getMemberImg(colValue.row.memberCount, colValue.row.memberLimit)"
-              size="3em"
+              size="2.5em"
             >
             </q-icon>
             <q-tooltip
@@ -145,7 +145,7 @@
           <div style="display:inline">
             <q-icon
               :name="getImg(colValue.col.name, colValue.value)"
-              size="3em"
+              size="2.5em"
             >
             </q-icon>
             <q-tooltip
