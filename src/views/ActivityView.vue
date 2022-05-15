@@ -21,6 +21,7 @@
               :categoryList="categoryList"
               :key="categoryList"
               :selectedCategory="selectedCategory"
+              v-model:ticked="selectedCategory"
               @setselectedcategory="setselectedCategory"
             />
           </div>
@@ -67,9 +68,12 @@ import {
 } from "../apis/api/userRequest";
 import { categoryNode, EventType, GetEventWithCondition } from "../apis/type";
 import { ref, onMounted, Ref, watch } from "vue";
+import { useRoute } from "vue-router";
 
 export default {
   setup() {
+    const route = useRoute();
+    const categoryid = route.params.category_id;
     const sortCondition: string[] = [
       "依活動開始時間升序",
       "依活動開始時間降序",
@@ -78,7 +82,9 @@ export default {
     ];
     const defaultCondition: GetEventWithCondition = {
       requestPageNum: 1,
-      category: 0,
+      category: parseInt(categoryid as string)
+        ? parseInt(categoryid as string)
+        : 0,
       tag: "",
       queryList: [],
       nonCompleteEvent: "No",
@@ -102,7 +108,7 @@ export default {
 
     const allEvent: Ref<EventType[]> = ref([]);
     const categoryList: Ref<categoryNode[]> = ref([]);
-    const selectedCategory: Ref<number> = ref(-1);
+    const selectedCategory: Ref<number> = ref(parseInt(categoryid as string));
 
     const stringOptions: Ref<string[]> = ref([]);
 
@@ -214,6 +220,7 @@ export default {
       sortCondition,
       sortConditionModel,
       stringOptions,
+      categoryid,
       setselectedCategory,
       setSortCondition,
       setDefaultAllCondition,

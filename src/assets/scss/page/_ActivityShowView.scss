@@ -1,3 +1,9 @@
 #ActivityShowView {
- 
+    .q-breadcrumbs {
+        & > div {
+            .q-breadcrumbs--last a {
+                pointer-events: default;
+            }
+        }
+    }
 }

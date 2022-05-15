@@ -435,7 +435,7 @@ export default {
           id: row.id,
           source: "profile",
           categoryId: row.categoryId,
-          categoryName: row.categoryName,
+          eventTitle: row.eventTitle,
         },
       });
     }

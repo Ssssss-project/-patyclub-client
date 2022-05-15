@@ -13,7 +13,11 @@
       :class="data.isWatcher ? 'favorite' : 'unfavorite'"
       @click="(e) => clickFavorite(e, data.id, data.userPersonnel)"
     />
-    <img :src="returnImg(data.coverPath)" />
+    <img
+      v-if="data.coverPath!==''"
+      :src="returnImg(data.coverPath)"
+    />
+
     <q-card-section class="content">
       <div class="text-h6">{{ data.eventTitle }}</div>
       <div class="text-subtitle2 ">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
@@ -122,7 +126,7 @@ export default {
 
     const returnImg = (imgURL: string) => {
       if (imgURL !== null) return "https://localhost:5001" + imgURL;
-      return "../assets/defaultCard.png"; //要放一個default ?
+      return require("../../assets/defaultCard.png");
     };
 
     const clickFavorite = (e: any, eventID: number, userPersonnel: string) => {
@@ -146,7 +150,8 @@ export default {
           id: id,
           source: "",
           categoryId: categoryId,
-          categoryName: categoryName,
+          eventTitle: categoryName,
+          //   ActivityName: ActivityName,
         },
       });
     };
