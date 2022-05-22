@@ -45,7 +45,7 @@
             <q-btn ref="previous"
               v-if="step > 1"
               flat
-              @click="$refs.stepper.previous('previous')"
+              @click="$refs.stepper.previous(); changeText('previous')"
               label="上一步"
               class="btn-step"
               style="margin-left: 5px"
@@ -53,7 +53,7 @@
             <q-btn ref="next"
             v-if="step == 1"
               class="btn-step"
-              @click="$refs.stepper.next(); save('next')"
+              @click="$refs.stepper.next(); save(); changeText('next')"
               label="下一步"
               flat
             ></q-btn>
@@ -103,10 +103,13 @@ function createdSave() {
   });
 }
 
-// 儲存按鈕
-function save(textType: string) {
-
+function changeText(textType: string) {
   saveText.value = textType == "next" ? "送審" : "儲存";
+}
+
+
+// 儲存按鈕
+function save() {
 
   // allChildPara.basicInfo.id = eventId;  // EventMst id
   tempBasicInfo.id = eventId;
