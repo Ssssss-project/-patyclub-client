@@ -28,7 +28,7 @@
           <q-breadcrumbs-el
             v-if="!showProfile"
             label="所有活動"
-            to="/activityView"
+            to="/activityView/0"
           />
           <q-breadcrumbs-el
             v-for="(value, index) in shownBreadcrumbs"
@@ -36,6 +36,7 @@
             :to="value.destination"
             :key="index"
           />
+          <q-breadcrumbs-el :label="eventTitle" />
         </q-breadcrumbs>
 
         <ActivityDetailsView :allChildPara="allChildPara" />
@@ -55,6 +56,7 @@ export default {
     let allChildPara: any = { id: route.params.id };
     let showProfile: boolean = route.params.source == "profile" ? true : false;
     let categoryId: any = route.params.categoryId;
+    let eventTitle: any = route.params.eventTitle;
 
     const shownBreadcrumbs: Array<object> = reactive([]);
 
@@ -66,7 +68,7 @@ export default {
             shownBreadcrumbs.push({
               id: object.id,
               label: object.name,
-              destination: "",
+              destination: `/activityView/${object.id}`,
             });
           });
         }
@@ -78,6 +80,7 @@ export default {
       activityImg: "img:" + require(`@/assets/icon/activities.svg`),
       shownBreadcrumbs,
       showProfile,
+      eventTitle,
     };
   },
 

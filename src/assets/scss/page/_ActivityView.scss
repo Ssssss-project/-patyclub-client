@@ -49,6 +49,8 @@
             max-height: 160px;
             object-fit: cover;
             flex: 1;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
         .unfavorite {
             color: grey;
@@ -88,7 +90,7 @@
     }
     .timeline:before,
     .timeline:after {
-        content: "";
+        content: '';
         flex: 1 1;
         border-bottom: 1px solid;
         margin: auto;

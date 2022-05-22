@@ -1,39 +1,46 @@
 <template>
-    <q-card
-        v-ripple
-        class="my-card cursor-pointer "
-        v-for="(data, idx) in Activity"
-        :key="idx"
-        @mouseover="data.showInfo = true"
-        @mouseleave="data.showInfo = false"
-        @click="clickCard(data.id, data.eventTitle)"
+  <q-card
+    v-ripple
+    class="my-card cursor-pointer "
+    v-for="(data, idx) in Activity"
+    :key="idx"
+    @mouseover="data.showInfo = true"
+    @mouseleave="data.showInfo = false"
+    @click="clickCard(data.id, data.eventTitle,data.categoryId)"
+  >
+    <q-icon
+      name="favorite"
+      :class="data.isWatcher ? 'favorite' : 'unfavorite'"
+      @click="(e) => clickFavorite(e, data.id, data.userPersonnel)"
+    />
+    <img
+      v-if="data.coverPath!==''"
+      :src="returnImg(data.coverPath)"
+    />
+
+    <q-card-section class="content">
+      <div class="text-h6">{{ data.eventTitle }}</div>
+      <div class="text-subtitle2 ">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
+    </q-card-section>
+    <div class="timeline">
+      <span>{{ timeDiffCalc(new Date(data.eventEdDate)) }}</span>
+    </div>
+
+    <div
+      class="q-pt-none"
+      v-if="data.showInfo"
     >
-        <q-icon
-            name="favorite"
-            :class="data.isWatcher ? 'favorite' : 'unfavorite'"
-            @click="(e) => clickFavorite(e, data.id, data.userPersonnel)"
-        />
-        <img :src="returnImg(data.coverPath)" />
-        <q-card-section class="content">
-            <div class="text-h6">{{ data.eventTitle }}</div>
-            <div class="text-subtitle2 ">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
-        </q-card-section>
-        <div class="timeline">
-            <span>{{ timeDiffCalc(new Date(data.eventEdDate)) }}</span>
-        </div>
+      <div class="text-h6 card-title scrollbarCol">{{ data.eventTitle }}</div>
+      <div class="hover-content scrollbarCol">
+        <span>{{ data.eventIntroduction }}</span>
+        <div class="text-subtitle2">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
+      </div>
 
-        <div class="q-pt-none" v-if="data.showInfo">
-            <div class="text-h6 card-title scrollbarCol">{{ data.eventTitle }}</div>
-            <div class="hover-content scrollbarCol">
-                <span>{{ data.eventIntroduction }}</span>
-                <div class="text-subtitle2">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
-            </div>
-
-            <div class="timeline">
-                <span>{{ timeDiffCalc(new Date(data.eventEdDate)) }}</span>
-            </div>
-        </div>
-    </q-card>
+      <div class="timeline">
+        <span>{{ timeDiffCalc(new Date(data.eventEdDate)) }}</span>
+      </div>
+    </div>
+  </q-card>
 </template>
 
 <script lang="ts">
@@ -45,108 +52,118 @@ import router from "@/router";
 import { logCategoryEnums } from "@/apis/enum";
 
 export default {
-    name: "CardList",
-    props: ["allEvent"],
-    setup(props: any, { emit }: any) {
-        const Activity = toRef(props, "allEvent");
-        const store = useStore();
-        const $q = useQuasar();
+  name: "CardList",
+  props: ["allEvent"],
+  setup(props: any, { emit }: any) {
+    const Activity = toRef(props, "allEvent");
+    const store = useStore();
+    const $q = useQuasar();
 
-        //計算時間差距
-        function timeDiffCalc(dateFuture: Date) {
-            let dateNow = new Date();
-            let diffInMilliSeconds: number = Math.abs(dateFuture.getTime() - dateNow.getTime()) / 1000;
-            // calculate days
-            const days = Math.floor(diffInMilliSeconds / 86400);
-            diffInMilliSeconds -= days * 86400;
-            // calculate hours
-            const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
-            diffInMilliSeconds -= hours * 3600;
-            // calculate minutes
-            const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
-            diffInMilliSeconds -= minutes * 60;
-            let difference = "";
-            if (days > 0) {
-                difference += days === 1 ? `${days} day ` : `${days} days `;
-            }
-            difference += hours === 0 || hours === 1 ? `${hours} hour ` : `${hours} hours `;
-            difference += minutes === 0 || hours === 1 ? `${minutes} minutes` : `${minutes} minutes`;
-            return difference;
-        }
+    //計算時間差距
+    function timeDiffCalc(dateFuture: Date) {
+      let dateNow = new Date();
+      let diffInMilliSeconds: number =
+        Math.abs(dateFuture.getTime() - dateNow.getTime()) / 1000;
+      // calculate days
+      const days = Math.floor(diffInMilliSeconds / 86400);
+      diffInMilliSeconds -= days * 86400;
+      // calculate hours
+      const hours = Math.floor(diffInMilliSeconds / 3600) % 24;
+      diffInMilliSeconds -= hours * 3600;
+      // calculate minutes
+      const minutes = Math.floor(diffInMilliSeconds / 60) % 60;
+      diffInMilliSeconds -= minutes * 60;
+      let difference = "";
+      if (days > 0) {
+        difference += days === 1 ? `${days} day ` : `${days} days `;
+      }
+      difference +=
+        hours === 0 || hours === 1 ? `${hours} hour ` : `${hours} hours `;
+      difference +=
+        minutes === 0 || hours === 1
+          ? `${minutes} minutes`
+          : `${minutes} minutes`;
+      return difference;
+    }
 
-        const returnSVG = () => {
-            return "img:" + require(`@/assets/icon/heartSolid.svg`);
-        };
+    const returnSVG = () => {
+      return "img:" + require(`@/assets/icon/heartSolid.svg`);
+    };
 
-        const loginCheck = (eventID: number, userPersonnel: string) => {
-            let token = store.getters.getUserStore.sToken;
-            console.log("userPersonnel", userPersonnel);
-            if (token === "") {
-                $q.notify({
-                    color: "red-5",
-                    textColor: "white",
-                    icon: "warning",
-                    message: "請先登入!",
-                });
-            } else {
-                apiPutWatchEvent({
-                    token: token,
-                    eventId: eventID,
-                })
-                    .then((res: any) => {
-                        $q.notify({
-                            icon: "done",
-                            color: "positive",
-                            message: res.message,
-                        });
-                        emit("getEventWithCondition");
-                    })
-                    .catch(() => {
-                        $q.notify({
-                            color: "red-5",
-                            textColor: "white",
-                            icon: "warning",
-                            message: "新增失敗!",
-                        });
-                    });
-            }
-        };
-
-        const returnImg = (imgURL: string) => {
-            console.log(imgURL);
-            if (imgURL !== null) return "https://localhost:5001" + imgURL;
-            return ""; //要放一個default ?
-        };
-
-        const clickFavorite = (e: any, eventID: number, userPersonnel: string) => {
-            e.stopPropagation();
-            loginCheck(eventID, userPersonnel);
-        };
-
-        const clickCard = (id: number, categoryName: string) => {
-            console.log(`route to ActivityShowView id:${id}`);
-            apiPostAllLog({
-                logCate: logCategoryEnums.eventTouch,
-                targetSeq: id.toString(),
+    const loginCheck = (eventID: number, userPersonnel: string) => {
+      let token = store.getters.getUserStore.sToken;
+      console.log("userPersonnel", userPersonnel);
+      if (token === "") {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "請先登入!",
+        });
+      } else {
+        apiPutWatchEvent({
+          token: token,
+          eventId: eventID,
+        })
+          .then((res: any) => {
+            $q.notify({
+              icon: "done",
+              color: "positive",
+              message: res.message,
             });
-            router.push({
-                name: "ActivityShowView",
-                params: {
-                    id: id,
-                    source: "profile",
-                    categoryName: categoryName,
-                },
+            emit("getEventWithCondition");
+          })
+          .catch(() => {
+            $q.notify({
+              color: "red-5",
+              textColor: "white",
+              icon: "warning",
+              message: "新增失敗!",
             });
-        };
+          });
+      }
+    };
 
-        return {
-            Activity,
-            timeDiffCalc,
-            returnSVG,
-            clickFavorite,
-            clickCard,
-            returnImg,
-        };
-    },
+    const returnImg = (imgURL: string) => {
+      if (imgURL !== null) return "https://localhost:5001" + imgURL;
+      return require("../../assets/defaultCard.png");
+    };
+
+    const clickFavorite = (e: any, eventID: number, userPersonnel: string) => {
+      e.stopPropagation();
+      loginCheck(eventID, userPersonnel);
+    };
+
+    const clickCard = (
+      id: number,
+      categoryName: string,
+      categoryId: number
+    ) => {
+      console.log(`route to ActivityShowView id:${id}`);
+      apiPostAllLog({
+        logCate: logCategoryEnums.eventTouch,
+        targetSeq: id.toString(),
+      });
+      router.push({
+        name: "ActivityShowView",
+        params: {
+          id: id,
+          source: "",
+          categoryId: categoryId,
+          eventTitle: categoryName,
+          //   ActivityName: ActivityName,
+        },
+      });
+    };
+
+    return {
+      Activity,
+      timeDiffCalc,
+      returnSVG,
+      clickFavorite,
+      clickCard,
+      returnImg,
+    };
+  },
 };
 </script>
