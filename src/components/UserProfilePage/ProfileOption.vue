@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-tree
-      style="font-size:20px"
+      style="font-size:18px"
       :nodes="tree"
       no-connectors
       default-expand-all

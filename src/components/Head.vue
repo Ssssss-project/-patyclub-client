@@ -4,7 +4,7 @@
             <img class="homelogo" src="../assets/PatyIcon.png" v-if="isHomepage === false" />
             <img class="homelogo" style="width:55px" src="../assets/PatyIcon-white.png" v-if="isHomepage" />
         </router-link>
-        <div>
+        <div style="margin-right: 30px;">
             <button :class="isHomepage ? 'btns-home' : 'btns'" @click="testToken()">測試token</button>
             <button :class="isHomepage ? 'btns-home' : 'btns'" @click="bShowChat = true">測試聊天室</button>
             <router-link :to="`/activityView`">
@@ -16,52 +16,60 @@
             <button v-if="!personalInfo" :class="isHomepage ? 'btns-home' : 'btns'" @click="openLoginDialog">
                 登入
             </button>
-            <q-btn v-if="personalInfo" :icon-right="personalInfo.headStickerPath" no-caps flat class="afterLoginBtn">
-                Hi,{{ personalInfo.name }}&nbsp;&nbsp;&nbsp;
-                <q-menu transition-show="flip-right" transition-hide="flip-left" style="backgroundColor:#deb06b">
-                    <q-list>
-                        <router-link :to="`/UserProfile/personalInfo`">
-                            <q-item clickable v-close-popup>
-                                <q-item-section avatar>
-                                    <q-icon :name="getImg('set')" />
-                                </q-item-section>
-                                <q-item-section caption>
-                                    <q-item-label>設定</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </router-link>
-                        <router-link :to="`/UserProfile/activities`">
-                            <q-item clickable v-close-popup>
-                                <q-item-section avatar>
-                                    <q-icon :name="getImg('activities')" />
-                                </q-item-section>
-                                <q-item-section caption>
-                                    <q-item-label>我的活動</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </router-link>
-                        <router-link :to="`/UserProfile/achievement`">
-                            <q-item clickable v-close-popup>
-                                <q-item-section avatar>
-                                    <q-icon :name="getImg('achievement')" />
-                                </q-item-section>
-                                <q-item-section caption>
-                                    <q-item-label>成就系統</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </router-link>
-                        <router-link :to="`/`">
-                            <q-item clickable v-close-popup @click="logOut()">
-                                <q-item-section avatar>
-                                    <q-icon :name="getImg('logOut')" />
-                                </q-item-section>
-                                <q-item-section caption>
-                                    <q-item-label>登出</q-item-label>
-                                </q-item-section>
-                            </q-item>
-                        </router-link>
-                    </q-list>
-                </q-menu>
+            <q-btn v-if="personalInfo" :icon-right="personalInfo.headStickerPath" no-caps flat
+                   :class="isHomepage ? 'afterLoginBtn-home' : 'afterLoginBtn'" :label="'Hi, ' + personalInfo.name">
+              <q-menu id="UserOption"
+                      transition-show="flip-right" 
+                      transition-hide="flip-left"
+                      anchor="bottom middle" 
+                      self="top middle"
+                      style="background:none;box-shadow:none">
+                <div class="main">
+                  <div class="triangle"/>
+                  <q-list class="list">
+                    <router-link :to="`/UserProfile/personalInfo`">
+                        <q-item clickable v-close-popup>
+                            <q-item-section avatar>
+                                <q-icon :name="getImg('set')" />
+                            </q-item-section>
+                            <q-item-section caption>
+                                <q-item-label>設定</q-item-label>
+                            </q-item-section>
+                        </q-item>
+                    </router-link>
+                    <router-link :to="`/UserProfile/activities`">
+                        <q-item clickable v-close-popup>
+                            <q-item-section avatar>
+                                <q-icon :name="getImg('activities')" />
+                            </q-item-section>
+                            <q-item-section caption>
+                                <q-item-label>我的活動</q-item-label>
+                            </q-item-section>
+                        </q-item>
+                    </router-link>
+                    <router-link :to="`/UserProfile/achievement`">
+                        <q-item clickable v-close-popup>
+                            <q-item-section avatar>
+                                <q-icon :name="getImg('achievement')" />
+                            </q-item-section>
+                            <q-item-section caption>
+                                <q-item-label>成就系統</q-item-label>
+                            </q-item-section>
+                        </q-item>
+                    </router-link>
+                    <router-link :to="`/`">
+                        <q-item clickable v-close-popup @click="logOut()">
+                            <q-item-section avatar>
+                                <q-icon :name="getImg('logOut')" />
+                            </q-item-section>
+                            <q-item-section caption>
+                                <q-item-label>登出</q-item-label>
+                            </q-item-section>
+                        </q-item>
+                    </router-link>
+                  </q-list>  
+                </div>
+              </q-menu>
             </q-btn>
         </div>
     </header>

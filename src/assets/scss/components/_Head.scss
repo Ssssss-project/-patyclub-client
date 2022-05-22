@@ -30,11 +30,22 @@
     }
     .btns-home:hover {
         background-color: $color-light-600;
-        color: $color-dark-900;
+        color: $color-light-80;
     }
 
     .afterLoginBtn {
-        background-color: $color-light-350;
+        background-color: $color-light-200;
+        height: 50px;
+    }
+
+    .afterLoginBtn:hover {
+        background-color: $color-primary-300;
+    }
+
+    .afterLoginBtn-home {
+        background-color: $color-dark-900;
+        height: 50px;
+        color: $color-light-80;
     }
 }
 .normalbg {
