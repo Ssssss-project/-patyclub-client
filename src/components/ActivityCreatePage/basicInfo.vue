@@ -154,7 +154,7 @@ cost.value = savePara.cost ? savePara.cost : "";
 
 
 onMounted(() => {
-  dataUploader.value.addFiles(fileTemp);
+  dataUploader.value.addFiles(fileTemp[0]);
 })
 
 
@@ -225,7 +225,7 @@ function getPara(key, event) {
 function factoryFn(file) {
   // preview.value = file[0].__img.currentSrc;
   preview.value = file;
-  // fileTemp.push(file);
+  fileTemp.push(file);
   getPara("preview", file);
   console.log(dataUploader.value);
 

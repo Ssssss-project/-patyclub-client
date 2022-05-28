@@ -42,35 +42,38 @@
         width: 100%;
         width: 240px;
         margin-top: 15px;
-        height: 330px;
+        height: 440px;
         & > img {
             width: 100%;
-            min-height: 200px;
+            min-height: 250px;
             max-height: 160px;
             object-fit: cover;
             flex: 1;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
         }
-        .unfavorite {
-            color: grey;
+        .heart {
             position: absolute;
             right: 8px;
             top: 8px;
             font-size: 25px;
             cursor: pointer;
             z-index: 3;
-        }
-        .favorite {
-            color: red;
-            position: absolute;
-            right: 8px;
-            top: 8px;
-            font-size: 25px;
-            cursor: pointer;
-            z-index: 3;
+            width: 50px;
+            height: 50px;
+            background-color: #ffffffcc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            border: 1px solid black;
+            & > img {
+                width: 30px;
+            }
         }
         @include laptop {
             width: 250px;
-            height: 330px;
+            height: 440px;
         }
     }
     .content {

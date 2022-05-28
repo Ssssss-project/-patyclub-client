@@ -39,16 +39,32 @@
             />
           </q-breadcrumbs>
 
-          <ActivityDetailsView :allChildPara="allChildPara" />
-        </div>
-        <div class="card-list" :key="allEvent">
-          <div>
-            <card-list
-              :allEvent="allEvent"
-              @getEventWithCondition="getEventWithCondition"
-            />
-          </div>
-        </div>
+          <q-breadcrumbs-el
+            label="首頁"
+            icon="home"
+            to="/"
+          />
+          <q-breadcrumbs-el
+            v-if="showProfile"
+            label="我的活動"
+            to="/UserProfile/activities"
+            :icon="activityImg"
+          />
+          <q-breadcrumbs-el
+            v-if="!showProfile"
+            label="所有活動"
+            to="/activityView/0"
+          />
+          <q-breadcrumbs-el
+            v-for="(value, index) in shownBreadcrumbs"
+            :label="value.label"
+            :to="value.destination"
+            :key="index"
+          />
+          <q-breadcrumbs-el :label="eventTitle" />
+        </q-breadcrumbs>
+
+        <ActivityDetailsView :allChildPara="allChildPara" />
       </div>
     </div>
   </main>
@@ -68,6 +84,7 @@ export default {
     let allChildPara: any = { id: route.params.id };
     let showProfile: boolean = route.params.source == "profile" ? true : false;
     let categoryId: any = route.params.categoryId;
+    let eventTitle: any = route.params.eventTitle;
 
     const shownBreadcrumbs: Array<object> = reactive([]);
 
@@ -81,7 +98,7 @@ export default {
             shownBreadcrumbs.push({
               id: object.id,
               label: object.name,
-              destination: "",
+              destination: `/activityView/${object.id}`,
             });
           });
         }
@@ -107,7 +124,7 @@ export default {
       activityImg: "img:" + require(`@/assets/icon/activities.svg`),
       shownBreadcrumbs,
       showProfile,
-      allEvent
+      eventTitle,
     };
   },
 

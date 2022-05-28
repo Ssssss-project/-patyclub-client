@@ -6,14 +6,13 @@
         :key="idx"
         @mouseover="data.showInfo = true"
         @mouseleave="data.showInfo = false"
-        @click="clickCard(data.id, data.eventTitle)"
+        @click="clickCard(data.id, data.eventTitle, data.categoryId)"
     >
-        <q-icon
-            name="favorite"
-            :class="data.isWatcher ? 'favorite' : 'unfavorite'"
-            @click="(e) => clickFavorite(e, data.id, data.userPersonnel)"
-        />
-        <img :src="returnImg(data.coverPath)" />
+        <div class="heart" @click="(e) => clickFavorite(e, data.id, data.userPersonnel)">
+            <img :src="returnSVG(data.isWatcher)" />
+        </div>
+        <img v-if="data.coverPath !== ''" :src="returnImg(data.coverPath)" />
+
         <q-card-section class="content">
             <div class="text-h6">{{ data.eventTitle }}</div>
             <div class="text-subtitle2 ">{{ data.owner !== "" ? `by ${data.owner}` : "" }}</div>
@@ -74,8 +73,9 @@ export default {
             return difference;
         }
 
-        const returnSVG = () => {
-            return "img:" + require(`@/assets/icon/heartSolid.svg`);
+        const returnSVG = (isWatcher: boolean) => {
+            if (!isWatcher) return require(`@/assets/icon/heartNull.svg`);
+            return require(`@/assets/icon/heartSolid.svg`);
         };
 
         const loginCheck = (eventID: number, userPersonnel: string) => {
@@ -113,9 +113,8 @@ export default {
         };
 
         const returnImg = (imgURL: string) => {
-            console.log(imgURL);
             if (imgURL !== null) return "https://localhost:5001" + imgURL;
-            return ""; //要放一個default ?
+            return require("../../assets/defaultCard.png");
         };
 
         const clickFavorite = (e: any, eventID: number, userPersonnel: string) => {
@@ -123,7 +122,7 @@ export default {
             loginCheck(eventID, userPersonnel);
         };
 
-        const clickCard = (id: number, categoryName: string) => {
+        const clickCard = (id: number, categoryName: string, categoryId: number) => {
             console.log(`route to ActivityShowView id:${id}`);
             apiPostAllLog({
                 logCate: logCategoryEnums.eventTouch,
@@ -133,8 +132,10 @@ export default {
                 name: "ActivityShowView",
                 params: {
                     id: id,
-                    source: "profile",
-                    categoryName: categoryName,
+                    source: "",
+                    categoryId: categoryId,
+                    eventTitle: categoryName,
+                    //   ActivityName: ActivityName,
                 },
             });
         };
