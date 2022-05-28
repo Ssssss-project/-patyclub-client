@@ -1,54 +1,67 @@
 <template>
   <main id="ActivityShowView">
     <div class="container">
-      <div>
-        <q-breadcrumbs
-          gutter="sm"
-          active-color="#2f4858"
-          style="font-size:15px;padding-bottom:5px"
-        >
-          <template v-slot:separator>
-            <q-icon
-              size="2em"
-              name="chevron_right"
+      <div class="main-show">
+        <div>
+          <q-breadcrumbs
+            gutter="sm"
+            active-color="#2f4858"
+            style="font-size:15px;padding-bottom:5px"
+          >
+            <template v-slot:separator>
+              <q-icon
+                size="2em"
+                name="chevron_right"
+              />
+            </template>
+
+            <q-breadcrumbs-el
+              label="首頁"
+              icon="home"
+              to="/"
             />
-          </template>
+            <q-breadcrumbs-el
+              v-if="showProfile"
+              label="我的活動"
+              to="/UserProfile/activities"
+              :icon="activityImg"
+            />
+            <q-breadcrumbs-el
+              v-if="!showProfile"
+              label="所有活動"
+              to="/activityView"
+            />
+            <q-breadcrumbs-el
+              v-for="(value, index) in shownBreadcrumbs"
+              :label="value.label"
+              :to="value.destination"
+              :key="index"
+            />
+          </q-breadcrumbs>
 
-          <q-breadcrumbs-el
-            label="首頁"
-            icon="home"
-            to="/"
-          />
-          <q-breadcrumbs-el
-            v-if="showProfile"
-            label="我的活動"
-            to="/UserProfile/activities"
-            :icon="activityImg"
-          />
-          <q-breadcrumbs-el
-            v-if="!showProfile"
-            label="所有活動"
-            to="/activityView"
-          />
-          <q-breadcrumbs-el
-            v-for="(value, index) in shownBreadcrumbs"
-            :label="value.label"
-            :to="value.destination"
-            :key="index"
-          />
-        </q-breadcrumbs>
-
-        <ActivityDetailsView :allChildPara="allChildPara" />
+          <ActivityDetailsView :allChildPara="allChildPara" />
+        </div>
+        <div class="card-list" :key="allEvent">
+          <div>
+            <card-list
+              :allEvent="allEvent"
+              @getEventWithCondition="getEventWithCondition"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </main>
 </template>
 
 <script lang="ts">
+import CardList from "../components/ActivityViewPage/CardList.vue";
 import { useRoute } from "vue-router";
-import { onMounted, reactive } from "vue";
+import { onMounted, reactive, ref, Ref } from "vue";
 import ActivityDetailsView from "../components/ActivityDetailsView.vue";
 import { apiGetSourceEventCategoryList } from "../apis/api/userRequest";
+import { apiGetEventWithCondition } from "../apis/api/userRequest";
+import { EventType } from "../apis/type";
 export default {
   setup() {
     const route = useRoute();
@@ -57,6 +70,8 @@ export default {
     let categoryId: any = route.params.categoryId;
 
     const shownBreadcrumbs: Array<object> = reactive([]);
+
+    const allEvent: Ref<EventType[]> = ref([]);
 
     onMounted(() => {
       apiGetSourceEventCategoryList({ rootCateId: categoryId }).then(
@@ -71,18 +86,34 @@ export default {
           });
         }
       );
+      getEventWithCondition();
     });
+
+    const getEventWithCondition = () => {
+      apiGetEventWithCondition({
+        category: 0,
+        tag: "",
+        queryList: [],
+        sortBy: "non_sort",
+        rownumPerPage: 5,
+        requestPageNum: 1
+      }).then((response: any) => {
+        allEvent.value = response.data;
+      });
+    };
 
     return {
       allChildPara,
       activityImg: "img:" + require(`@/assets/icon/activities.svg`),
       shownBreadcrumbs,
       showProfile,
+      allEvent
     };
   },
 
   components: {
     ActivityDetailsView,
+    CardList
   },
 };
 </script>
