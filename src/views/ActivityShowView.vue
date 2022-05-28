@@ -1,7 +1,7 @@
 <template>
   <main id="ActivityShowView">
     <div class="container">
-      <div class="main-show">
+      <div class="main">
         <div>
           <q-breadcrumbs
             gutter="sm"
@@ -29,7 +29,7 @@
             <q-breadcrumbs-el
               v-if="!showProfile"
               label="所有活動"
-              to="/activityView"
+              to="/activityView/0"
             />
             <q-breadcrumbs-el
               v-for="(value, index) in shownBreadcrumbs"
@@ -37,34 +37,22 @@
               :to="value.destination"
               :key="index"
             />
+            <q-breadcrumbs-el :label="eventTitle" />
           </q-breadcrumbs>
 
-          <q-breadcrumbs-el
-            label="首頁"
-            icon="home"
-            to="/"
-          />
-          <q-breadcrumbs-el
-            v-if="showProfile"
-            label="我的活動"
-            to="/UserProfile/activities"
-            :icon="activityImg"
-          />
-          <q-breadcrumbs-el
-            v-if="!showProfile"
-            label="所有活動"
-            to="/activityView/0"
-          />
-          <q-breadcrumbs-el
-            v-for="(value, index) in shownBreadcrumbs"
-            :label="value.label"
-            :to="value.destination"
-            :key="index"
-          />
-          <q-breadcrumbs-el :label="eventTitle" />
-        </q-breadcrumbs>
-
-        <ActivityDetailsView :allChildPara="allChildPara" />
+          <ActivityDetailsView :allChildPara="allChildPara" />
+        </div>
+        <div class="history-area">
+          <q-btn label="瀏覽紀錄" class="history-btn" :icon-right="showHistory ? 'close':'expand_more' " align="between" @click="showHistory = !showHistory"/>
+          <div class="card-list" :key="allEvent">
+            <div>
+              <card-list
+                :allEvent="allEvent"
+                @getEventWithCondition="getEventWithCondition"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </main>
@@ -85,6 +73,7 @@ export default {
     let showProfile: boolean = route.params.source == "profile" ? true : false;
     let categoryId: any = route.params.categoryId;
     let eventTitle: any = route.params.eventTitle;
+    const showHistory:Ref<boolean> = ref(true);
 
     const shownBreadcrumbs: Array<object> = reactive([]);
 
@@ -125,6 +114,9 @@ export default {
       shownBreadcrumbs,
       showProfile,
       eventTitle,
+      allEvent,
+      showHistory,
+      getEventWithCondition
     };
   },
 
