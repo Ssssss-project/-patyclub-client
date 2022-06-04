@@ -4,6 +4,9 @@
         flex-direction: column;
         height: 100%;
     }
+    .slider-image {
+        margin-bottom: 20px;
+    }
     .head-block {
         margin: 20px 0px;
         min-height: 300px;
@@ -91,7 +94,7 @@
     }
     .timeline:before,
     .timeline:after {
-        content: "";
+        content: '';
         flex: 1 1;
         border-bottom: 1px solid;
         margin: auto;
