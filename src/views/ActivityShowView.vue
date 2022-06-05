@@ -44,7 +44,7 @@
         </div>
         <div class="history-area">
           <q-btn label="瀏覽紀錄" class="history-btn" :icon-right="showHistory ? 'close':'expand_more' " align="between" @click="showHistory = !showHistory"/>
-          <div class="card-list" :key="allEvent">
+          <div class="card-list" :key="allEvent" v-if="showHistory">
             <div>
               <card-list
                 :allEvent="allEvent"
