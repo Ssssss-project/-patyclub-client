@@ -16,7 +16,9 @@ app.directive('demo', (el, binding) => {
 
     console.log(el)
     console.log(binding.value)
-    el.innerHTML = `<div class='out-side-directive'>${binding.value.text}<div class='hint-directive'>hi</div></div>`
+    el.innerHTML = `<div class='out-side-directive'>${
+        binding.value.text
+    }<div class='hint-directive'><img src='${require(`../src/assets/review/warn.png`)}' alt=''></div></div>`
     el.addEventListener('click', binding.value.click)
 
     el.style.color = binding.value.color

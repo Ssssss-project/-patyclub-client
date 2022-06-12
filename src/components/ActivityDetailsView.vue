@@ -24,7 +24,6 @@
       <div class="action_display">
         <div class="C1">
           <div class="icon_info">
-
             <q-icon
               class="display"
               size="30px"
