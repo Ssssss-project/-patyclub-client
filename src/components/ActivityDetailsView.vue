@@ -1,18 +1,19 @@
 <template>
   <div id="ActivityDetailsView">
-     <q-carousel
-        animated
-        v-model="slide"
-        arrows
-        navigation
-        infinite
-      >
-        <q-carousel-slide v-for="x in images"
-          :key="x.id"
-          :name="x.id"
-          :img-src="x.img"
-        />
-      </q-carousel>
+    <q-carousel
+      animated
+      v-model="slide"
+      arrows
+      navigation
+      infinite
+    >
+      <q-carousel-slide
+        v-for="x in images"
+        :key="x.id"
+        :name="x.id"
+        :img-src="x.img"
+      />
+    </q-carousel>
     <div class="main">
       <!-- <q-img
         :src="appendixPath"
@@ -23,54 +24,116 @@
       <div class="action_display">
         <div class="C1">
           <div class="icon_info">
-            <q-icon class="display" size="30px" name="person" />
-            <div class="icon_text">目前人數</div>
+
+            <q-icon
+              class="display"
+              size="30px"
+              name="person"
+            />
+            <div
+              v-demo="{ text:
+              '目前人數'
+              ,click:testOnclick}"
+              class="icon_text"
+            >目前人數</div>
             <label>39/50</label>
           </div>
           <div class="icon_info">
-            <q-icon class="display" size="30px" name="monetization_on" />
+            <q-icon
+              class="display"
+              size="30px"
+              name="monetization_on"
+            />
             <div class="icon_text">參與費用</div>
             <label>NT {{ cost }}</label>
           </div>
           <div class="icon_info">
-            <q-icon class="display" size="30px" name="schedule" />
+            <q-icon
+              class="display"
+              size="30px"
+              name="schedule"
+            />
             <div class="icon_text">活動時長</div>
             <label>5-6小時</label>
           </div>
+
           <div class="icon_info">
-            <q-icon class="display" size="30px" name="timer" />
+            <q-icon
+              class="display"
+              size="30px"
+              name="timer"
+            />
             <div class="icon_text">報名截止倒數</div>
             <label>{{ signUpEdDate }}</label>
+
           </div>
+
         </div>
         <div class="C2">
           <div class="C2_L">
             <div class="C2_L_1">
               <div class="C2_L_1_L">創辦人</div>
-              <div class="user_name" v-on:mousemove="mousemove" v-on:mouseleave="mouseleave">{{ createUserName }}</div>
-              <span id="PersonalCard" ref="PersonalCardToolTip">
-                <PersonalCard/>
+              <div
+                class="user_name"
+                v-on:mousemove="mousemove"
+                v-on:mouseleave="mouseleave"
+              >{{ createUserName }}</div>
+              <span
+                id="PersonalCard"
+                ref="PersonalCardToolTip"
+              >
+                <PersonalCard />
               </span>
             </div>
             <div class="C2_L_2">
-              <q-btn class="C2_L_btn" icon="favorite">收藏</q-btn>
-              <q-btn class="C2_L_btn" icon="share">分享</q-btn>
+              <q-btn
+                class="C2_L_btn"
+                icon="favorite"
+              >收藏</q-btn>
+              <q-btn
+                class="C2_L_btn"
+                icon="share"
+              >分享</q-btn>
             </div>
           </div>
-          <q-btn class="btn-apply" icon="person_add_alt_1">我要報名</q-btn>
+          <q-btn
+            class="btn-apply"
+            icon="person_add_alt_1"
+          >我要報名</q-btn>
         </div>
       </div>
-      <div class="title">{{ eventTitle }}</div>
+      <div
+        class="title"
+        v-demo="{ text:eventTitle ,click:testOnclick}"
+      >{{ eventTitle }}</div>
       <div class="q-pa-md">
         <q-card class="main_tab">
-          <q-tabs v-model="tab" class="tab_title">
-            <q-tab label="活動簡介" name="one" />
-            <q-tab label="活動細項" name="two" />
-            <q-tab label="注意事項" name="three" />
-            <q-tab label="其他附件" name="four" />
+          <q-tabs
+            v-model="tab"
+            class="tab_title"
+          >
+            <q-tab
+              label="活動簡介"
+              name="one"
+            />
+            <q-tab
+              label="活動細項"
+              name="two"
+            />
+            <q-tab
+              label="注意事項"
+              name="three"
+            />
+            <q-tab
+              label="其他附件"
+              name="four"
+            />
           </q-tabs>
           <q-separator />
-          <q-tab-panels v-model="tab" animated>
+          <q-tab-panels
+            v-model="tab"
+            animated
+          >
             <q-tab-panel name="one">
               {{ eventIntroduction }}
             </q-tab-panel>
@@ -93,7 +156,7 @@ import { ref } from "vue";
 import { defineProps } from "vue";
 import { defineEmits } from "vue";
 import { apiGetEvent, apiGetUserProfile } from "@/apis/api/userRequest.ts";
-import PersonalCard from "../components/PersonalCard.vue"
+import PersonalCard from "../components/PersonalCard.vue";
 // import { apiGetEventAppendix } from "@/apis/api/userRequest.ts";
 // import store from "@/store";
 // import jwt_decode from "jwt-decode";
@@ -105,24 +168,24 @@ import PersonalCard from "../components/PersonalCard.vue"
 const tab = ref("one");
 // const token = store.getters.getUserStore.sToken; // 取得token
 // const decoded = jwt_decode(token); // 解析token
-const createUserName = ref("");//decoded["userName"]; // 活動創建人姓名
+const createUserName = ref(""); //decoded["userName"]; // 活動創建人姓名
 const cost = ref(""); // 參與費用
 const signUpEdDate = ref(""); // 報名截止倒數
-const eventTitle = ref("");   // 活動標題
-const eventIntroduction = ref("");  // 活動簡介
-const eventDetail = ref("");   // 活動細項
-const eventAttantion = ref("")  // 注意事項
+const eventTitle = ref(""); // 活動標題
+const eventIntroduction = ref(""); // 活動簡介
+const eventDetail = ref(""); // 活動細項
+const eventAttantion = ref(""); // 注意事項
 // const appendixPath = ref("");
 const eventId = defineProps(["allChildPara"]);
 const emit = defineEmits(["get-para"]);
 const slide = ref(1);
-const images =  ref([]);
+const images = ref([]);
 
 /********************const variable end********************/
 
 let id = eventId.allChildPara.id ? eventId.allChildPara.id : 0;
 // getEvent(); // 進入此頁面後先讀取活動資訊(創建活動時)
-setTimeout(function() {
+setTimeout(function () {
   getEvent();
 }, 1000);
 
@@ -139,7 +202,7 @@ function getEvent() {
     let dateTemp = new Date(eventObj.signUpEdDate);
     let difference = (dateTemp.getTime() - newDate.getTime()) / 1000;
     let signUpEdDateStr = formatSecToStr(difference);
-    
+
     // 將資料帶回畫面
     cost.value = eventObj.cost;
     eventTitle.value = eventObj.eventTitle;
@@ -149,20 +212,24 @@ function getEvent() {
     signUpEdDate.value = signUpEdDateStr;
     // appendixPath.value = "https://localhost:5001" + response.data.eventAppendixList[0].appendixPath;
     response.data.eventAppendixList.forEach(function (value, index) {
-      images.value.push({id:index + 1, img:"https://localhost:5001" + value.appendixPath});
+      images.value.push({
+        id: index + 1,
+        img: "https://localhost:5001" + value.appendixPath,
+      });
     });
 
     // 取得使用者資訊
-    apiGetUserProfile({ userAccount: eventObj.owner }).then((profileResponse) => {
-      if (profileResponse.data) {
-        createUserName.value  = profileResponse.data.name;
+    apiGetUserProfile({ userAccount: eventObj.owner }).then(
+      (profileResponse) => {
+        if (profileResponse.data) {
+          createUserName.value = profileResponse.data.name;
+        }
       }
-    });
+    );
   });
 
   // 與父元件參數做連結
-  emit("get-para", {
-  });
+  emit("get-para", {});
 }
 
 // 將日期相差秒數轉為"幾天幾小時幾分幾秒"顯示
@@ -185,19 +252,21 @@ function formatSecToStr(seconds) {
   }
 }
 const PersonalCardToolTip = ref();
-function mousemove(event){
+function mousemove(event) {
   PersonalCardToolTip.value.style.visibility = "visible";
   var x = event.clientX;
   var y = event.clientY;
-  PersonalCardToolTip.value.style.top = (y + 10) + "px";
-  PersonalCardToolTip.value.style.left = (x + 10) + "px";
+  PersonalCardToolTip.value.style.top = y + 10 + "px";
+  PersonalCardToolTip.value.style.left = x + 10 + "px";
 }
 
-function mouseleave(){
-  PersonalCardToolTip.value.style.visibility = "hidden"
+function mouseleave() {
+  PersonalCardToolTip.value.style.visibility = "hidden";
 }
 
-// function test() {
+function testOnclick() {
+  console.log("1111");
+}
 //   console.log(preview.preview);
 // }
 
