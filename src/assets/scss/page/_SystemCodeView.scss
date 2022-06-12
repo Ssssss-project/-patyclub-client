@@ -1,0 +1,16 @@
+#SystemCodeView {
+    .main {
+        display: flex;
+        flex-direction: row;
+        .cardMst {
+            width: 180px;
+            margin-bottom: 6px;
+        }
+
+        .dtlDiv {
+            width: 800px;
+        }
+
+    }
+    
+}

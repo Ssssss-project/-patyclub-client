@@ -65,6 +65,9 @@ export const apiPutWatchEvent = (params: AddFavoriteEvent) => request('put', '/E
 // 紀錄log
 export const apiPostAllLog = (params: any) => request('post', '/Log/addLog/', params)
 
+// 取得前十筆log紀錄
+export const apiGetTop10PersonalEventTouchLog = () => request('get', '/Log/getTop10PersonalEventTouchLog')
+
 // 取得來源活動類別清單
 export const apiGetSourceEventCategoryList = (params: any) =>
     request('get', '/GetEntityList/getSourceEventCategoryList', params)

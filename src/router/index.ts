@@ -31,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'ActivityShowView',
         component: () => import('../views/ActivityShowView.vue'),
     },
+    {
+        path: '/SystemCode',
+        name: 'SystemCode',
+        component: () => import('../views/SystemCodeView.vue'),
+    },
 ]
 
 const router = createRouter({

@@ -59,7 +59,7 @@
                   </q-item-section>
                 </q-item>
               </router-link>
-              <router-link :to="`/UserProfile/activities`">
+              <router-link :to="`/SystemCode`">
                 <q-item
                   clickable
                   v-close-popup

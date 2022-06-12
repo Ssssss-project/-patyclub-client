@@ -61,14 +61,15 @@
 <script lang="ts">
 import CardList from "../components/ActivityViewPage/CardList.vue";
 import { useRoute } from "vue-router";
-import { onMounted, reactive, ref, Ref } from "vue";
+import { onMounted, reactive, ref, Ref, watch } from "vue";
 import ActivityDetailsView from "../components/ActivityDetailsView.vue";
 import { apiGetSourceEventCategoryList } from "../apis/api/userRequest";
-import { apiGetEventWithCondition } from "../apis/api/userRequest";
+import { apiGetTop10PersonalEventTouchLog } from "../apis/api/userRequest";
 import { EventType } from "../apis/type";
 export default {
   setup() {
     const route = useRoute();
+    let init: boolean = false;
     let allChildPara: any = { id: route.params.id };
     let showProfile: boolean = route.params.source == "profile" ? true : false;
     let categoryId: any = route.params.categoryId;
@@ -80,9 +81,16 @@ export default {
     const allEvent: Ref<EventType[]> = ref([]);
 
     onMounted(() => {
+      apiGetSourceEvent();
+      apiGetTop10();
+      init = true;
+    });
+
+    const apiGetSourceEvent = () => {
       apiGetSourceEventCategoryList({ rootCateId: categoryId }).then(
         (response: any) => {
           let categoryList: Array<object> = response.data.reverse();
+          initBreadcrumbs();
           categoryList.forEach((object: any) => {
             shownBreadcrumbs.push({
               id: object.id,
@@ -92,21 +100,32 @@ export default {
           });
         }
       );
-      getEventWithCondition();
-    });
+    };
 
-    const getEventWithCondition = () => {
-      apiGetEventWithCondition({
-        category: 0,
-        tag: "",
-        queryList: [],
-        sortBy: "non_sort",
-        rownumPerPage: 5,
-        requestPageNum: 1
-      }).then((response: any) => {
+    const initBreadcrumbs = () => {
+        while(shownBreadcrumbs.length > 0) {
+          shownBreadcrumbs.pop();
+        }
+    }
+
+    const apiGetTop10 = () => {
+      apiGetTop10PersonalEventTouchLog().then((response: any) => {
         allEvent.value = response.data;
       });
     };
+
+    watch(
+      () => route.params.id,
+      () => {
+        if (init) {
+          allChildPara = route.params.id;
+          categoryId = route.params.categoryId;
+          apiGetSourceEvent();
+          apiGetTop10();
+        }
+      },
+      { immediate: true }
+    );
 
     return {
       allChildPara,
@@ -116,7 +135,9 @@ export default {
       eventTitle,
       allEvent,
       showHistory,
-      getEventWithCondition
+      apiGetSourceEvent,
+      apiGetTop10,
+      initBreadcrumbs
     };
   },
 
