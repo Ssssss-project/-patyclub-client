@@ -59,6 +59,12 @@ export const apiGetCodeMstList = () => request('get', '/Code/getCodeMstList/')
 // 取得代碼明細
 export const apiGetCodeDtl = (params: any) => request('get', '/Code/getCodeDtl/', params)
 
+// 更新代碼明細
+export const apiUpdateCodeDtl = (params: any) => request('post', '/Code/updateCodeDtl/', params)
+
+// 刪除代碼明細
+export const apiRemoveCodeDtl = (params: any) => request('delete', '/Code/removeCodeDtl/' , params)
+
 // 加入我的最愛
 export const apiPutWatchEvent = (params: AddFavoriteEvent) => request('put', '/Event/switchwatchEvent/', params)
 
