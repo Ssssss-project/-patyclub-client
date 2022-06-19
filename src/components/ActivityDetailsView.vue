@@ -47,7 +47,10 @@
           <div class="C2_L">
             <div class="C2_L_1">
               <div class="C2_L_1_L">創辦人</div>
-              <div class="user_name">{{ createUserName }}</div>
+              <div class="user_name" v-on:mousemove="mousemove" v-on:mouseleave="mouseleave">{{ createUserName }}</div>
+              <span id="PersonalCard" ref="PersonalCardToolTip">
+                <PersonalCard/>
+              </span>
             </div>
             <div class="C2_L_2">
               <q-btn class="C2_L_btn" icon="favorite">收藏</q-btn>
@@ -90,6 +93,7 @@ import { ref } from "vue";
 import { defineProps } from "vue";
 import { defineEmits } from "vue";
 import { apiGetEvent, apiGetUserProfile } from "@/apis/api/userRequest.ts";
+import PersonalCard from "../components/PersonalCard.vue"
 // import { apiGetEventAppendix } from "@/apis/api/userRequest.ts";
 // import store from "@/store";
 // import jwt_decode from "jwt-decode";
@@ -179,6 +183,18 @@ function formatSecToStr(seconds) {
   } else {
     return ss + "秒";
   }
+}
+const PersonalCardToolTip = ref();
+function mousemove(event){
+  PersonalCardToolTip.value.style.visibility = "visible";
+  var x = event.clientX;
+  var y = event.clientY;
+  PersonalCardToolTip.value.style.top = (y + 10) + "px";
+  PersonalCardToolTip.value.style.left = (x + 10) + "px";
+}
+
+function mouseleave(){
+  PersonalCardToolTip.value.style.visibility = "hidden"
 }
 
 // function test() {

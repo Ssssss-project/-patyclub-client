@@ -179,18 +179,17 @@
     <div class="row justify-center q-mt-md">
       <q-pagination
         class="pagination"
-        v-model="pagination.page"
+        v-model="currentPage"
         color="orange-12"
         :min="1"
-        :max="pagesNumber"
-        :input="true"
+        :max="pageMaxNumber"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { ref, Ref, onMounted, reactive, watch, computed } from "vue";
+import { ref, Ref, onMounted, reactive, watch } from "vue";
 import { useRouter, Router } from "vue-router";
 import {
   apiGetEventWithCondition,
@@ -234,18 +233,23 @@ export default {
       "statusDesc",
     ]);
 
-    const pagination = reactive({
+    const currentPage:Ref<number> = ref(1)
+
+    const pagination = ref({
       sortBy: "desc",
       descending: false,
-      page: 1,
+      page: currentPage,
       rowsPerPage: 8,
     });
+
+    const pageMaxNumber:Ref<number> = ref(1);
+
 
     const searchCondition: GetEventWithCondition = reactive({
       eventPersonnel: "OWNER",
       sortBy: conditionMap.get(sort.value),
-      requestPageNum: pagination.page,
-      rownumPerPage: pagination.rowsPerPage,
+      requestPageNum: pagination.value.page,
+      rownumPerPage: pagination.value.rowsPerPage,
     });
 
     const columns = reactive([
@@ -311,6 +315,7 @@ export default {
       loading.value = true;
       apiGetEventWithCondition(searchCondition)
         .then((response: any) => {
+          pageMaxNumber.value = response.maxPageNum;
           loading.value = false;
           let originalRows: EventList[] = response.data;
 
@@ -446,12 +451,22 @@ export default {
         val == "OWNER" ? "statusDesc" : "activityStatus"
       );
       searchCondition.eventPersonnel = val;
+      searchCondition.requestPageNum = 1;
+      currentPage.value = 1;
       postEventWithCondition();
     });
 
     watch([sort, filter], ([newSort]) => {
       searchCondition.sortBy = conditionMap.get(newSort);
       postEventWithCondition();
+    });
+
+    watch(currentPage, () => {
+      // pagination.value.page = currentPage.value;
+      searchCondition.requestPageNum = currentPage.value;
+      postEventWithCondition();
+    }, {
+      deep:true
     });
 
     return {
@@ -462,14 +477,13 @@ export default {
       activitySort,
       sort,
       columns,
-      pagination,
-      pagesNumber: computed(() =>
-        Math.ceil(rows.value.length / pagination.rowsPerPage)
-      ),
       visibleColumns,
       rows,
       searchCondition,
       conditionMap,
+      currentPage,
+      pagination,
+      pageMaxNumber,
       postEventWithCondition,
       getImg,
       getMemberImg,

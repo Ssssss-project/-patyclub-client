@@ -10,12 +10,16 @@
 
 // components
 @import "components/Head";
+@import "components/PersonalCard";
+@import "components/AdminOption";
 
 // page
 @import "page/Home";
 @import "page/LoginDialog";
 @import "page/ActivityCreate";
 @import "page/ActivityView";
+@import "page/ActivityShowView";
 @import "page/ActivityDetailsView";
 @import "page/UserProfile";
 @import "page/UserOption";
+@import "page/SystemCodeView";

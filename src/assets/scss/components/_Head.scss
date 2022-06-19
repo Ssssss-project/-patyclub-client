@@ -50,6 +50,46 @@
         height: 30px;
         color: $color-light-80;
     }
+
+    .notifications {
+        color: $color-brown-900;
+        padding: 4px 8px 4px 8px;
+        margin-right: 5px;
+        &:hover {
+          background-color: $color-light-200;  
+        }
+    }
+
+    .notifications-home {
+        color: $color-light-200;
+        padding: 4px 8px 4px 8px;
+        margin-right: 5px;
+        &:hover {
+          background-color: $color-dark-500;  
+        }
+    }
+
+    .build {
+        color: $color-brown-900;
+        transform:rotate(90deg);
+        padding: 4px 6px 4px 6px;
+        margin-right: 20px;
+        &:hover {
+            background-color: $color-red-200;  
+            color: $color-light-50;
+        }
+    }
+
+    .build-home {
+        color: $color-light-50;
+        transform:rotate(90deg);
+        padding: 4px 6px 4px 6px;
+        margin-right: 20px;
+        &:hover {
+            background-color: $color-red-200;  
+            color: $color-brown-900;
+        }
+    }
 }
 .normalbg {
     background-color: $color-light-200;

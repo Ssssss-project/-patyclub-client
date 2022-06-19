@@ -2,7 +2,22 @@
   <main id="ActivityView">
     <div class="container">
       <div class="activity-main">
-        <div class="head-block"></div>
+        <q-carousel
+          class="slider-image"
+          animated
+          v-model="slide"
+          arrows
+          navigation
+          infinite
+          :autoplay="5000"
+        >
+          <q-carousel-slide
+            v-for="x in images"
+            :key="x.id"
+            :name="x.id"
+            :img-src="x.img"
+          />
+        </q-carousel>
         <div class="activity-filter">
           <activity-filter
             :sortCondition="sortCondition"
@@ -65,6 +80,7 @@ import ActivityFilter from "../components/ActivityViewPage/ActivityFilter.vue";
 import {
   apiGetEventWithCondition,
   apiGetEventCategory,
+  apiGetSlideList,
 } from "../apis/api/userRequest";
 import { categoryNode, EventType, GetEventWithCondition } from "../apis/type";
 import { ref, onMounted, Ref, watch } from "vue";
@@ -111,6 +127,7 @@ export default {
     const selectedCategory: Ref<number> = ref(parseInt(categoryid as string));
 
     const stringOptions: Ref<string[]> = ref([]);
+    const images: Ref<{ img: string; id: number }[]> = ref([]);
 
     const handleSearchWord = (refKey: string) => {
       console.log(refKey);
@@ -204,10 +221,27 @@ export default {
       getEventWithCondition();
     });
 
+    const getSlideImage = () => {
+      apiGetSlideList().then((response: any) => {
+        response.data.forEach(function (value: string, index: number) {
+          images.value.push({
+            id: index + 1,
+            img:
+              "https://localhost:5001" +
+              value.split(".")[1] +
+              "." +
+              value.split(".")[2],
+          });
+        });
+      });
+      console.log(images.value);
+    };
+
     onMounted(() => {
       getEventTree();
       allCondition.value.sortBy = "eventStDate_asc";
       getEventWithCondition();
+      getSlideImage();
     });
 
     return {
@@ -221,6 +255,8 @@ export default {
       sortConditionModel,
       stringOptions,
       categoryid,
+      images,
+      slide: ref(1),
       setselectedCategory,
       setSortCondition,
       setDefaultAllCondition,
