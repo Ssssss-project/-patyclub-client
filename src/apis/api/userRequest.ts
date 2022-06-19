@@ -59,6 +59,9 @@ export const apiGetCodeMstList = () => request('get', '/Code/getCodeMstList/')
 // 取得代碼明細
 export const apiGetCodeDtl = (params: any) => request('get', '/Code/getCodeDtl/', params)
 
+// 新增代碼明細
+export const apiAddCodeDtl = (params: any) => request('post', '/Code/addCodeDtl/', params)
+
 // 更新代碼明細
 export const apiUpdateCodeDtl = (params: any) => request('post', '/Code/updateCodeDtl/', params)
 

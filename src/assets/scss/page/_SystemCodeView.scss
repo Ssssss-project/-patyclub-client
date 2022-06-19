@@ -1,16 +1,30 @@
 #SystemCodeView {
     .control {
         display: flex;
-        flex-direction: row-reverse;
+        flex-direction: row;
         align-items: right;
+        justify-content: flex-end;
         width: 600px;
         padding-bottom: 10px;
+        .add {
+            background-color: $color-primary-500;
+            border-style: solid;
+            border-color: $color-dark-900;
+            border-width: 1px;
+            color: $color-dark-900;  
+            margin-right: 5px;
+        }
         .save {
             background-color: $color-primary-500;
             border-style: solid;
             border-color: $color-dark-900;
             border-width: 1px;
             color: $color-dark-900;
+            margin-right: 5px;
+        }
+        .search{
+            background-color: $color-light-50;
+            font-size: large;
         }
     }
     .main {
@@ -34,11 +48,13 @@
             font-weight: bold;
             font-size: large;
             color: $color-dark-900;
+            user-select:none;
         }
 
         .cardName {
             font-size: small;
             color: rgb(73, 71, 71);
+            user-select:none;
         }
 
         .dtlDiv {
@@ -57,7 +73,7 @@
 
         .list-group-item {
             background-color: $color-light-50;
-            width: 600px;
+            width: 700px;
             height: 40px;
             border-color: $color-dark-900;
             border-style: solid;
@@ -69,13 +85,18 @@
             align-items: center;
             position: relative;
 
+            &:hover {
+                background-color: $color-light-200;
+            }
+
             .drag_icon {
-                padding-right: 10px;
+                padding-left: 10px;
+                padding-right: 20px;
             }
 
             .codeName {
                 text-align: left;
-                width: 150px;
+                width: 200px;
                 font-size: medium;
             }
 
@@ -87,12 +108,18 @@
                 position: absolute;
                 right: 100px;
                 width: 20px;
+                &:hover {
+                    background-color: $color-light-350;
+                }
             }
 
             .edit-btn {
                 position: absolute;
                 right: 70px;
                 width: 20px;
+                &:hover {
+                    background-color: $color-light-350;
+                }
             }
 
             .line {
@@ -108,6 +135,9 @@
                 right: 0px;
             }
         } 
+        .addRow{
+            background-color: $color-skyblue-300;
+        }
         .noData {
             font-size: larger;
         }

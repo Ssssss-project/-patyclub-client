@@ -2,7 +2,13 @@
   <main id="SystemCodeView">
     <div class="container">
       <div class="control">
+        <q-btn class="add" @click="addRow()">新增</q-btn>
         <q-btn class="save" @click="updateCodeDtl()">SAVE</q-btn>
+        <q-input :dense="true" class="search" outlined >
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
       </div>
       <div class="main">
         <div>
@@ -13,7 +19,7 @@
                   @click="cardClick(idx, data.keyword)">
             <span class="q-focus-helper"></span>
             <q-card-section>
-              <span class="cardKeyword">{{ data.keyword }}</span> <br>
+              <span class="cardKeyword" select>{{ data.keyword }}</span> <br>
               <span class="cardName">{{ data.name }}</span>
             </q-card-section>
           </q-card>
@@ -25,10 +31,10 @@
             :disabled="!enabled"
             item-key="orderSeq"
             ghost-class="ghost"
-            @end="moveEnd">
+            handle=".drag_icon">
             <template v-slot:item="{ element }">
-              <div class="list-group-item" :class="{ 'not-draggable': !enabled }">
-                <q-icon name="drag_indicator" size="25px" class="drag_icon"/>
+              <div class="list-group-item" :class="{ 'not-draggable': !enabled , 'addRow': element.rowStatus == 'C' ? true : false}">
+                <q-icon name="format_align_justify" size="25px" class="drag_icon"/>
                 <q-input v-model="element.codeName" :dense="true" class="codeName" :readonly="element.editable" @update:model-value="rowChange(element.id, 'U')"/>
                 <q-input v-model="element.codeDesc" :dense="true" class="codeDesc" :readonly="element.editable" @update:model-value="rowChange(element.id, 'U')"/>
                 <q-btn icon="delete" class="delete-btn" flat @click="removeCodeDtl(element.id, element.sysCodeMstKeyword)"/>
@@ -49,7 +55,7 @@
 
 <script lang="ts">
 import { onMounted, reactive } from "vue";
-import { apiGetCodeMstList, apiGetCodeDtl, apiUpdateCodeDtl, apiRemoveCodeDtl } from "../apis/api/userRequest";
+import { apiGetCodeMstList, apiGetCodeDtl, apiUpdateCodeDtl, apiRemoveCodeDtl, apiAddCodeDtl } from "../apis/api/userRequest";
 import { sysCodeMst } from "../apis/type";
 import draggable from 'vuedraggable';
 export default {
@@ -99,6 +105,7 @@ export default {
       for(let i = 0;i < isActive.length;i++) {
         isActive[i] = i == idx ? true : false;
       }
+      updateMstKeyword = mstKeyword;
       getCodeDtl(mstKeyword);
     }
 
@@ -117,7 +124,7 @@ export default {
 
     function rowChange(id:number, rowStatus:string) {
       for(let i = 0 ; i < list.length ; i++) {
-        if(list[i].id == id) {
+        if(list[i].id == id && list[i].rowStatus != "C") {
           list[i].rowStatus = rowStatus;
           break;
         }
@@ -133,9 +140,16 @@ export default {
 
     async function apiUpdate() {
         for(let i = 0 ; i < list.length ; i++) {
-          if(list[i].rowStatus != "R") {
+          if (list[i].orderSeq != i + 1) {
+            list[i].rowStatus = "U";
+            list[i].orderSeq = i + 1;
+          }
+
+          if(list[i].rowStatus == "U") {
             updateMstKeyword = list[i].sysCodeMstKeyword;
             await apiUpdateCodeDtl(list[i]);
+          } else if (list[i].rowStatus == "C") {
+            await apiAddCodeDtl(list[i]);
           }
         }
     }
@@ -144,6 +158,17 @@ export default {
       apiRemoveCodeDtl({sysCodeDtlId:dtlId}).then(()=>{
          getCodeDtl(mstKeyword);
       })
+    }
+
+    function addRow() {
+      list.push({id:0, 
+                  sysCodeMstKeyword:updateMstKeyword,
+                  codeName:"", 
+                  codeDesc:"",
+                  orderSeq:list.length + 1, 
+                  enable:true, 
+                  editable:false,
+                  rowStatus:"C"})
     }
 
     return {
@@ -157,8 +182,9 @@ export default {
       apiUpdate,
       updateCodeDtl,
       removeCodeDtl,
+      addRow,
       enabled: true,
-      list
+      list,
     }
   },
 
