@@ -9,10 +9,10 @@
   }
 
   .btns:hover {
-      background-color: $color-primary-300;
+    background-color: $color-primary-300;
   }
 
-  .mainContainer{
+  .mainContainer {
 
     display: flex;
     justify-content: center;
@@ -39,125 +39,157 @@
       color: $color-brown-900;
     }
 
-    .childComponent{
+    .childComponent {
 
       height: calc(100vh - 250px);
 
-      .basicInfo{
+      .basicInfo {
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin-left: 15%;
 
-        .page-title{
+        .page-title {
           font-size: 28px;
           line-height: 33px;
           color: $color-primary-500;
-          margin-bottom:20px;
+          margin-bottom: 20px;
           margin-left: -10%;
         }
-  
-        .text-title{
+
+        .text-title {
           width: 72px;
           font-size: 18px;
           color: $color-brown-900;
         }
-  
-        .input-title{
+
+        .input-title {
           width: 720px;
           padding-left: 10px;
           background: $color-light-200;
           border-radius: 5px;
-          .q-field__control{
+
+          .q-field__control {
             height: 30px;
           }
         }
 
-        .date_file_text{
-
+        .date_file_text {
           display: flex;
           flex-direction: row;
           align-items: center;
           margin-top: 30px;
 
-          .text-date{
+          .text-dateSt {
+            width: 90px;
+            font-size: 18px;
+            color: $color-brown-900;
+          }
+
+          .text-dateEd {
+            margin-left: 200px;
+            font-size: 18px;
+            color: $color-brown-900;
+          }
+        }
+
+        .date_file_input {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .select-dateSt {
+            padding-left: 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+
+            .q-field__control {
+              height: 30px;
+            }
+          }
+
+          .select-dateEd {
+            padding-left: 10px;
+            background: $color-light-200;
+            border-radius: 5px;
+
+            .q-field__control {
+              height: 30px;
+            }
+            margin-left: 62px;
+          }
+        }
+
+        .field_text {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          .text-image {
+            margin-top: 30px;
             width: 72px;
             font-size: 18px;
             color: $color-brown-900;
           }
 
-          .text-field{
-            margin-left: 198px;
+          .text-field {
+            margin-top: 30px;
+            margin-left: 215px;
+            width: 72px;
             font-size: 18px;
             color: $color-brown-900;
           }
         }
 
-        .date_file_input{
+        .field_input {
           display: flex;
           flex-direction: row;
-          align-items: center;
 
-          .file-field{
-            position: relative;
+          .uploader-image {
+            width: 240px;
+            height: 180px;
+          }
+  
+          .file-field {
+            height: 30px;
             width: 450px;
             padding: 0px 10px 0px 10px;
             background: $color-light-200;
             border-radius: 5px;
             margin-left: 48px;
+  
             .material-icons {
               color: $color-primary-500;
-            } 
-          }
-
-          .select-date{
-            padding-left: 10px;
-            background: $color-light-200;
-            border-radius: 5px;
-            .q-field__control{
-              height: 30px;
             }
           }
         }
-        
-        .text-image{
+
+        .text-introduction {
           margin-top: 30px;
           width: 72px;
           font-size: 18px;
           color: $color-brown-900;
         }
 
-        .uploader-image{
-          width: 240px;
-          height: 180px;
-        }
-
-        .text-introduction{
-          margin-top: 30px;
-          width: 72px;
-          font-size: 18px;
-          color: $color-brown-900;
-        }
-
-        .input-introduction{
+        .input-introduction {
           width: 85%;
         }
 
-        .category_ageLimit_text{
+        .category_ageLimit_text {
 
           display: flex;
           flex-direction: row;
           align-items: center;
           margin-top: 30px;
 
-          .text-category{
+          .text-category {
             width: 72px;
             height: 21px;
             font-size: 18px;
             color: $color-brown-900;
           }
 
-          .text-ageLimit{
+          .text-ageLimit {
             margin-left: 337px;
             width: 72px;
             height: 21px;
@@ -166,21 +198,21 @@
           }
         }
 
-        .category_ageLimit_input{
+        .category_ageLimit_input {
 
           display: flex;
           flex-direction: row;
           align-items: center;
 
-          .select-category{
+          .select-category {
             width: 320px;
             padding-left: 10px;
             background: $color-light-200;
             border-radius: 5px;
             margin: 5px 0px 0px 0px;
           }
-  
-          .select-ageLimit{
+
+          .select-ageLimit {
             width: 320px;
             padding-left: 10px;
             background: $color-light-200;
@@ -189,21 +221,21 @@
           }
         }
 
-        .numberLimit_cost_text{
+        .numberLimit_cost_text {
 
           margin-top: 30px;
           display: flex;
           flex-direction: row;
           align-items: center;
 
-          .text-numberLimit{
+          .text-numberLimit {
             width: 72px;
             height: 21px;
             font-size: 18px;
             color: $color-brown-900;
           }
 
-          .text-cost{
+          .text-cost {
             margin-left: 337px;
             width: 72px;
             height: 21px;
@@ -213,47 +245,50 @@
 
         }
 
-        .numberLimit_cost_input{
+        .numberLimit_cost_input {
 
           display: flex;
           flex-direction: row;
           align-items: center;
 
-          .input-numberLimit{
+          .input-numberLimit {
             width: 320px;
             padding-left: 10px;
             background: $color-light-200;
             border-radius: 5px;
-            .q-field__control{
+
+            .q-field__control {
               height: 30px;
             }
           }
-  
-          .input-cost{
+
+          .input-cost {
             width: 320px;
             padding-left: 10px;
             background: $color-light-200;
             border-radius: 5px;
             margin: 5px 0px 0px 90px;
-            .q-field__control{
+
+            .q-field__control {
               height: 30px;
             }
           }
         }
 
-        .text-addTag{
+        .text-addTag {
           margin-top: 30px;
           width: 72px;
           font-size: 18px;
           color: $color-brown-900;
         }
 
-        .input-addTag{
+        .input-addTag {
           width: 732px;
           padding-left: 10px;
           background: $color-light-200;
           border-radius: 5px;
-          .q-field__control{
+
+          .q-field__control {
             height: 30px;
           }
         }
@@ -272,7 +307,7 @@
     font-size: 30px;
   }
 
-  .q-field__control{
+  .q-field__control {
     min-height: 0px;
   }
 
@@ -299,9 +334,10 @@
     padding-bottom: 0px;
   }
 
-  .q-gutter-y-xs, .q-gutter-xs {
+  .q-gutter-y-xs,
+  .q-gutter-xs {
     background: $color-primary-500;
-    border-radius:5px 5px 0px 0px;
+    border-radius: 5px 5px 0px 0px;
     margin-left: 0px;
     height: 40px;
   }

@@ -10,11 +10,11 @@
       placeholder="30字以內"
     />
     <div class="date_file_text">
-      <div class="text-date">活動日期</div>
-      <div class="text-field">其他附件</div>
+      <div class="text-dateSt">活動開始日</div>
+      <div class="text-dateEd">活動結束日</div>
     </div>
     <div class="date_file_input">
-      <div class="select-date">
+      <div class="select-dateSt">
         <q-input
           v-model="eventStDate"
           @update:modelValue="(event) => getPara('eventStDate', event)"
@@ -41,6 +41,100 @@
           </template>
         </q-input>
       </div>
+      <div class="select-dateEd">
+        <q-input
+          v-model="eventEdDate"
+          @update:modelValue="(event) => getPara('eventEdDate', event)"
+          borderless
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="eventEdDate"
+                  @update:modelValue="(event) => getPara('eventEdDate', event)"
+                  color="yellow-9"
+                >
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="#deb06b" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+    </div>
+     <div class="date_file_text">
+      <div class="text-dateSt">報名開始日</div>
+      <div class="text-dateEd">報名結束日</div>
+    </div>
+    <div class="date_file_input">
+      <div class="select-dateSt">
+        <q-input
+          v-model="signUpStDate"
+          @update:modelValue="(event) => getPara('signUpStDate', event)"
+          borderless
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="signUpStDate"
+                  @update:modelValue="(event) => getPara('signUpStDate', event)"
+                  color="yellow-9"
+                >
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="#deb06b" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+      <div class="select-dateEd">
+        <q-input
+          v-model="signUpEdDate"
+          @update:modelValue="(event) => getPara('signUpEdDate', event)"
+          borderless
+        >
+          <template v-slot:append>
+            <q-icon name="event" class="cursor-pointer">
+              <q-popup-proxy
+                ref="qDateProxy"
+                transition-show="scale"
+                transition-hide="scale"
+              >
+                <q-date
+                  v-model="signUpEdDate"
+                  @update:modelValue="(event) => getPara('signUpEdDate', event)"
+                  color="yellow-9"
+                >
+                  <div class="row items-center justify-end">
+                    <q-btn v-close-popup label="Close" color="#deb06b" flat />
+                  </div>
+                </q-date>
+              </q-popup-proxy>
+            </q-icon>
+          </template>
+        </q-input>
+      </div>
+    </div>
+    <div class="field_text">
+      <div class="text-image">活動圖片</div>
+      <div class="text-field">其他附件</div>
+    </div>
+    <div class="field_input">
+      <q-uploader  ref="dataUploader"  class="uploader-image" :factory="factoryFn" auto-upload multiple append />
       <div class="file-field">
         <q-file
           multiple
@@ -64,8 +158,6 @@
         </q-file>
       </div>
     </div>
-    <div class="text-image">活動圖片</div>
-    <q-uploader  ref="dataUploader"  class="uploader-image" :factory="factoryFn" auto-upload multiple append />
     <div class="text-introduction">活動簡介</div>
     <q-input
       class="input-introduction"
@@ -113,7 +205,7 @@
 </template>
 
 <script setup>
-import { ref,  onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { defineEmits } from "vue";
 import { defineProps } from "vue";
 
@@ -123,6 +215,11 @@ const eventTitle = ref("");
 const ageOptions = [">6", ">15", ">18"];
 const eventCategory = ref("");
 const eventStDate = ref("");
+const eventEdDate = ref("");
+const signUpStDate = ref("");
+const signUpEdDate = ref("");
+const eventCreateDate = ref("");
+const examinationPassedDate = ref("");
 const dataField = ref(null);
 const ageLimit = ref("");
 const personLimit = ref("");
@@ -146,6 +243,11 @@ let savePathArray = [];
 
 eventTitle.value = savePara.eventTitle ? savePara.eventTitle : "";
 eventStDate.value = savePara.eventStDate ? savePara.eventStDate : "";
+eventEdDate.value = savePara.eventEdDate ? savePara.eventEdDate : "";
+signUpStDate.value = savePara.signUpStDate ? savePara.signUpStDate : "";
+signUpEdDate.value = savePara.signUpEdDate ? savePara.signUpEdDate : "";
+eventCreateDate.value = savePara.eventCreateDate ? savePara.eventCreateDate : "";
+examinationPassedDate.value = savePara.examinationPassedDate ? savePara.examinationPassedDate : "";
 eventIntroduction.value = savePara.eventIntroduction ? savePara.eventIntroduction : "";
 eventCategory.value = savePara.eventCategory ? savePara.eventCategory : "";
 ageLimit.value = savePara.ageLimit ? savePara.ageLimit : "";
@@ -167,9 +269,18 @@ let month =
     : newDate.getMonth() + 1;
 let date = newDate.getDate() < 10 ? "0" + newDate.getDate() : newDate.getDate();
 eventStDate.value = year + "/" + month + "/" + date;
+eventEdDate.value = year + "/" + month + "/" + date;
+signUpStDate.value = year + "/" + month + "/" + date;
+signUpEdDate.value = year + "/" + month + "/" + date;
+eventCreateDate.value = year + "/" + month + "/" + date;
 
-getPara("eventStDate", eventStDate.value); // 進入頁面後處理各項參數
-
+// 進入頁面後先處理日期
+getPara("eventStDate", eventStDate.value); 
+getPara("eventEdDate", eventEdDate.value); 
+getPara("signUpStDate", signUpStDate.value); 
+getPara("signUpEdDate", signUpEdDate.value); 
+getPara("eventCreateDate", eventCreateDate.value); 
+getPara("examinationPassedDate", examinationPassedDate.value); 
 
 
 
@@ -184,6 +295,26 @@ function getPara(key, event) {
 
     case "eventStDate":
       savePara.eventStDate = event;
+      break;
+
+    case "eventEdDate":
+      savePara.eventEdDate = event;
+      break;
+
+    case "signUpStDate":
+      savePara.signUpStDate = event;
+      break;
+
+    case "signUpEdDate":
+      savePara.signUpEdDate = event;
+      break;
+    
+    case "eventCreateDate":
+      savePara.eventCreateDate = event;
+      break;
+
+    case "examinationPassedDate":
+      savePara.examinationPassedDate = event;
       break;
 
     case "eventIntroduction":
