@@ -1,25 +1,26 @@
 // utils
-@import "utils/Mixin";
-@import "utils/Variables";
+@import 'utils/Mixin';
+@import 'utils/Variables';
 
 // base
-@import "base/Reset";
-@import "base/Base";
-@import "base/Button";
-@import "base/Scrollbar";
+@import 'base/Reset';
+@import 'base/Base';
+@import 'base/Button';
+@import 'base/Scrollbar';
 
 // components
-@import "components/Head";
-@import "components/PersonalCard";
-@import "components/AdminOption";
+@import 'components/Head';
+@import 'components/PersonalCard';
+@import 'components/AdminOption';
 
 // page
-@import "page/Home";
-@import "page/LoginDialog";
-@import "page/ActivityCreate";
-@import "page/ActivityView";
-@import "page/ActivityShowView";
-@import "page/ActivityDetailsView";
-@import "page/UserProfile";
-@import "page/UserOption";
-@import "page/SystemCodeView";
+@import 'page/Home';
+@import 'page/LoginDialog';
+@import 'page/ActivityCreate';
+@import 'page/ActivityView';
+@import 'page/ActivityShowView';
+@import 'page/ActivityDetailsView';
+@import 'page/UserProfile';
+@import 'page/UserOption';
+@import 'page/SystemCodeView';
+@import 'page/VerifyPage';

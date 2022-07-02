@@ -36,6 +36,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'SystemCode',
         component: () => import('../views/SystemCodeView.vue'),
     },
+    {
+        path: '/VerifyPage',
+        name: 'VerifyPage',
+        component: () => import('../views/VerifyList.vue'),
+    },
 ]
 
 const router = createRouter({
