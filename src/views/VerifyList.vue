@@ -2,10 +2,19 @@
   <main id="VerifyPage">
     <div class="container">
       <div class="btn-list">
-        <q-btn>全部</q-btn>
+        <q-btn
+          @click="selectALL"
+          :class="btnSearch==='ALL' ? 'clicked-btn' : ''"
+        >全部</q-btn>
         <div class="line"></div>
-        <q-btn>待審</q-btn>
-        <q-btn>已審</q-btn>
+        <q-btn
+          @click="selectAUDIT"
+          :class="btnSearch==='AUDIT' ? 'clicked-btn' : ''"
+        >待審</q-btn>
+        <q-btn
+          @click="selectAUDITPASS"
+          :class="btnSearch==='AUDITPASS' ? 'clicked-btn' : ''"
+        >已審</q-btn>
         <q-btn>上呈</q-btn>
         <div class="line"></div>
         <q-input
@@ -52,18 +61,41 @@ export default {
   setup() {
     const allEvent: Ref<EventType[]> = ref([]);
     const stringSearch: Ref<string> = ref("");
+    const btnSearch: Ref<string> = ref("ALL");
 
     const getEventWithCondition = () => {
-      apiGetEventWithCondition({
-        status: "AUDIT",
-      }).then((response: any) => {
+      apiGetEventWithCondition({}).then((response: any) => {
         allEvent.value = response.data;
       });
     };
 
     const SearchEvent = () => {
       apiGetEventWithCondition({
+        queryList: [stringSearch.value],
+      }).then((response: any) => {
+        allEvent.value = response.data;
+      });
+    };
+
+    const selectALL = () => {
+      getEventWithCondition();
+      btnSearch.value = "ALL";
+    };
+
+    const selectAUDIT = () => {
+      btnSearch.value = "AUDIT";
+      apiGetEventWithCondition({
         status: "AUDIT",
+        queryList: [stringSearch.value],
+      }).then((response: any) => {
+        allEvent.value = response.data;
+      });
+    };
+
+    const selectAUDITPASS = () => {
+      btnSearch.value = "AUDITPASS";
+      apiGetEventWithCondition({
+        status: "AUDIT_PASS",
         queryList: [stringSearch.value],
       }).then((response: any) => {
         allEvent.value = response.data;
@@ -77,7 +109,11 @@ export default {
     return {
       allEvent,
       stringSearch,
+      btnSearch,
       SearchEvent,
+      selectALL,
+      selectAUDIT,
+      selectAUDITPASS,
     };
   },
 };
