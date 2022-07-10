@@ -2,8 +2,9 @@
   <main id="SystemCodeView">
     <div class="container">
       <div class="control">
-        <q-btn class="add" @click="addRow()">新增</q-btn>
-        <q-btn class="save" @click="updateCodeDtl()">SAVE</q-btn>
+        <!-- <q-btn class="add" @click="addRow()">新增</q-btn> -->
+        <q-btn icon="save" class="save" @click="updateCodeDtl()"></q-btn>
+        <q-btn icon="refresh" class="add" @click="refreshDtl()"></q-btn>
         <q-input :dense="true" class="search" outlined >
           <template v-slot:append>
             <q-icon name="search" />
@@ -33,14 +34,19 @@
             ghost-class="ghost"
             handle=".drag_icon">
             <template v-slot:item="{ element }">
-              <div class="list-group-item" :class="{ 'not-draggable': !enabled , 'addRow': element.rowStatus == 'C' ? true : false}">
+              <div class="list-group-item" :class="{ 'not-draggable': !enabled , 
+                                                     'addRow': element.rowStatus != rowStatus.read && element.rowStatus != null ? true : false}">
                 <q-icon name="format_align_justify" size="25px" class="drag_icon"/>
-                <q-input v-model="element.codeName" :dense="true" class="codeName" :readonly="element.editable" @update:model-value="rowChange(element.id, 'U')"/>
-                <q-input v-model="element.codeDesc" :dense="true" class="codeDesc" :readonly="element.editable" @update:model-value="rowChange(element.id, 'U')"/>
-                <q-btn icon="delete" class="delete-btn" flat @click="removeCodeDtl(element.id, element.sysCodeMstKeyword)"/>
-                <q-btn icon="edit" class="edit-btn" @click="element.editable = false" flat/>
+                <q-input v-model="element.codeName" :dense="true" class="codeName" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
+                <q-input v-model="element.codeDesc" :dense="true" class="codeDesc" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
+                <q-btn icon="delete" class="delete-btn" flat @click="rowChange(element.id, rowStatus.delete)" :disable='element.id == 0 ? true : false'
+                :class="{'visible':element.rowStatus != null ? true : false}"/>
+                <q-btn icon="edit" class="edit-btn" @click="element.editable = false" flat
+                :class="{'visible':element.rowStatus != null ? true : false}"/>
+                <q-btn icon="add" class="add-btn" :class="{'visible':element.rowStatus == null ? true : false}" @click="beforeAddRow(element)" flat/>
                 <div class="line"/>
-                <q-toggle v-model="element.enable" color="green" class="rightStyle" @update:model-value="rowChange(element.id, 'U')"/>
+                <q-toggle v-model="element.enable" color="green" class="rightStyle" @update:model-value="rowChange(element.id, rowStatus.update)"/>
+                <div :class="{ 'del' : element.rowStatus == 'D' ? true : false}"/>
               </div>
             </template>
           </draggable>
@@ -55,14 +61,19 @@
 
 <script lang="ts">
 import { onMounted, reactive } from "vue";
+import { useQuasar } from "quasar";
 import { apiGetCodeMstList, apiGetCodeDtl, apiUpdateCodeDtl, apiRemoveCodeDtl, apiAddCodeDtl } from "../apis/api/userRequest";
 import { sysCodeMst } from "../apis/type";
+import { RowStatus } from "../apis/enum";
 import draggable from 'vuedraggable';
 export default {
   setup() {
+    const $q = useQuasar();
+    const rowStatus = RowStatus;
     const codeMst:sysCodeMst[] = reactive([]);
     const isActive:Array<boolean> = reactive([]);
     const list:Array<any> = reactive([]);
+    let tempList:Array<any> = [];
 
     onMounted(() => {
       getCodeMst();
@@ -87,6 +98,7 @@ export default {
       while(list.length > 0) {
         list.pop();
       }
+      tempList = [];
       apiGetCodeDtl({mstKeyword:mstKeyword}).then((response:any) => {
         response.data.forEach((dtl: any) => {
           list.push({id:dtl.id, 
@@ -97,7 +109,16 @@ export default {
                     enable:true, 
                     editable:true,
                     rowStatus:"R"});
+          tempList.push({id:dtl.id, 
+                    sysCodeMstKeyword:dtl.sysCodeMstKeyword,
+                    codeName:dtl.codeName, 
+                    codeDesc:dtl.codeDesc,
+                    orderSeq:dtl.orderSeq, 
+                    enable:true, 
+                    editable:true,
+                    rowStatus:"R"});                
         });
+         addRow();
       });
     }
 
@@ -124,7 +145,7 @@ export default {
 
     function rowChange(id:number, rowStatus:string) {
       for(let i = 0 ; i < list.length ; i++) {
-        if(list[i].id == id && list[i].rowStatus != "C") {
+        if(list[i].id == id && list[i].rowStatus != "C" && list[i].rowStatus != null) {
           list[i].rowStatus = rowStatus;
           break;
         }
@@ -150,6 +171,8 @@ export default {
             await apiUpdateCodeDtl(list[i]);
           } else if (list[i].rowStatus == "C") {
             await apiAddCodeDtl(list[i]);
+          } else if (list[i].rowStatus == "D") {
+            await apiRemoveCodeDtl({sysCodeDtlId:list[i].id});
           }
         }
     }
@@ -168,20 +191,55 @@ export default {
                   orderSeq:list.length + 1, 
                   enable:true, 
                   editable:false,
-                  rowStatus:"C"})
+                  rowStatus:null})
+    }
+
+    function refreshDtl() {
+      while(list.length > 0) {
+              list.pop();
+      }
+      tempList.forEach((dtl: any) => {
+          list.push({id:dtl.id, 
+                    sysCodeMstKeyword:dtl.sysCodeMstKeyword,
+                    codeName:dtl.codeName, 
+                    codeDesc:dtl.codeDesc,
+                    orderSeq:dtl.orderSeq, 
+                    enable:true, 
+                    editable:true,
+                    rowStatus:"R"});             
+      });
+      addRow(); 
+    }
+
+    function beforeAddRow(dtl:any) {
+      if (dtl.codeName == "" || dtl.codeDesc == "") {
+        $q.notify({
+          color: "red-5",
+          textColor: "white",
+          icon: "warning",
+          message: "欄位不得為空",
+        });
+      } else {
+        dtl.rowStatus = "C";
+        addRow();
+      }
     }
 
     return {
+      rowStatus,
       codeMst,
       isActive,
+      tempList,
       getCodeMst,
       getCodeDtl,
+      refreshDtl,
       cardClick,
       moveEnd,
       rowChange,
       apiUpdate,
       updateCodeDtl,
       removeCodeDtl,
+      beforeAddRow,
       addRow,
       enabled: true,
       list,

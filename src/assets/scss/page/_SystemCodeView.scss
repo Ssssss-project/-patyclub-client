@@ -105,6 +105,7 @@
             }
 
             .delete-btn {
+                visibility:hidden;
                 position: absolute;
                 right: 100px;
                 width: 20px;
@@ -114,9 +115,20 @@
             }
 
             .edit-btn {
+                visibility:hidden;
                 position: absolute;
                 right: 70px;
                 width: 20px;
+                &:hover {
+                    background-color: $color-light-350;
+                }
+            }
+
+            .add-btn {
+                visibility:hidden;
+                position: absolute;
+                right: 85px;
+                width: 20px; 
                 &:hover {
                     background-color: $color-light-350;
                 }
@@ -134,12 +146,22 @@
                 position: absolute;
                 right: 0px;
             }
+
+            .visible {
+                visibility: visible;
+            }
         } 
-        .addRow{
+        .addRow {
             background-color: $color-skyblue-300;
         }
         .noData {
             font-size: larger;
+        }
+
+        .del {
+            position: absolute;
+            border: 1px solid red;
+            width: 700px;
         }
     }
 }
