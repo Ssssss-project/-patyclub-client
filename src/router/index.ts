@@ -41,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
         name: 'VerifyPage',
         component: () => import('../views/VerifyList.vue'),
     },
+    {
+        path: '/UserManage',
+        name: 'UserManage',
+        component: () => import('../views/UserManage.vue'),
+    },
 ]
 
 const router = createRouter({

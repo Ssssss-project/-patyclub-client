@@ -1,0 +1,32 @@
+#UserManage {
+    .control {
+        width: 660px;
+        display: flex;
+        justify-content: flex-end;
+        .search {
+            width: 200px;
+            border-color: $color-brown-900;
+            border-style: solid;
+            border-width: 1px;
+            border-radius: 5px;
+            background-color: white;
+        }
+    }
+    .table-class {
+        border-style: solid;
+        border-width: 1px;
+        border-color: $color-brown-900;
+    }
+    .table-header-class {
+        font-weight: bold;
+        font-size:medium;
+        color: $color-brown-900;
+        background-color: $color-primary-500;
+        vertical-align: middle;
+    }
+    .cell-class {
+        font-size: 15px;
+        vertical-align: middle;
+        background-color: #e4ddd3;
+    }
+}

@@ -90,7 +90,7 @@
                   </q-item-section>
                 </q-item>
               </router-link>
-              <router-link :to="`/UserProfile/achievement`">
+              <router-link :to="`/UserManage`">
                 <q-item
                   clickable
                   v-close-popup
