@@ -152,16 +152,23 @@
             }
         } 
         .addRow {
-            background-color: $color-skyblue-300;
+            background-color: #CBE1E1;
         }
+
+        .delRow {
+            opacity: 0.5;
+        }
+
         .noData {
             font-size: larger;
         }
 
         .del {
             position: absolute;
-            border: 1px solid red;
-            width: 700px;
+            border: 1px solid $color-dark-900;
+            width: 720px;
+            left: -10px;
+            pointer-events: none;
         }
     }
 }

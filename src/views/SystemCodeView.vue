@@ -35,14 +35,15 @@
             handle=".drag_icon">
             <template v-slot:item="{ element }">
               <div class="list-group-item" :class="{ 'not-draggable': !enabled , 
-                                                     'addRow': element.rowStatus != rowStatus.read && element.rowStatus != null ? true : false}">
+                                                     'addRow': element.rowStatus != rowStatus.read && element.rowStatus != null ? true : false,
+                                                     'delRow': element.rowStatus == 'D' ? true : false}">
                 <q-icon name="format_align_justify" size="25px" class="drag_icon"/>
                 <q-input v-model="element.codeName" :dense="true" class="codeName" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
                 <q-input v-model="element.codeDesc" :dense="true" class="codeDesc" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
-                <q-btn icon="delete" class="delete-btn" flat @click="rowChange(element.id, rowStatus.delete)" :disable='element.id == 0 ? true : false'
-                :class="{'visible':element.rowStatus != null ? true : false}"/>
+                <q-btn icon="delete" class="delete-btn" flat @click="rowChange(element.id, rowStatus.delete)"
+                  :class="{'visible':element.rowStatus != null ? true : false}"/>
                 <q-btn icon="edit" class="edit-btn" @click="element.editable = false" flat
-                :class="{'visible':element.rowStatus != null ? true : false}"/>
+                  :class="{'visible':element.rowStatus != null ? true : false}"/>
                 <q-btn icon="add" class="add-btn" :class="{'visible':element.rowStatus == null ? true : false}" @click="beforeAddRow(element)" flat/>
                 <div class="line"/>
                 <q-toggle v-model="element.enable" color="green" class="rightStyle" @update:model-value="rowChange(element.id, rowStatus.update)"/>
@@ -145,7 +146,7 @@ export default {
 
     function rowChange(id:number, rowStatus:string) {
       for(let i = 0 ; i < list.length ; i++) {
-        if(list[i].id == id && list[i].rowStatus != "C" && list[i].rowStatus != null) {
+        if(list[i].id == id  && list[i].rowStatus != null) {
           list[i].rowStatus = rowStatus;
           break;
         }
@@ -171,7 +172,7 @@ export default {
             await apiUpdateCodeDtl(list[i]);
           } else if (list[i].rowStatus == "C") {
             await apiAddCodeDtl(list[i]);
-          } else if (list[i].rowStatus == "D") {
+          } else if (list[i].rowStatus == "D" && list[i].id != 0) {
             await apiRemoveCodeDtl({sysCodeDtlId:list[i].id});
           }
         }
