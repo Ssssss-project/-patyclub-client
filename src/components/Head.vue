@@ -33,8 +33,20 @@
         :class="isHomepage ? 'btns-home' : 'btns'"
         @click="loginChick"
       >活動創建</button>
-      <q-btn v-if="personalInfo" icon="notifications" no-caps flat :class="isHomepage ? 'notifications-home' : 'notifications'"/>
-      <q-btn v-if="personalInfo" icon="build" no-caps flat :class="isHomepage ? 'build-home' : 'build'">
+      <q-btn
+        v-if="personalInfo"
+        icon="notifications"
+        no-caps
+        flat
+        :class="isHomepage ? 'notifications-home' : 'notifications'"
+      />
+      <q-btn
+        v-if="personalInfo"
+        icon="build"
+        no-caps
+        flat
+        :class="isHomepage ? 'build-home' : 'build'"
+      >
         <q-menu
           id="AdminOption"
           transition-show="flip-right"
@@ -46,13 +58,16 @@
           <div class="main">
             <div class="triangle" />
             <q-list class="list">
-              <router-link :to="`/UserProfile/personalInfo`">
+              <router-link :to="`/VerifyPage`">
                 <q-item
                   clickable
                   v-close-popup
                 >
                   <q-item-section avatar>
-                    <q-icon name="build" class="icon"/>
+                    <q-icon
+                      name="build"
+                      class="icon"
+                    />
                   </q-item-section>
                   <q-item-section caption>
                     <q-item-label>審核活動</q-item-label>
@@ -65,7 +80,10 @@
                   v-close-popup
                 >
                   <q-item-section avatar>
-                    <q-icon name="build"  class="icon"/>
+                    <q-icon
+                      name="build"
+                      class="icon"
+                    />
                   </q-item-section>
                   <q-item-section caption>
                     <q-item-label>系統代碼</q-item-label>
@@ -78,7 +96,10 @@
                   v-close-popup
                 >
                   <q-item-section avatar>
-                    <q-icon name="build"  class="icon"/>
+                    <q-icon
+                      name="build"
+                      class="icon"
+                    />
                   </q-item-section>
                   <q-item-section caption>
                     <q-item-label>使用者管理</q-item-label>
@@ -92,7 +113,10 @@
                   @click="logOut()"
                 >
                   <q-item-section avatar>
-                    <q-icon name="build" class="icon"/>
+                    <q-icon
+                      name="build"
+                      class="icon"
+                    />
                   </q-item-section>
                   <q-item-section caption>
                     <q-item-label>儀表板</q-item-label>
