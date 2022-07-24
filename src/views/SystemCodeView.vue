@@ -34,19 +34,22 @@
             ghost-class="ghost"
             handle=".drag_icon">
             <template v-slot:item="{ element }">
-              <div class="list-group-item" :class="{ 'not-draggable': !enabled , 
+              <div class="list_group_main">
+                <div class="list-group-item" :class="{'not-draggable': !enabled , 
                                                      'addRow': element.rowStatus != rowStatus.read && element.rowStatus != null ? true : false,
                                                      'delRow': element.rowStatus == 'D' ? true : false}">
-                <q-icon name="format_align_justify" size="25px" class="drag_icon"/>
-                <q-input v-model="element.codeName" :dense="true" class="codeName" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
-                <q-input v-model="element.codeDesc" :dense="true" class="codeDesc" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
-                <q-btn icon="delete" class="delete-btn" flat @click="rowChange(element.id, rowStatus.delete)"
-                  :class="{'visible':element.rowStatus != null ? true : false}"/>
-                <q-btn icon="edit" class="edit-btn" @click="element.editable = false" flat
-                  :class="{'visible':element.rowStatus != null ? true : false}"/>
-                <q-btn icon="add" class="add-btn" :class="{'visible':element.rowStatus == null ? true : false}" @click="beforeAddRow(element)" flat/>
-                <div class="line"/>
-                <q-toggle v-model="element.enable" color="green" class="rightStyle" @update:model-value="rowChange(element.id, rowStatus.update)"/>
+                  <q-icon name="format_align_justify" size="25px" class="drag_icon"/>
+                  <q-input v-model="element.codeName" :dense="true" class="codeName" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
+                  <q-input v-model="element.codeDesc" :dense="true" class="codeDesc" :readonly="element.editable" @update:model-value="rowChange(element.id, rowStatus.update)"/>
+                  <q-btn icon="delete" class="delete-btn" flat @click="rowChange(element.id, rowStatus.delete)"
+                    :class="{'visible':element.rowStatus != null ? true : false}"/>
+                  <q-btn icon="edit" class="edit-btn" @click="element.editable = false" flat
+                    :class="{'visible':element.rowStatus != null ? true : false}"/>
+                  <q-btn icon="add" class="add-btn" :class="{'visible':element.rowStatus == null ? true : false}" @click="beforeAddRow(element)" flat/>
+                  <div class="line"/>
+                  <q-toggle v-model="element.enable" color="green" class="rightStyle" @update:model-value="rowChange(element.id, rowStatus.update)"/>
+                </div>
+                
                 <div :class="{ 'del' : element.rowStatus == 'D' ? true : false}"/>
               </div>
             </template>

@@ -71,104 +71,109 @@
             cursor: no-drop;
         }
 
-        .list-group-item {
-            background-color: $color-light-50;
-            width: 700px;
-            height: 40px;
-            border-color: $color-dark-900;
-            border-style: solid;
-            border-width: 1px;
-            border-radius: 5px;
-            margin-bottom: 5px;
+        .list_group_main {
             display: flex;
-            flex-direction: row;
             align-items: center;
             position: relative;
-
-            &:hover {
-                background-color: $color-light-200;
-            }
-
-            .drag_icon {
-                padding-left: 10px;
-                padding-right: 20px;
-            }
-
-            .codeName {
-                text-align: left;
-                width: 200px;
-                font-size: medium;
-            }
-
-            .codeDesc {
-                font-size: medium;
-            }
-
-            .delete-btn {
-                visibility:hidden;
-                position: absolute;
-                right: 100px;
-                width: 20px;
+            .list-group-item {
+                background-color: $color-light-50;
+                width: 700px;
+                height: 40px;
+                border-color: $color-dark-900;
+                border-style: solid;
+                border-width: 1px;
+                border-radius: 5px;
+                margin-bottom: 5px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                position: relative;
+    
                 &:hover {
-                    background-color: $color-light-350;
+                    background-color: $color-light-200;
                 }
-            }
-
-            .edit-btn {
-                visibility:hidden;
-                position: absolute;
-                right: 70px;
-                width: 20px;
-                &:hover {
-                    background-color: $color-light-350;
+    
+                .drag_icon {
+                    padding-left: 10px;
+                    padding-right: 20px;
                 }
-            }
-
-            .add-btn {
-                visibility:hidden;
-                position: absolute;
-                right: 85px;
-                width: 20px; 
-                &:hover {
-                    background-color: $color-light-350;
+    
+                .codeName {
+                    text-align: left;
+                    width: 200px;
+                    font-size: medium;
                 }
+    
+                .codeDesc {
+                    font-size: medium;
+                }
+    
+                .delete-btn {
+                    visibility:hidden;
+                    position: absolute;
+                    right: 100px;
+                    width: 20px;
+                    &:hover {
+                        background-color: $color-light-350;
+                    }
+                }
+    
+                .edit-btn {
+                    visibility:hidden;
+                    position: absolute;
+                    right: 70px;
+                    width: 20px;
+                    &:hover {
+                        background-color: $color-light-350;
+                    }
+                }
+    
+                .add-btn {
+                    visibility:hidden;
+                    position: absolute;
+                    right: 85px;
+                    width: 20px; 
+                    &:hover {
+                        background-color: $color-light-350;
+                    }
+                }
+    
+                .line {
+                    width: 2px;
+                    height: 80%;
+                    background-color:#9e9e9e;
+                    position: absolute;
+                    right: 55px;
+                }
+    
+                .rightStyle {
+                    position: absolute;
+                    right: 0px;
+                }
+    
+                .visible {
+                    visibility: visible;
+                }
+            } 
+            .addRow {
+                background-color: #CBE1E1;
             }
-
-            .line {
-                width: 2px;
-                height: 80%;
-                background-color:#9e9e9e;
+    
+            .delRow {
+                opacity: 0.3;
+            }
+    
+            .noData {
+                font-size: larger;
+            }
+    
+            .del {
                 position: absolute;
-                right: 55px;
+                border: 1px solid $color-dark-900;
+                width: 720px;
+                left: -10px;
+                pointer-events: none;
             }
-
-            .rightStyle {
-                position: absolute;
-                right: 0px;
-            }
-
-            .visible {
-                visibility: visible;
-            }
-        } 
-        .addRow {
-            background-color: #CBE1E1;
-        }
-
-        .delRow {
-            opacity: 0.5;
-        }
-
-        .noData {
-            font-size: larger;
-        }
-
-        .del {
-            position: absolute;
-            border: 1px solid $color-dark-900;
-            width: 720px;
-            left: -10px;
-            pointer-events: none;
         }
     }
 }
